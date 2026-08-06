@@ -3,13 +3,15 @@ id: PRG-STK-001
 title: Enterprise Stakeholder Map — Youth Football Ecosystem Platform
 context: programme
 stage: 1
-status: IN_REVIEW
+status: APPROVED
 revision: 1
+approved_on: 2026-08-06
+gate: G1 PASSED
 owner: Chief Product Officer
 co_owner: Chief Enterprise Architect
 derives_from: [PRG-VIS-001, CONSENT-001, PRG-MET-001]
 satisfied_by: [IDN-PRD-001, PRG-CTX-001, PRG-CDM-001]
-adrs: [ADR-0001, ADR-0002]
+adrs: [ADR-0001, ADR-0002, ADR-0003]
 north_star_impact: "Names every actor that can create, verify, or destroy a Verified Active Player, and the authority each holds over child data."
 ---
 
