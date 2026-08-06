@@ -12,9 +12,13 @@ Produced so far:
 - [`01-prd.md` (IDN-PRD-001 v1.0)](./01-prd.md) — IN_REVIEW at G2. Two blocking
   business decisions remain: OQ-02 (minimum L1 verification evidence) and
   OQ-05 (CTI Phase 0 floor).
+- [`03-domain-model.md` (IDN-DMN-001 v1.0)](./03-domain-model.md) — IN_REVIEW at
+  G3. 7 aggregates, 25 value objects, 33 domain events, 38 invariants, 10
+  versioned policies. Carries OQ-02 and OQ-05 forward as policy values.
 
-Next artefacts after G2 approval: `02-journeys.md` (IDN-JRN-001) and
-`IDN-DOM-001` (Domain Model).
+Next artefacts after approval: `02-journeys.md` (IDN-JRN-001), `IDN-EVT-001`
+(Domain Event Catalogue) and `IDN-CDM-001` (Canonical Data Model).
+
 
 Governing decisions:
 [ADR-0002 rev. 2 — Football ID fully opaque](../../adr/ADR-0002-football-id-format.md) ·
