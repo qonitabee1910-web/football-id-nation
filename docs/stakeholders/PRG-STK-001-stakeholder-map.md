@@ -73,6 +73,67 @@ negotiated.
 | S6 | **No stakeholder may be created that requires under-13 scouting access** | Structural, not policy: the capability does not exist to grant. |
 | S7 | **Aggregation is the escape valve** | Where a stakeholder has a legitimate need but no lawful child-level basis, it receives k-anonymised aggregates, never rows. |
 | S8 | **Every actor is observable** | Access to child-sensitive data writes an access-log entry the Guardian can read (CONSENT-001 §8). |
+| S9 | **Membership is typed** | One `ACTIVE` Primary Membership, `0..N` Secondary. Eligibility and Transfer follow Primary only; the Journey records both (ADR-0003). |
+
+### PART 2.1 — Named invariants (Council-adopted, 6 Aug 2026)
+
+These four rules are citable by ID from every downstream artefact.
+
+**STK-INV-001 — Data Minimisation by Capability** *(constitutional invariant)*
+
+> No stakeholder may consume player-level data unless player data is essential
+> to fulfil its primary business capability.
+
+Privacy by Architecture, not Privacy by Policy: where the capability does not
+require player-level data, the access path is not built, so no configuration can
+open it. Applied here:
+
+| Stakeholder | Sees | Never sees |
+| --- | --- | --- |
+| Venue | Booking, field, schedule, capacity, fixture times | Roster, player identity, any player-level record |
+| Commercial Partner (sponsor, equipment, insurer, store) | Aggregate analytics, k-anonymised metrics, sponsorship context | Any child-level row, contact detail, or development record |
+
+**STK-INV-002 — Record Authority Principle**
+
+> Consent Authority ≠ Evidence Authority. *Guardian owns consent, not truth.*
+
+| Guardian may | Guardian may never |
+| --- | --- |
+| Grant consent | Change an Assessment result |
+| Revoke consent | Delete match history |
+| Object to a record, in writing | Edit a Referee report |
+| Request export, correction of factual identity data, and erasure per CONSENT-001 | Alter statistics or activity records |
+
+Objection never mutates evidence. It attaches to it.
+
+**STK-INV-003 — Guardian Annotation** *(first-class object)*
+
+A Guardian objection creates a `GuardianAnnotation` with its own lifecycle,
+attached to — never merged into — the underlying immutable record:
+
+```text
+Assessment ──▶ Guardian Comment ──▶ Coach Response ──▶ Resolved
+                                                  └──▶ Open (escalates to
+                                                       Compliance Officer)
+```
+
+Rules: the annotated record is unchanged and remains authoritative; the
+annotation is always visible alongside the record to anyone entitled to read the
+record; an unresolved annotation is reported in the Guardian's access log; no
+role may delete an annotation.
+
+**STK-INV-004 — Structural Prohibition**
+
+> Under-13 × Scouting Capability = **Not Implemented**. Never `permission = false`.
+
+A permission can be misconfigured; an absent capability cannot. Every "denied"
+in this document that concerns under-13 scouting exposure means the capability is
+not built. This is the official term and supersedes the wording "explicitly
+denied" wherever it appears (PART 4 E-group, PART 8, PART 14 R1, PART 18 §5).
+
+---
+
+
 
 ---
 
