@@ -12,7 +12,9 @@ Authoritative vocabulary. Code, contracts, and UI copy must use these terms.
 | **Guardian** | A Person legally responsible for a minor Player. Source of consent. |
 | **Consent** | An explicit, timestamped, revocable grant by a Guardian (or adult Person) permitting a defined data use. |
 | **Organization** | SSB, Club, Academy, Association, or Federation body. |
-| **Membership** | A time-bounded relationship between a Person and an Organization. Confers access, never ownership. |
+| **Membership** | A time-bounded, typed relationship between a Person and an Organization. Confers access, never ownership. Type is `PRIMARY` or `SECONDARY` (ADR-0003). |
+| **Primary Membership** | The one `ACTIVE` Membership that constitutes a Player's official affiliation. Exactly one per Player at a time. Sole basis of roster, competition eligibility, and Transfer. |
+| **Secondary Membership** | A concurrent, non-exclusive Membership (`0..N`): holiday camp, regional training centre, talent program, national camp, academy trial. Recorded in the Journey; confers no competition eligibility and is never a Transfer. |
 | **SSB** | Sekolah Sepak Bola — grassroots football school. |
 | **Team** | A squad fielded by an Organization for training or competition. |
 | **Competition** | Tournament or League run by an Organization or Association. |
