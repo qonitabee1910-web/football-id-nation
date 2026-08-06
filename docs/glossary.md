@@ -37,7 +37,7 @@ Authoritative vocabulary. Code, contracts, and UI copy must use these terms.
 | **Network Density Index (NDI)** | Connectedness of the football network in a scope — players, Organizations, coaches, competitions, and activities as one graph. Headline sub-index: share of `ACTIVE` players with verified activity from two or more independently administered Organizations, proving portability in production. |
 | **Journey Completeness Score (JCS)** | Percentage of players holding a complete journey across identity, organization, activity, and development. Underlying per-player weighted score uses the versioned `JourneyCompletenessPolicy`; fields not justified by an active consent purpose carry zero weight. |
 | **JourneyCompletenessPolicy** | The named, versioned configuration object holding JCS component weights. Configurable, never hard-coded; every JCS figure carries its `policy_id@version`. |
-| **Consent Trust Index (CTI)** | Composite trust measure (guardian verification, voluntary opt-in, revocation rates inverted, DSAR fulfilment). Falling below its floor blocks phase exit regardless of VAP. |
+| **Consent Trust Index (CTI)** | Percentage of player data usable for its intended purpose because an active, valid consent covers it, measured per purpose and in aggregate. Diagnostics: guardian verification, voluntary opt-in, revocation rates, DSAR fulfilment. Below its floor it blocks phase exit regardless of VAP. |
 | **Bounded Context** | A DDD boundary owning its model and language. |
 | **Aggregate** | A consistency boundary with a single root entity. |
 | **Domain Event** | A past-tense fact published by an aggregate, e.g. `FootballIdIssued`. |
