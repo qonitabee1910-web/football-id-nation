@@ -45,4 +45,10 @@ Training · Development · Finance · Notification · Scouting · Federation
 
 ## ADRs
 
+| ID | Title | Status |
+| --- | --- | --- |
+| ADR-0001 | Runtime stack deviation: TanStack Start + Lovable Cloud | ACCEPTED |
+| ADR-0002 | Football ID: fully opaque identifier (rev. 2) | ACCEPTED |
+| ADR-0003 | Organization Membership Model: Primary (1) + Secondary (0..N) | ACCEPTED (6 Aug 2026) |
+
 See [adr/README.md](./adr/README.md).
