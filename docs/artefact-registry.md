@@ -24,7 +24,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | ID | Artefact | Stage | Status | Gate |
 | --- | --- | --- | --- | --- |
 | CONSENT-001 | Consent, Access Rights & Privacy for Minors | 0 | APPROVED | G0 PASSED |
-| IDN-PRD-001 | Identity PRD | 1 | NOT_STARTED — next, unblocked | G1 |
+| IDN-PRD-001 | Identity PRD v1.0 (21 parts, FR/BR/NFR + Decision Log + traceability) | 2 | IN_REVIEW — 2 blocking business decisions (OQ-02, OQ-05) | G2 |
 | IDN-JRN-001 | User Journeys (register, guardian consent, multi-role) | 1 | NOT_STARTED | G1 |
 | IDN-DOM-001 | Domain Model (Person, FootballID, Role, Membership) | 2 | NOT_STARTED | G2 |
 | IDN-EVT-001 | Domain Events | 2 | NOT_STARTED | G2 |
