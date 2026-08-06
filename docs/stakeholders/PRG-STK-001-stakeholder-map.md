@@ -586,7 +586,7 @@ Cardinalities and rules that later artefacts must honour:
 | Guardian | owns consent for | Player | 1..n | Multi-child is the default (ratio 0.80) |
 | Player | has | Guardian | 1..n | Two guardians may both hold authority; conflict escalates to Compliance |
 | Organization | holds membership of | Player | 0..n | Membership, never ownership; historical memberships persist |
-| Player | belongs to | Organization | 0..1 active, 0..n historical | Concurrent active memberships are disallowed by default |
+| Player | belongs to | Organization | 1 active Primary, 0..n active Secondary, 0..n historical | Typed Membership per ADR-0003: eligibility and Transfer follow Primary only; every Membership is recorded in the Journey |
 | Coach | trains | Player | n..n | Only while assigned to a shared Team |
 | Scout | observes | Player | n..n | Only where age ≥ 13 **and** `P5` active |
 | Referee | officiates | Match | 1..n | Assignment-scoped |
