@@ -969,10 +969,17 @@ accordingly; no open items remain.
 | VAP / NDI / JCS / CTI | PRG-VIS-001 §3, §9 | PART 17 |
 | Phase 0 volumes | PRG-VIS-001 §10.1 | Catalogue sizing; guardian multi-child default |
 | Stack boundary | ADR-0001 | No implementation content in this artefact |
+| STK-INV-001 Data Minimisation by Capability | Constitution #6; PRG-VIS-001 §7 | PART 4 E3/H-group; PARTS 8, 9, 17 |
+| STK-INV-002 Record Authority Principle | Constitution #1; CONSENT-001 | PART 8 Guardian Authority; PART 10 |
+| STK-INV-003 Guardian Annotation | STK-INV-002 | Development context; assessment model |
+| STK-INV-004 Structural Prohibition | Constitution #6; CONSENT-001 `P5` | PART 8; PART 14 R1; Scouting context |
+| S9 Typed Membership | ADR-0003 | PART 5; IDN-PRD-001; Competition, Transfer, Analytics |
 
 **Downstream consumers:** `IDN-PRD-001` (actors and permissions), `PRG-CTX-001`
 (bounded contexts from PART 5), `PRG-CDM-001` (canonical model from PART 7),
 authorization model (PART 8), consent model extension (PART 10), identity model
 (PART 11), AI interaction model (PART 15).
 
-**Status:** IN_REVIEW — submitted for Council approval at G1.
+**Status:** APPROVED — Council resolution 6 August 2026, **G1 PASSED**, subject
+to ADR-0003, which is ACCEPTED and on file.
+
