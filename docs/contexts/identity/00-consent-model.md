@@ -3,7 +3,7 @@ id: CONSENT-001
 title: Consent, Access Rights, and Privacy Model for Minors
 context: identity
 stage: 0
-status: DRAFT
+status: APPROVED (G0, 6 Aug 2026, with P8 + high-risk revocation amendments)
 owner: Principal Security Architect
 co_owner: Principal Domain Architect
 derives_from: []
@@ -57,6 +57,7 @@ of this artefact.
 | `P5_SCOUTING` | Expose profile to verified Scouts outside own Organization | Scouting context | Opt-in, off by default, **never** for under-13 | Yes |
 | `P6_FEDERATION` | Share identity + participation with an Association/Federation | Official competition entry | Opt-in per competition | Yes, before submission only |
 | `P7_ANALYTICS` | Aggregate, de-identified ecosystem reporting | North Star metrics | Opt-out | Yes (removes from row-level, not from historical aggregates) |
+| `P8_AI_MODEL_IMPROVEMENT` | Use row-level data as training/evaluation input for platform AI | Player Development AI, Coach Assistant, Scouting AI, Analytics models, Training Recommendation | Opt-in, off by default, **L2 required** | Yes (see §3.1) |
 
 Hard rules:
 1. `P1` and `P2` are the only purposes that may be required to use the platform.
@@ -64,7 +65,41 @@ Hard rules:
    separate, independently revocable grant.
 3. No purpose grants marketing, third-party sale, or advertising. Those are not
    on the list and may not be added.
-4. Under-13 Minors: `P5_SCOUTING` is unavailable regardless of guardian consent.
+4. Under-13 Minors: `P5_SCOUTING` and `P8_AI_MODEL_IMPROVEMENT` are unavailable
+   regardless of guardian consent or verification level.
+
+### 3.1 P8_AI_MODEL_IMPROVEMENT — additional conditions
+
+Added by Council amendment at G0. A child's data is never automatically available
+to a model.
+
+1. **Never required.** Absence of `P8` must not degrade any non-AI feature. A
+   Person without `P8` uses the platform fully.
+2. **L2 guardian verification required** — stricter than `P3`/`P4`, matching the
+   irreversibility of model training.
+3. **Under-13 prohibited**, structurally, regardless of guardian level.
+4. **Scope is the closed list above.** Any AI use outside Player Development AI,
+   Coach Assistant, Scouting AI, Analytics models, and Training Recommendation
+   requires a new purpose and a revised version of this artefact — not a
+   reinterpretation of `P8`.
+5. **`P7` never implies `P8`.** `P7_ANALYTICS` covers de-identified aggregate
+   reporting; `P8` covers row-level records entering a model. They are granted,
+   displayed, and revoked independently.
+6. **Revocation semantics, stated honestly.** Revoking `P8`:
+   - removes the Person from all future training and evaluation sets immediately;
+   - removes their contribution at the **next scheduled retraining cycle**, with
+     an SLA of **90 days** from revocation;
+   - does not claim instant removal from an already-trained model — the artefact
+     must not promise what model architecture cannot deliver;
+   - emits `AITrainingSetMembershipChanged`.
+7. **No third-party model training.** `P8` permits training of platform-operated
+   models only. Sending a Minor's data to an external model provider for training
+   is prohibited under every purpose. Inference-time calls to external providers
+   require de-identification and are governed separately at G4.
+8. **Provenance.** Every training set records the `policy_version` and the set of
+   `ConsentGrant` ids it was assembled from, so any model can be audited back to
+   the consents that produced it.
+
 
 ## 4. Consent grant object
 
@@ -173,7 +208,52 @@ On the Person's 18th birthday:
 4. Guardian read access downgrades to none unless the adult Person re-grants it.
 5. Emits `ConsentAuthorityTransferred { person_id, occurred_at }`.
 
-## 10. Domain events
+## 10. High-risk revocation
+
+Added by Council amendment at G0. **Revocation is never delayed, held, queued for
+approval, or reversed.** This flow adds notification and audit around an
+already-effective revocation so that accountable parties learn of it in time to
+act.
+
+A revocation is **high-risk** when, at the moment of revocation, the Minor is:
+
+- named in an active competition squad or an unplayed fixture;
+- subject to an in-flight scouting exposure under `P5`;
+- included in a federation submission under `P6` that has been sent but not
+  finalised;
+- included in a training set assembled under `P8` and not yet retrained.
+
+Flow:
+
+```text
+Revocation ──▶ EFFECTIVE IMMEDIATELY ──▶ HighRiskConsentRevoked emitted
+                                              │
+                          ┌───────────────────┼───────────────────┐
+                          ▼                   ▼                   ▼
+                    Notification          Audit entry        Review queue
+              (Guardian, Organization,  (immutable, visible  (operational
+               Association as scoped)    to Guardian)         follow-up)
+```
+
+Rules:
+
+1. Effect precedes notification. The data is inaccessible before any party is
+   told. No implementation may invert this order for convenience.
+2. The review queue exists to execute consequences — squad withdrawal, media
+   takedown, submission recall, training-set removal — **never** to reverse or
+   delay the revocation. No role, including Association or Federation, may
+   restore a revoked grant; only a new grant by the consent authority can.
+3. Notification is scoped to legitimate need: the Guardian always; the affected
+   Organization; the Association only where a `P6` submission is affected. A
+   Scout is told the exposure ended, never why.
+4. Notification content is minimised — the fact of withdrawal and the operational
+   consequence, never the Guardian's reasoning.
+5. Every high-risk revocation is auditable end to end and visible in the Guardian
+   dashboard, including which parties were notified and when.
+6. Where a revocation creates a competition-eligibility conflict, Rule 0 applies:
+   the child's interest prevails over the fixture.
+
+## 11. Domain events
 
 | Event | Payload | Publisher |
 | --- | --- | --- |
@@ -184,22 +264,29 @@ On the Person's 18th birthday:
 | `ConsentExpired` | grant_id, subject_person_id, purpose, expired_at | Consent aggregate |
 | `ConsentAuthorityTransferred` | person_id, occurred_at | Person aggregate |
 | `MinorDataExported` | subject_person_id, requested_by, scope, exported_at | Consent aggregate |
+| `HighRiskConsentRevoked` | grant_id, subject_person_id, purpose, risk_reasons[], affected_org_ids[], notified_parties[], revoked_at | Consent aggregate |
+| `AITrainingSetMembershipChanged` | subject_person_id, change (ADDED/REMOVED), grant_id, effective_at, retrain_by | Consent aggregate |
 
 `MinorDataExported` is an audit event — every export of a child's data is logged
 and visible to the Guardian.
 
-## 11. UX obligations (binding on G5)
+## 12. UX obligations (binding on G5)
 
 - Consent notices in Bahasa Indonesia, plain language, ≤ 8th-grade reading level,
   with a per-purpose one-line explanation of "what this means for my child".
 - Each purpose is a separate toggle. No pre-ticked opt-ins. No dark patterns.
 - Revocation is reachable in ≤ 2 taps from the child's profile.
+- A high-risk revocation shows the operational consequence before confirming
+  (e.g. "your child will be withdrawn from Sunday's fixture") — as information,
+  never as a warning designed to deter.
 - Guardian dashboard shows: who accessed my child's data, when, and under which
-  purpose.
+  purpose; plus who was notified of any revocation.
+- `P8` is presented with its own plain-language explanation of what training a
+  model means and the 90-day removal SLA.
 - A Minor aged 13+ sees an age-appropriate assent screen and can see, but not
   change, their own consent state.
 
-## 12. Acceptance criteria (G0 exit)
+## 13. Acceptance criteria (G0 exit)
 
 1. Given a Minor with no guardian verification, when any Organization attempts to
    read their profile, then only Football ID and age band are returned.
@@ -212,10 +299,28 @@ and visible to the Guardian.
    and Guardian read access is removed on completion.
 5. Given an under-13 Minor, when `P5_SCOUTING` is requested, then the grant is
    rejected regardless of guardian level.
+6. Given an under-13 Minor, when `P8_AI_MODEL_IMPROVEMENT` is requested, then the
+   grant is rejected regardless of guardian verification level.
+7. Given a Guardian at L1, when `P8` is requested, then the grant is rejected and
+   the required verification level is stated.
+8. Given a Minor with `P8` active whose Guardian revokes it, when the next
+   training set is assembled, then the Minor is absent from it, and the Minor's
+   contribution is removed from the deployed model within 90 days.
+9. Given a Guardian holds `P7` only, when a training set is assembled, then the
+   Minor is not included.
+10. Given a Minor named in an unplayed fixture, when their Guardian revokes `P2`,
+    then access is revoked before any notification is sent, a
+    `HighRiskConsentRevoked` event is emitted, and the Guardian, Organization,
+    and (if a `P6` submission is affected) Association are notified.
+11. Given a high-risk revocation in the review queue, when an Organization Admin
+    or Association attempts to restore the grant, then the action is rejected.
 
-## 13. Traceability
+## 14. Traceability
 
 Satisfies the G0 universal-gate item "child-data impact assessed; consent model
-referenced where applicable". Blocks IDN-ERD-001 and IDN-API-001 until APPROVED.
-Referenced by [ADR-0002 rev. 2](../../adr/ADR-0002-football-id-format.md) and
-[PRG-MET-001](../../metrics/active-football-activity.md).
+referenced where applicable". Blocks IDN-ERD-001 and IDN-API-001 until the Stage 3
+RLS design enforces §6, §3.1, and §10 as testable invariants.
+Referenced by [ADR-0002 rev. 2](../../adr/ADR-0002-football-id-format.md),
+[PRG-MET-001](../../metrics/active-football-activity.md), and
+[PRG-VIS-001](../../vision/PRG-VIS-001-vision-positioning.md).
+
