@@ -7,6 +7,7 @@ reused. Use [_template.md](./_template.md).
 | --- | --- | --- | --- |
 | [ADR-0001](./ADR-0001-runtime-stack-deviation.md) | Runtime stack deviation: TanStack Start + Lovable Cloud | ACCEPTED | programme |
 | [ADR-0002](./ADR-0002-football-id-format.md) | Football ID: fully opaque identifier (rev. 2) | ACCEPTED | identity |
+| [ADR-0003](./ADR-0003-organization-membership-model.md) | Organization Membership Model: Primary (1) + Secondary (0..N) | ACCEPTED | identity, competition, transfer, analytics |
 
 ## Lifecycle
 

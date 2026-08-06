@@ -3,13 +3,15 @@ id: PRG-STK-001
 title: Enterprise Stakeholder Map — Youth Football Ecosystem Platform
 context: programme
 stage: 1
-status: IN_REVIEW
+status: APPROVED
 revision: 1
+approved_on: 2026-08-06
+gate: G1 PASSED
 owner: Chief Product Officer
 co_owner: Chief Enterprise Architect
 derives_from: [PRG-VIS-001, CONSENT-001, PRG-MET-001]
 satisfied_by: [IDN-PRD-001, PRG-CTX-001, PRG-CDM-001]
-adrs: [ADR-0001, ADR-0002]
+adrs: [ADR-0001, ADR-0002, ADR-0003]
 north_star_impact: "Names every actor that can create, verify, or destroy a Verified Active Player, and the authority each holds over child data."
 ---
 
@@ -71,6 +73,67 @@ negotiated.
 | S6 | **No stakeholder may be created that requires under-13 scouting access** | Structural, not policy: the capability does not exist to grant. |
 | S7 | **Aggregation is the escape valve** | Where a stakeholder has a legitimate need but no lawful child-level basis, it receives k-anonymised aggregates, never rows. |
 | S8 | **Every actor is observable** | Access to child-sensitive data writes an access-log entry the Guardian can read (CONSENT-001 §8). |
+| S9 | **Membership is typed** | One `ACTIVE` Primary Membership, `0..N` Secondary. Eligibility and Transfer follow Primary only; the Journey records both (ADR-0003). |
+
+### PART 2.1 — Named invariants (Council-adopted, 6 Aug 2026)
+
+These four rules are citable by ID from every downstream artefact.
+
+**STK-INV-001 — Data Minimisation by Capability** *(constitutional invariant)*
+
+> No stakeholder may consume player-level data unless player data is essential
+> to fulfil its primary business capability.
+
+Privacy by Architecture, not Privacy by Policy: where the capability does not
+require player-level data, the access path is not built, so no configuration can
+open it. Applied here:
+
+| Stakeholder | Sees | Never sees |
+| --- | --- | --- |
+| Venue | Booking, field, schedule, capacity, fixture times | Roster, player identity, any player-level record |
+| Commercial Partner (sponsor, equipment, insurer, store) | Aggregate analytics, k-anonymised metrics, sponsorship context | Any child-level row, contact detail, or development record |
+
+**STK-INV-002 — Record Authority Principle**
+
+> Consent Authority ≠ Evidence Authority. *Guardian owns consent, not truth.*
+
+| Guardian may | Guardian may never |
+| --- | --- |
+| Grant consent | Change an Assessment result |
+| Revoke consent | Delete match history |
+| Object to a record, in writing | Edit a Referee report |
+| Request export, correction of factual identity data, and erasure per CONSENT-001 | Alter statistics or activity records |
+
+Objection never mutates evidence. It attaches to it.
+
+**STK-INV-003 — Guardian Annotation** *(first-class object)*
+
+A Guardian objection creates a `GuardianAnnotation` with its own lifecycle,
+attached to — never merged into — the underlying immutable record:
+
+```text
+Assessment ──▶ Guardian Comment ──▶ Coach Response ──▶ Resolved
+                                                  └──▶ Open (escalates to
+                                                       Compliance Officer)
+```
+
+Rules: the annotated record is unchanged and remains authoritative; the
+annotation is always visible alongside the record to anyone entitled to read the
+record; an unresolved annotation is reported in the Guardian's access log; no
+role may delete an annotation.
+
+**STK-INV-004 — Structural Prohibition**
+
+> Under-13 × Scouting Capability = **Not Implemented**. Never `permission = false`.
+
+A permission can be misconfigured; an absent capability cannot. Every "denied"
+in this document that concerns under-13 scouting exposure means the capability is
+not built. This is the official term and supersedes the wording "explicitly
+denied" wherever it appears (PART 4 E-group, PART 8, PART 14 R1, PART 18 §5).
+
+---
+
+
 
 ---
 
@@ -523,7 +586,7 @@ Cardinalities and rules that later artefacts must honour:
 | Guardian | owns consent for | Player | 1..n | Multi-child is the default (ratio 0.80) |
 | Player | has | Guardian | 1..n | Two guardians may both hold authority; conflict escalates to Compliance |
 | Organization | holds membership of | Player | 0..n | Membership, never ownership; historical memberships persist |
-| Player | belongs to | Organization | 0..1 active, 0..n historical | Concurrent active memberships are disallowed by default |
+| Player | belongs to | Organization | 1 active Primary, 0..n active Secondary, 0..n historical | Typed Membership per ADR-0003: eligibility and Transfer follow Primary only; every Membership is recorded in the Journey |
 | Coach | trains | Player | n..n | Only while assigned to a shared Team |
 | Scout | observes | Player | n..n | Only where age ≥ 13 **and** `P5` active |
 | Referee | officiates | Match | 1..n | Assignment-scoped |
@@ -866,7 +929,8 @@ G1 acceptance for PRG-STK-001 requires all of:
    as Owner of a player-subject data class.
 4. No stakeholder can read child data without a named consent purpose or a
    logged, time-boxed break-glass justification.
-5. Under-13 scouting access is structurally absent, not policy-denied.
+5. Under-13 scouting access is structurally absent, not policy-denied
+   (STK-INV-004 Structural Prohibition).
 6. Consent authority is held only by Guardian (<18) and Player (18+), and
    transfers as an event.
 7. Every relationship in PART 5 has a stated cardinality and rule.
@@ -879,11 +943,14 @@ G1 acceptance for PRG-STK-001 requires all of:
 11. Every AI interaction is classified permitted or prohibited.
 12. The document contains no code, ERD, API, schema, migration, or UI.
 13. Every part traces to the Constitution, PRG-VIS-001, or CONSENT-001 (PART 19).
+14. STK-INV-001 to STK-INV-004 are stated as named, citable invariants (PART 2.1).
 
-Open item for Council decision: whether **concurrent active Memberships** at two
-Organizations are permitted (PART 5 currently disallows them by default). This
-affects NDI portability measurement and the transfer flow, and should be resolved
-before IDN-PRD-001 is finalised.
+**Closed item.** The Council resolved the concurrent-Membership question on
+6 August 2026: Primary (exactly one active) + Secondary (`0..N`), eligibility and
+Transfer on Primary only, all Memberships recorded in the Journey. Binding as
+[ADR-0003](../adr/ADR-0003-organization-membership-model.md). PART 5 is updated
+accordingly; no open items remain.
+
 
 ---
 
@@ -902,10 +969,17 @@ before IDN-PRD-001 is finalised.
 | VAP / NDI / JCS / CTI | PRG-VIS-001 §3, §9 | PART 17 |
 | Phase 0 volumes | PRG-VIS-001 §10.1 | Catalogue sizing; guardian multi-child default |
 | Stack boundary | ADR-0001 | No implementation content in this artefact |
+| STK-INV-001 Data Minimisation by Capability | Constitution #6; PRG-VIS-001 §7 | PART 4 E3/H-group; PARTS 8, 9, 17 |
+| STK-INV-002 Record Authority Principle | Constitution #1; CONSENT-001 | PART 8 Guardian Authority; PART 10 |
+| STK-INV-003 Guardian Annotation | STK-INV-002 | Development context; assessment model |
+| STK-INV-004 Structural Prohibition | Constitution #6; CONSENT-001 `P5` | PART 8; PART 14 R1; Scouting context |
+| S9 Typed Membership | ADR-0003 | PART 5; IDN-PRD-001; Competition, Transfer, Analytics |
 
 **Downstream consumers:** `IDN-PRD-001` (actors and permissions), `PRG-CTX-001`
 (bounded contexts from PART 5), `PRG-CDM-001` (canonical model from PART 7),
 authorization model (PART 8), consent model extension (PART 10), identity model
 (PART 11), AI interaction model (PART 15).
 
-**Status:** IN_REVIEW — submitted for Council approval at G1.
+**Status:** APPROVED — Council resolution 6 August 2026, **G1 PASSED**, subject
+to ADR-0003, which is ACCEPTED and on file.
+

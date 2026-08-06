@@ -13,7 +13,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | PRG-GOV-001 | Governance scaffolding (this docs tree) | — | APPROVED | — |
 | PRG-MET-001 | Active Football Activity counting spec | 0 | APPROVED | G0 PASSED |
 | PRG-VIS-001 | Vision, Positioning, North Star (rev. 3 — Phase 0–4 targets + NDI/JCS/CTI) | 1 | APPROVED | G1 PASSED (6 Aug 2026) |
-| PRG-STK-001 | Enterprise Stakeholder Map (41 stakeholders, 9 groups, 19 parts) | 1 | IN_REVIEW | G1 pending |
+| PRG-STK-001 | Enterprise Stakeholder Map (41 stakeholders, 9 groups, 19 parts, STK-INV-001..004) | 1 | APPROVED | G1 PASSED (6 Aug 2026) |
 | PRG-CTX-001 | Bounded Contexts + Context Map | 2 | NOT_STARTED | G2 |
 | PRG-CDM-001 | Canonical Data Model | 3 | NOT_STARTED | G3 |
 | PRG-API-001 | API Standards (errors, pagination, versioning) | 4 | NOT_STARTED | G4 |
@@ -24,7 +24,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | ID | Artefact | Stage | Status | Gate |
 | --- | --- | --- | --- | --- |
 | CONSENT-001 | Consent, Access Rights & Privacy for Minors | 0 | APPROVED | G0 PASSED |
-| IDN-PRD-001 | Identity PRD | 1 | NOT_STARTED | G1 |
+| IDN-PRD-001 | Identity PRD | 1 | NOT_STARTED — next, unblocked | G1 |
 | IDN-JRN-001 | User Journeys (register, guardian consent, multi-role) | 1 | NOT_STARTED | G1 |
 | IDN-DOM-001 | Domain Model (Person, FootballID, Role, Membership) | 2 | NOT_STARTED | G2 |
 | IDN-EVT-001 | Domain Events | 2 | NOT_STARTED | G2 |
@@ -44,5 +44,11 @@ Training · Development · Finance · Notification · Scouting · Federation
 > sebelum Identity selesai."
 
 ## ADRs
+
+| ID | Title | Status |
+| --- | --- | --- |
+| ADR-0001 | Runtime stack deviation: TanStack Start + Lovable Cloud | ACCEPTED |
+| ADR-0002 | Football ID: fully opaque identifier (rev. 2) | ACCEPTED |
+| ADR-0003 | Organization Membership Model: Primary (1) + Secondary (0..N) | ACCEPTED (6 Aug 2026) |
 
 See [adr/README.md](./adr/README.md).
