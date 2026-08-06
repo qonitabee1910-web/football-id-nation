@@ -1,7 +1,7 @@
 ---
 id: ADR-0002
 title: Football ID format — fully opaque identifier with meaning-free display code
-status: PROPOSED (rev. 2 — G0 conditional approval)
+status: ACCEPTED (rev. 2 — G0 PASSED, 6 Aug 2026)
 date: 2026-08-06
 revised: 2026-08-06
 deciders: [Chief Enterprise Architect, Principal Domain Architect, Principal Data Architect, Principal Security Architect, Principal Football Operations Expert]

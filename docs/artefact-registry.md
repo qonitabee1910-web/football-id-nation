@@ -11,8 +11,8 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | ID | Artefact | Stage | Status | Gate |
 | --- | --- | --- | --- | --- |
 | PRG-GOV-001 | Governance scaffolding (this docs tree) | — | APPROVED | — |
-| PRG-MET-001 | Active Football Activity counting spec | 0 | IN_REVIEW | G0 |
-| PRG-VIS-001 | Vision, Positioning, North Star | 0 | NOT_STARTED | G0 |
+| PRG-MET-001 | Active Football Activity counting spec | 0 | APPROVED | G0 PASSED |
+| PRG-VIS-001 | Vision, Positioning, North Star | 1 | DRAFT | G1 |
 | PRG-STK-001 | Stakeholder Map | 1 | NOT_STARTED | G1 |
 | PRG-CTX-001 | Bounded Contexts + Context Map | 2 | NOT_STARTED | G2 |
 | PRG-CDM-001 | Canonical Data Model | 3 | NOT_STARTED | G3 |
@@ -23,7 +23,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 
 | ID | Artefact | Stage | Status | Gate |
 | --- | --- | --- | --- | --- |
-| CONSENT-001 | Consent, Access Rights & Privacy for Minors | 0 | IN_REVIEW | G0 |
+| CONSENT-001 | Consent, Access Rights & Privacy for Minors | 0 | APPROVED | G0 PASSED |
 | IDN-PRD-001 | Identity PRD | 1 | NOT_STARTED | G1 |
 | IDN-JRN-001 | User Journeys (register, guardian consent, multi-role) | 1 | NOT_STARTED | G1 |
 | IDN-DOM-001 | Domain Model (Person, FootballID, Role, Membership) | 2 | NOT_STARTED | G2 |

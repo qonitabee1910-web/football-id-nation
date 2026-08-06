@@ -39,3 +39,7 @@ Chief Enterprise Architect decides and records an ADR.
 3. One Person → Multiple Roles — never a second account for a second role.
 4. API-First — UI is one client among several.
 5. Contract-First Engineering — no code before approved contracts.
+6. **The Child's Interest Prevails** — where the interests of Organization,
+   Coach, Guardian, Sponsor, or Association conflict, the decision that best
+   protects the child Player wins. Adopted at G0 (6 Aug 2026); overrides all
+   other decision rules.
