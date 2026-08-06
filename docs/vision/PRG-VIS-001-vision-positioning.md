@@ -3,8 +3,10 @@ id: PRG-VIS-001
 title: Vision & Positioning — Football Ecosystem Platform Indonesia
 context: programme
 stage: 1
-status: APPROVED (architecture) / PENDING TARGET CONFIRMATION
-revision: 2
+status: APPROVED
+revision: 3
+approved_on: 2026-08-06
+gate: G1 PASSED
 owner: Chief Product Officer
 co_owner: Chief Enterprise Architect
 derives_from: [PRG-MET-001, CONSENT-001]
