@@ -19,6 +19,22 @@ When two or more options are viable, choose in this priority order:
 If a lower rule contradicts a higher rule, the higher rule wins and the
 trade-off is recorded in an ADR. Rule 0 outranks all five.
 
+## Standing invariants
+
+Applied to every decision alongside Rule 0. Defined in PRG-STK-001 PART 2.1.
+
+- **STK-INV-001 — Data Minimisation by Capability.** No stakeholder may consume
+  player-level data unless player data is essential to fulfil its primary
+  business capability. Where it is not essential, the access path is not built.
+- **STK-INV-002 — Record Authority Principle.** Consent Authority ≠ Evidence
+  Authority. The Guardian owns consent, not truth.
+- **STK-INV-003 — Guardian Annotation.** Objection attaches to a record; it
+  never mutates it.
+- **STK-INV-004 — Structural Prohibition.** Prefer an absent capability over a
+  denied permission wherever child safety depends on it.
+
+
+
 ## Tie-break heuristics
 
 - Prefer **additive** schema/contract change over breaking change.
