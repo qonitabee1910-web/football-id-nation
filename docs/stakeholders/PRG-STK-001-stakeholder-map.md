@@ -929,7 +929,8 @@ G1 acceptance for PRG-STK-001 requires all of:
    as Owner of a player-subject data class.
 4. No stakeholder can read child data without a named consent purpose or a
    logged, time-boxed break-glass justification.
-5. Under-13 scouting access is structurally absent, not policy-denied.
+5. Under-13 scouting access is structurally absent, not policy-denied
+   (STK-INV-004 Structural Prohibition).
 6. Consent authority is held only by Guardian (<18) and Player (18+), and
    transfers as an event.
 7. Every relationship in PART 5 has a stated cardinality and rule.
@@ -942,11 +943,14 @@ G1 acceptance for PRG-STK-001 requires all of:
 11. Every AI interaction is classified permitted or prohibited.
 12. The document contains no code, ERD, API, schema, migration, or UI.
 13. Every part traces to the Constitution, PRG-VIS-001, or CONSENT-001 (PART 19).
+14. STK-INV-001 to STK-INV-004 are stated as named, citable invariants (PART 2.1).
 
-Open item for Council decision: whether **concurrent active Memberships** at two
-Organizations are permitted (PART 5 currently disallows them by default). This
-affects NDI portability measurement and the transfer flow, and should be resolved
-before IDN-PRD-001 is finalised.
+**Closed item.** The Council resolved the concurrent-Membership question on
+6 August 2026: Primary (exactly one active) + Secondary (`0..N`), eligibility and
+Transfer on Primary only, all Memberships recorded in the Journey. Binding as
+[ADR-0003](../adr/ADR-0003-organization-membership-model.md). PART 5 is updated
+accordingly; no open items remain.
+
 
 ---
 
