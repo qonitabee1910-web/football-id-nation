@@ -23,9 +23,13 @@ docs/
     README.md               <- ADR index
     _template.md            <- ADR template (MADR-style)
     ADR-0001-*.md ...
+  metrics/
+    active-football-activity.md   <- PRG-MET-001, North Star counting rule
+  vision/
+    PRG-VIS-001-vision-positioning.md
   contexts/
     _template/              <- per-context artefact skeleton
-    identity/               <- Sprint 1
+    identity/               <- Sprint 1 (incl. CONSENT-001)
     ...
 ```
 

@@ -19,8 +19,20 @@ Authoritative vocabulary. Code, contracts, and UI copy must use these terms.
 | **Match** | A single fixture within a Competition. |
 | **Assessment** | A recorded evaluation of a Player's development attributes. |
 | **Verified Active Player** | Football ID + Guardian Verified + Active Football Activity. The North Star unit. |
-| **Guardian Verified** | Guardian identity confirmed and consent recorded for the minor's Football ID. |
-| **Active Football Activity** | At least one recorded training, match, or assessment within the trailing activity window (window defined at G0). |
+| **Guardian Verified** | Guardian identity confirmed at level L1 or above with `P1` and `P2` consent active for the minor's Football ID. |
+| **Active Football Activity** | Qualifying, organization-recorded, adult-attested activity meeting the thresholds of the applicable ActivityPolicy (default: ≥2 events on ≥2 distinct dates in 90 days). |
+| **ActivityPolicy** | The named, versioned configuration object holding the activity window, thresholds, and lifecycle timings. Exactly one GLOBAL policy is active at a time; every published metric carries its `policy_id@version`. |
+| **REGISTERED** | Lifecycle state: Football ID issued, guardian verification incomplete. |
+| **VERIFIED** | Lifecycle state: Guardian Verified, activity threshold not yet met. |
+| **ACTIVE** | Lifecycle state: meets the ActivityPolicy threshold. The only state counted in VAP. |
+| **TEMPORARILY_INACTIVE** | Lifecycle state: recently active but currently below threshold, or transfer in progress. Recoverable without re-verification. |
+| **INACTIVE** | Lifecycle state: no qualifying activity beyond `inactive_after_days`. |
+| **ARCHIVED** | Lifecycle state: long-dormant or guardian-archived. Journey is retained; archival is never erasure. |
+| **NEVER_ACTIVE** | Derived flag (not a state) on a Person who has never recorded a qualifying activity. The registration-inflation guard. |
+| **Consent Purpose** | One of the eight closed-list reasons for processing (`P1_IDENTITY` … `P8_AI_MODEL_IMPROVEMENT`). Consent is always per purpose, never generic. |
+| **P8_AI_MODEL_IMPROVEMENT** | Consent purpose permitting row-level data as platform AI training input. Opt-in, L2 required, prohibited under 13, 90-day removal SLA on revocation. |
+| **High-Risk Revocation** | A revocation affecting an active squad, scouting exposure, federation submission, or training set. Takes effect immediately; triggers notification, audit, and a review queue that can never reverse it. |
+| **The Child's Interest Prevails** | Overriding constitutional principle: in any conflict between Organization, Coach, Guardian, Sponsor, or Association, the outcome best protecting the child Player wins. |
 | **Bounded Context** | A DDD boundary owning its model and language. |
 | **Aggregate** | A consistency boundary with a single root entity. |
 | **Domain Event** | A past-tense fact published by an aggregate, e.g. `FootballIdIssued`. |
