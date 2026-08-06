@@ -165,45 +165,67 @@ practice as the design target, so the platform is export- and federation-ready.
 
 ## 9. Strategic KPIs
 
-Three KPIs qualify the North Star. They never substitute for it: a phase cannot be
-exited on KPI strength alone, and no KPI may be reported without the
-`ActivityPolicy policy_id@version` it was computed under (PRG-MET-001 rule).
+The North Star remains **Verified Active Players (VAP)**. Three strategic KPIs qualify
+it, because a Football Data Infrastructure is judged by the connectedness, completeness,
+and lawfulness of its data — not by a user count.
+
+They never substitute for the North Star: a phase cannot be exited on KPI strength
+alone, and no KPI is reported without the `ActivityPolicy policy_id@version` it was
+computed under (PRG-MET-001 rule).
 
 ### 9.1 Network Density Index (NDI)
 
 Is this an ecosystem, or a set of silos?
 
-- **Definition:** share of `ACTIVE` players, within a scope, whose Journey contains
-  verified activity recorded by two or more distinct Organizations.
-- **Why:** portability is the core promise. NDI is the only metric that proves it
-  happened in production rather than on paper.
+- **Definition:** the connectedness of the football network within a scope — players,
+  Organizations, coaches, competitions, and recorded activities as a single graph.
+  NDI is the realised share of meaningful connections against the connections the
+  population makes possible.
+- **Headline sub-index (portability):** share of `ACTIVE` players whose Journey contains
+  verified activity recorded by two or more distinct Organizations. Portability is the
+  core promise, and this is the only figure that proves it happened in production rather
+  than on paper.
+- **Supporting sub-indices:** players per competition; Organizations sharing at least one
+  competition; coaches linked to more than one Organization; share of activity records
+  attached to a competition rather than isolated.
 - **Scope:** computed per city, association, province, and nationally.
-- **Anti-gaming:** the two Organizations must be independently administered.
-  Activity attested by the same accountable adult never counts as two.
+- **Anti-gaming:** the two Organizations must be independently administered. Activity
+  attested by the same accountable adult never counts as two connections.
 
 ### 9.2 Journey Completeness Score (JCS)
 
 Is a Football ID a real record, or an empty shell?
 
-- **Definition:** per-player weighted completeness across identity, guardian
-  verification, membership, activity history, and assessment coverage.
-- **Reporting:** population **median plus distribution**, never a bare average — an
-  average hides a population of empty shells behind a few rich records.
-- **Configurability:** component weights live in a named, versioned
-  `JourneyCompletenessPolicy` object, same pattern as `ActivityPolicy`. Never
-  hard-coded.
-- **Guardrail (Child's Interest Prevails):** JCS must never reward collecting more
-  child data than a purpose requires. Any field not justified by an active consent
-  purpose contributes **zero** weight, so a high JCS cannot be bought with
-  over-collection.
+- **Headline figure (Council definition):** the **percentage of players whose football
+  journey is complete** across four dimensions — identity, organization, activity, and
+  development.
+- **Completeness threshold:** a Journey counts as complete when all four dimensions are
+  present: verified identity + guardian verification; an active or historical Membership;
+  qualifying activity within the ActivityPolicy window; and at least one recorded
+  Assessment.
+- **Underlying computation:** a per-player weighted score whose component weights live in
+  a named, versioned `JourneyCompletenessPolicy` object, same pattern as `ActivityPolicy`.
+  Never hard-coded.
+- **Reporting:** the percentage is the headline; the score **median plus distribution** is
+  reported beneath it, never a bare average — an average hides a population of empty
+  shells behind a few rich records.
+- **Guardrail (Child's Interest Prevails):** JCS must never reward collecting more child
+  data than a purpose requires. Any field not justified by an active consent purpose
+  contributes **zero** weight, so a high JCS cannot be bought with over-collection.
 
 ### 9.3 Consent Trust Index (CTI)
 
-Do guardians trust the platform, or merely tolerate it?
+Is the data we hold actually usable, lawfully?
 
-- **Composite of:** guardian-verified rate; voluntary opt-in rate on non-essential
-  purposes (`P4`–`P8`); consent revocation rate (inverted); high-risk revocation
-  count (inverted); data-access-request fulfilment within SLA.
+- **Headline figure (Council definition):** the **percentage of player data that may be
+  used for its intended purpose** because an active, valid consent covers it — measured
+  per purpose (`P1`–`P8`) and in aggregate.
+- **Validity test:** a grant counts only when it is unrevoked, unexpired, given at the
+  required guardian verification level, and permitted for the subject's age band. An
+  expired L1 grant on a `P5` purpose counts as zero, not as consent.
+- **Supporting diagnostics:** guardian-verified rate; voluntary opt-in rate on
+  non-essential purposes (`P4`–`P8`); consent revocation rate; high-risk revocation count;
+  data-access-request fulfilment within SLA.
 - **Halt semantics:** CTI is not a dashboard number. Falling below the defined floor
   triggers mandatory Council review and blocks phase exit **regardless of VAP
   performance**.
@@ -211,50 +233,81 @@ Do guardians trust the platform, or merely tolerate it?
 
 ## 10. Phased Targets
 
-Five phases replace the earlier three horizons. Each phase has a scope, an entry
-condition, and an exit condition; the exit condition of one phase is the entry
-condition of the next. **No phase is complete on elapsed time alone.**
+Five phases. Each has a scope, an entry condition, and an exit condition; the exit
+condition of one phase is the entry condition of the next. **No phase is complete on
+elapsed time alone.**
 
 ```text
-Founding -> Pilot -> Regional -> Provincial -> National
+Phase 0 Founding Network -> Phase 1 Sulsel Pilot -> Phase 2 Regional Scale
+  -> Phase 3 Provincial Coverage -> Phase 4 National Expansion
 ```
 
-| Phase | Scope | Purpose |
-| --- | --- | --- |
-| **Founding** | 1 city, hand-picked SSBs | Prove the identity + consent loop end to end |
-| **Pilot** | Sulawesi Selatan | Prove repeatability without founder involvement |
-| **Regional** | Indonesia Timur | Prove multi-association operation |
-| **Provincial** | 12 provinces | Prove federation-grade data quality |
-| **National** | Nasional | Prove scale economics |
+| Phase | Name | Scope | Purpose |
+| --- | --- | --- | --- |
+| **0** | Founding Network | 1 city, hand-picked SSBs | Prove the **operational process**, not scale |
+| **1** | Sulsel Pilot | Sulawesi Selatan | Repeatability without founder involvement; network effect first becomes measurable |
+| **2** | Regional Scale | Indonesia Timur | Multi-association operation |
+| **3** | Provincial Coverage | 12 provinces | Federation-grade data quality |
+| **4** | National Expansion | Nasional | Scale economics — begins only once the provincial foundation is proven |
 
-### 10.1 Target matrix
+### 10.1 Confirmed target matrix
 
-All figures below are **`TBC — business decision`**. They are deliberately blank:
-targets are a business commitment, not an architectural proposal.
+Confirmed as a business decision by the Council on **6 August 2026**. These are
+commitments, not proposals.
 
-| Metric | Founding | Pilot | Regional | Provincial | National |
+| KPI | P0 Founding | P1 Pilot | P2 Regional | P3 Provincial | P4 National |
 | --- | --- | --- | --- | --- | --- |
-| Verified Active Players (VAP) | TBC | TBC | TBC | TBC | TBC |
-| Participating Organizations with ≥1 `ACTIVE` player | TBC | TBC | TBC | TBC | TBC |
-| Provinces live | 1 (part) | 1 | TBC | 12 | TBC |
-| `NEVER_ACTIVE` share of issued Football IDs | TBC | TBC | TBC | TBC | TBC |
-| Guardian Verified rate among registered minors | TBC | TBC | TBC | TBC | TBC |
-| Median registration → first qualifying activity | TBC | TBC | TBC | TBC | TBC |
-| **NDI** | TBC | TBC | TBC | TBC | TBC |
-| **JCS** (median) | TBC | TBC | TBC | TBC | TBC |
-| **CTI** (floor) | TBC | TBC | TBC | TBC | TBC |
+| Founding / participating SSBs | **10** | **30** | **100** | derived | pending |
+| Competitions | **3** | **10** | **40** | derived | pending |
+| Coaches | **80** | derived | derived | derived | pending |
+| Referees | **25** | derived | derived | derived | pending |
+| Verified Guardians | **1,200** | **4,000** | derived | derived | pending |
+| Verified Players | **1,500** | **5,000** | **15,000** | **50,000** | pending |
+| **VAP (North Star)** | **800** | **2,500** | **8,000** | **25,000** | pending |
+| Provinces live | 1 (partial) | 1 | ≥3 | 12 | pending |
+| NDI | baseline | target set at P0 baseline | " | " | " |
+| JCS (% complete) | baseline | target set at P0 baseline | " | " | " |
+| CTI (% usable) | baseline | target set at P0 baseline | " | " | " |
 
-### 10.2 Entry and exit conditions
+Cells the Council did not specify are marked honestly rather than invented:
+
+- **`derived`** — the artefact computes a floor from the ratios the Council did set
+  (e.g. coaches and referees scale with Organizations and Competitions). Derived floors
+  are planning figures, not Council commitments, and are labelled as such wherever used.
+- **`pending`** — Phase 4 national targets are intentionally unset. The Council stated
+  national expansion begins only after the provincial foundation is proven, so setting
+  Phase 4 numbers is a **Phase 3 exit deliverable**, not a G1 blocker.
+- **`baseline`** — NDI, JCS, and CTI are ratio metrics with no meaningful pre-launch
+  target. Phase 0 establishes the baseline; Phase 1 onwards carries a Council-set floor.
+
+### 10.2 Ratio signals derived from the confirmed targets
+
+Recorded as design sanity checks for later artefacts, **not** as additional targets:
+
+| Signal | P0 | P1 | P2 | P3 |
+| --- | --- | --- | --- | --- |
+| VAP ÷ Verified Players | 53% | 50% | 53% | 50% |
+| Implied `NEVER_ACTIVE` + inactive ceiling | 47% | 50% | 47% | 50% |
+| Verified Players ÷ SSB | 150 | 167 | 150 | — |
+| Guardians ÷ Verified Players | 0.80 | 0.80 | — | — |
+
+Two consequences the design must absorb: a guardian-to-player ratio of 0.80 means
+multi-child households are the norm, so **one Guardian must hold consent for several
+Players from day one** — not as a later enhancement. And a steady ~50% VAP conversion
+means `TEMPORARILY_INACTIVE`/`INACTIVE` is the expected majority-adjacent case, so
+lifecycle reporting cannot treat non-active as an error state.
+
+### 10.3 Entry and exit conditions
 
 | Phase | Entry condition | Exit condition |
 | --- | --- | --- |
-| Founding | Identity context passes G6 | Full loop proven: Football ID issued → guardian verified → activity recorded → `ACTIVE` computed → export produced; VAP/CTI targets met |
-| Pilot | Founding exit met | Provincial targets met with organizations onboarded without founder involvement |
-| Regional | Pilot exit met, ≥1 association integrated by API | Multi-association operation proven; NDI target met across ≥2 associations |
-| Provincial | Regional exit met | Federation-grade data quality: `P6` records reconcile with association records within tolerance |
-| National | Provincial exit met | Scale economics proven at national VAP target with all guardrails intact |
+| 0 Founding | Identity context passes G6 | Full loop proven — Football ID issued → guardian verified → activity recorded → `ACTIVE` computed → export produced — at 10 SSBs / 1,500 Verified Players / 800 VAP, with NDI, JCS, CTI baselines published |
+| 1 Pilot | P0 exit met | 30 SSBs / 5,000 Verified Players / 2,500 VAP, onboarded **without founder involvement**; measurable network effect (NDI above P0 baseline) |
+| 2 Regional | P1 exit met, ≥1 association integrated by API | 100 SSBs / 40 competitions / 15,000 Verified Players / 8,000 VAP across ≥2 associations |
+| 3 Provincial | P2 exit met | 50,000 Verified Players / 25,000 VAP across 12 provinces; `P6` records reconcile with association records within tolerance; **Phase 4 targets set and approved** |
+| 4 National | P3 exit met and P4 targets approved | Scale economics proven at the national target with all guardrails intact |
 
-### 10.3 Guardrails (override every target)
+### 10.4 Guardrails (override every target)
 
 Breach of any guardrail halts the roadmap regardless of VAP, NDI, JCS, or CTI:
 
@@ -264,21 +317,24 @@ Breach of any guardrail halts the roadmap regardless of VAP, NDI, JCS, or CTI:
 
 Counter-metrics from §3 continue to be reported per phase alongside the KPIs.
 
-## 11. Open G1 Condition
+## 11. Gate Status
 
-`PRG-VIS-001` is **architecturally approved**. One condition remains before G1 can
-be declared PASSED:
+`PRG-VIS-001` rev. 3 is **APPROVED**. The single open G1 condition — Council
+confirmation of the phase targets — was closed on 6 August 2026. **G1 is PASSED** for
+this artefact.
 
-> Every `TBC` in the §10.1 target matrix must be confirmed as a business decision
-> by the Chief Product Officer and recorded here with the confirmation date.
+Two follow-ups are tracked as scheduled work rather than open conditions:
 
-Until then no Stage 1 artefact that depends on target numbers may be approved.
+1. Phase 4 national targets — due as a Phase 3 exit deliverable.
+2. NDI / JCS / CTI floors for Phase 1 onwards — due once the Phase 0 baseline exists.
 
 ## 12. Traceability
 
-Satisfies `PRG-VIS-001` rev. 2 (Stage 1). Derives from
+Satisfies `PRG-VIS-001` rev. 3 (Stage 1, G1 PASSED). Derives from
 [PRG-MET-001](../metrics/active-football-activity.md) and
-[CONSENT-001](../contexts/identity/00-consent-model.md). NDI, JCS, and CTI are
-specified as computable definitions with named inputs so the Stage 3 ERD derives
-them from event data, not from a reporting-only table. Next artefacts:
-`PRG-STK-001` (Stakeholder Map) and `IDN-PRD-001` (Identity PRD), both G1.
+[CONSENT-001](../contexts/identity/00-consent-model.md). NDI, JCS, and CTI are specified
+as computable definitions with named inputs and a named scope dimension, so the Stage 3
+ERD derives them from event data rather than from a reporting-only table. Next artefacts:
+`PRG-STK-001` (Stakeholder Map) and `IDN-PRD-001` (Identity PRD), both now unblocked and
+designed against Phase 0 volumes: 10 SSBs, 3 competitions, 80 coaches, 25 referees,
+1,200 guardians, 1,500 players, 800 VAP.
