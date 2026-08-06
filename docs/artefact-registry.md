@@ -12,7 +12,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | --- | --- | --- | --- | --- |
 | PRG-GOV-001 | Governance scaffolding (this docs tree) | — | APPROVED | — |
 | PRG-MET-001 | Active Football Activity counting spec | 0 | APPROVED | G0 PASSED |
-| PRG-VIS-001 | Vision, Positioning, North Star | 1 | DRAFT | G1 |
+| PRG-VIS-001 | Vision, Positioning, North Star (rev. 2 — phased targets + NDI/JCS/CTI) | 1 | APPROVED (architecture) — PENDING TARGET CONFIRMATION | G1 blocked on §10.1 numbers |
 | PRG-STK-001 | Stakeholder Map | 1 | NOT_STARTED | G1 |
 | PRG-CTX-001 | Bounded Contexts + Context Map | 2 | NOT_STARTED | G2 |
 | PRG-CDM-001 | Canonical Data Model | 3 | NOT_STARTED | G3 |

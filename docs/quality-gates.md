@@ -27,6 +27,9 @@ result in the [artefact registry](./artefact-registry.md).
 - [ ] Every feature traces to a journey step and a business problem
 - [ ] Release plan sequenced so Identity precedes Competition
 - [ ] Guardian/consent journey explicitly covered for minors
+- [ ] Every phase target (Founding → Pilot → Regional → Provincial → National) is a **confirmed business decision**, not an architectural proposal — no `TBC` remains in PRG-VIS-001 §10.1
+- [ ] Phase exit conditions are stated and not time-based alone
+- [ ] Strategic KPIs (NDI, JCS, CTI) reported with the `policy_id@version` used
 
 ## G2 — Domain Engineering
 - [ ] Bounded contexts have explicit boundaries and a context map

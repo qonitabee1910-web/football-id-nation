@@ -33,6 +33,11 @@ Authoritative vocabulary. Code, contracts, and UI copy must use these terms.
 | **P8_AI_MODEL_IMPROVEMENT** | Consent purpose permitting row-level data as platform AI training input. Opt-in, L2 required, prohibited under 13, 90-day removal SLA on revocation. |
 | **High-Risk Revocation** | A revocation affecting an active squad, scouting exposure, federation submission, or training set. Takes effect immediately; triggers notification, audit, and a review queue that can never reverse it. |
 | **The Child's Interest Prevails** | Overriding constitutional principle: in any conflict between Organization, Coach, Guardian, Sponsor, or Association, the outcome best protecting the child Player wins. |
+| **Founding / Pilot / Regional / Provincial / National** | The five programme phases. Each has a scope, entry condition, and exit condition; the exit condition of one is the entry condition of the next. A phase is never complete on elapsed time alone. |
+| **Network Density Index (NDI)** | Share of `ACTIVE` players in a scope whose Journey contains verified activity from two or more independently administered Organizations. Proves portability in production. |
+| **Journey Completeness Score (JCS)** | Per-player weighted completeness across identity, guardian verification, membership, activity history, and assessment coverage. Reported as median plus distribution. Fields not justified by an active consent purpose carry zero weight. |
+| **JourneyCompletenessPolicy** | The named, versioned configuration object holding JCS component weights. Configurable, never hard-coded; every JCS figure carries its `policy_id@version`. |
+| **Consent Trust Index (CTI)** | Composite trust measure (guardian verification, voluntary opt-in, revocation rates inverted, DSAR fulfilment). Falling below its floor blocks phase exit regardless of VAP. |
 | **Bounded Context** | A DDD boundary owning its model and language. |
 | **Aggregate** | A consistency boundary with a single root entity. |
 | **Domain Event** | A past-tense fact published by an aggregate, e.g. `FootballIdIssued`. |
