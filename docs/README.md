@@ -39,7 +39,10 @@ Each context owns: PRD, Domain Model, ERD subset, API Contract, UI Contract, ADR
 
 ## Current position
 
-- **Stage:** 0 (Vision) — not yet approved
+- **Stage:** 1 (Product) — **G0 PASSED** 6 Aug 2026
+- **G0 artefacts:** ADR-0002 rev. 2 (ACCEPTED) · PRG-MET-001 (APPROVED) ·
+  CONSENT-001 (APPROVED)
+- **Active artefact:** `PRG-VIS-001` — [Vision & Positioning](./vision/PRG-VIS-001-vision-positioning.md) (DRAFT)
 - **Active context:** Identity
 - **Sprint 1:** Authentication · Person · Football ID · Role & Permission ·
   Organization Membership · Dashboard Shell
@@ -47,3 +50,10 @@ Each context owns: PRD, Domain Model, ERD subset, API Contract, UI Contract, ADR
 ## North Star
 
 **Verified Active Players** = Football ID + Guardian Verified + Active Football Activity.
+Counting rule: [PRG-MET-001](./metrics/active-football-activity.md).
+
+## Overriding principle
+
+**The Child's Interest Prevails.** Where Organization, Coach, Guardian, Sponsor,
+or Association interests conflict, the outcome that best protects the child Player
+wins. Adopted at G0; outranks every other decision rule.
