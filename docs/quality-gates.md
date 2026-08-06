@@ -6,7 +6,8 @@ result in the [artefact registry](./artefact-registry.md).
 
 ## Universal gate (applies to every stage)
 
-- [ ] Consistent with the five Non-Negotiable Principles
+- [ ] **The Child's Interest Prevails** — conflicting stakeholder interests resolved in the child Player's favour, and the resolution stated
+- [ ] Consistent with the six Non-Negotiable Principles
 - [ ] Football ID remains the single source of truth for player identity
 - [ ] No separate account is introduced for an additional role
 - [ ] Traceability front-matter complete, no dangling links
