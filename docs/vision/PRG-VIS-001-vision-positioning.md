@@ -161,35 +161,122 @@ integration is by API contract, never by database sharing.
 **Regulatory boundary:** UU No. 27/2022 (PDP) as the floor, GDPR-equivalent
 practice as the design target, so the platform is export- and federation-ready.
 
-## 9. Success Metrics
+## 9. Strategic KPIs
 
-Time-bound, measured under `GLOBAL` ActivityPolicy v1 unless stated.
+Three KPIs qualify the North Star. They never substitute for it: a phase cannot be
+exited on KPI strength alone, and no KPI may be reported without the
+`ActivityPolicy policy_id@version` it was computed under (PRG-MET-001 rule).
 
-| Horizon | Metric | Target |
+### 9.1 Network Density Index (NDI)
+
+Is this an ecosystem, or a set of silos?
+
+- **Definition:** share of `ACTIVE` players, within a scope, whose Journey contains
+  verified activity recorded by two or more distinct Organizations.
+- **Why:** portability is the core promise. NDI is the only metric that proves it
+  happened in production rather than on paper.
+- **Scope:** computed per city, association, province, and nationally.
+- **Anti-gaming:** the two Organizations must be independently administered.
+  Activity attested by the same accountable adult never counts as two.
+
+### 9.2 Journey Completeness Score (JCS)
+
+Is a Football ID a real record, or an empty shell?
+
+- **Definition:** per-player weighted completeness across identity, guardian
+  verification, membership, activity history, and assessment coverage.
+- **Reporting:** population **median plus distribution**, never a bare average — an
+  average hides a population of empty shells behind a few rich records.
+- **Configurability:** component weights live in a named, versioned
+  `JourneyCompletenessPolicy` object, same pattern as `ActivityPolicy`. Never
+  hard-coded.
+- **Guardrail (Child's Interest Prevails):** JCS must never reward collecting more
+  child data than a purpose requires. Any field not justified by an active consent
+  purpose contributes **zero** weight, so a high JCS cannot be bought with
+  over-collection.
+
+### 9.3 Consent Trust Index (CTI)
+
+Do guardians trust the platform, or merely tolerate it?
+
+- **Composite of:** guardian-verified rate; voluntary opt-in rate on non-essential
+  purposes (`P4`–`P8`); consent revocation rate (inverted); high-risk revocation
+  count (inverted); data-access-request fulfilment within SLA.
+- **Halt semantics:** CTI is not a dashboard number. Falling below the defined floor
+  triggers mandatory Council review and blocks phase exit **regardless of VAP
+  performance**.
+- **Traces to:** CONSENT-001 purposes `P1`–`P8` and the high-risk revocation flow.
+
+## 10. Phased Targets
+
+Five phases replace the earlier three horizons. Each phase has a scope, an entry
+condition, and an exit condition; the exit condition of one phase is the entry
+condition of the next. **No phase is complete on elapsed time alone.**
+
+```text
+Founding -> Pilot -> Regional -> Provincial -> National
+```
+
+| Phase | Scope | Purpose |
 | --- | --- | --- |
-| **Pilot — 6 months (Sulsel)** | Verified Active Players | 2,000 |
-| | Participating SSBs with ≥1 ACTIVE player | 25 |
-| | `NEVER_ACTIVE` share of issued Football IDs | < 25% |
-| | Guardian Verified rate among registered minors | > 80% |
-| | Median registration → first qualifying activity | < 14 days |
-| **Year 1 — Indonesia Timur** | Verified Active Players | 15,000 |
-| | Provinces with an active association integration | 3 |
-| | `NEVER_ACTIVE` share | < 20% |
-| | Players with Journey entries from ≥2 Organizations (portability proven in production) | > 5% |
-| **Year 2 — Nasional** | Verified Active Players | 100,000 |
-| | Provinces live | 12 |
-| | Federation-consented (`P6`) participation records | > 30,000 |
-| | Consent revocation rate (trust signal) | < 2% annually |
+| **Founding** | 1 city, hand-picked SSBs | Prove the identity + consent loop end to end |
+| **Pilot** | Sulawesi Selatan | Prove repeatability without founder involvement |
+| **Regional** | Indonesia Timur | Prove multi-association operation |
+| **Provincial** | 12 provinces | Prove federation-grade data quality |
+| **National** | Nasional | Prove scale economics |
 
-Guardrail metrics that fail the programme regardless of VAP:
+### 10.1 Target matrix
 
-- Any unauthorised disclosure of minor data: **zero tolerance**, halts the roadmap.
-- Guardian data-access request fulfilment: 100% within SLA (CONSENT-001 §8).
+All figures below are **`TBC — business decision`**. They are deliberately blank:
+targets are a business commitment, not an architectural proposal.
+
+| Metric | Founding | Pilot | Regional | Provincial | National |
+| --- | --- | --- | --- | --- | --- |
+| Verified Active Players (VAP) | TBC | TBC | TBC | TBC | TBC |
+| Participating Organizations with ≥1 `ACTIVE` player | TBC | TBC | TBC | TBC | TBC |
+| Provinces live | 1 (part) | 1 | TBC | 12 | TBC |
+| `NEVER_ACTIVE` share of issued Football IDs | TBC | TBC | TBC | TBC | TBC |
+| Guardian Verified rate among registered minors | TBC | TBC | TBC | TBC | TBC |
+| Median registration → first qualifying activity | TBC | TBC | TBC | TBC | TBC |
+| **NDI** | TBC | TBC | TBC | TBC | TBC |
+| **JCS** (median) | TBC | TBC | TBC | TBC | TBC |
+| **CTI** (floor) | TBC | TBC | TBC | TBC | TBC |
+
+### 10.2 Entry and exit conditions
+
+| Phase | Entry condition | Exit condition |
+| --- | --- | --- |
+| Founding | Identity context passes G6 | Full loop proven: Football ID issued → guardian verified → activity recorded → `ACTIVE` computed → export produced; VAP/CTI targets met |
+| Pilot | Founding exit met | Provincial targets met with organizations onboarded without founder involvement |
+| Regional | Pilot exit met, ≥1 association integrated by API | Multi-association operation proven; NDI target met across ≥2 associations |
+| Provincial | Regional exit met | Federation-grade data quality: `P6` records reconcile with association records within tolerance |
+| National | Provincial exit met | Scale economics proven at national VAP target with all guardrails intact |
+
+### 10.3 Guardrails (override every target)
+
+Breach of any guardrail halts the roadmap regardless of VAP, NDI, JCS, or CTI:
+
+- Any unauthorised disclosure of minor data: **zero tolerance**.
 - Under-13 scouting exposures: **zero**, structurally enforced.
+- Guardian data-access request fulfilment: 100% within SLA (CONSENT-001 §8).
 
-## 10. Traceability
+Counter-metrics from §3 continue to be reported per phase alongside the KPIs.
 
-Satisfies `PRG-VIS-001` (Stage 0 → Stage 1 entry). Derives from
+## 11. Open G1 Condition
+
+`PRG-VIS-001` is **architecturally approved**. One condition remains before G1 can
+be declared PASSED:
+
+> Every `TBC` in the §10.1 target matrix must be confirmed as a business decision
+> by the Chief Product Officer and recorded here with the confirmation date.
+
+Until then no Stage 1 artefact that depends on target numbers may be approved.
+
+## 12. Traceability
+
+Satisfies `PRG-VIS-001` rev. 2 (Stage 1). Derives from
 [PRG-MET-001](../metrics/active-football-activity.md) and
-[CONSENT-001](../contexts/identity/00-consent-model.md). Next artefacts:
+[CONSENT-001](../contexts/identity/00-consent-model.md). NDI, JCS, and CTI are
+specified as computable definitions with named inputs so the Stage 3 ERD derives
+them from event data, not from a reporting-only table. Next artefacts:
 `PRG-STK-001` (Stakeholder Map) and `IDN-PRD-001` (Identity PRD), both G1.
