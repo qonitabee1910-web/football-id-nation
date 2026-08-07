@@ -25,7 +25,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | --- | --- | --- | --- | --- |
 | CONSENT-001 | Consent, Access Rights & Privacy for Minors | 0 | APPROVED | G0 PASSED |
 | IDN-PRD-001 | Identity PRD v1.0 (21 parts, FR/BR/NFR + Decision Log + traceability) | 2 | IN_REVIEW — 2 blocking business decisions (OQ-02, OQ-05) | G2 |
-| IDN-JRN-001 | User Journeys (register, guardian consent, multi-role) | 1 | NOT_STARTED | G1 |
+| IDN-JRN-001 | Enterprise Business Journey Catalogue v1.0 (21 journeys, 12 decisions, 9 exceptions, 19 parts) | 2 | IN_REVIEW | G5 |
 | IDN-DMN-001 | Identity Domain Model v1.0 (7 aggregates, 25 VOs, 33 events, 38 invariants) | 2 | IN_REVIEW | G3 |
 | IDN-DOM-001 | superseded by IDN-DMN-001 | 2 | SUPERSEDED | G3 |
 | IDN-CDM-001 | Canonical Data Model v1.0 (13 canonical business objects, 19 parts) | 2 | IN_REVIEW | G4 |
