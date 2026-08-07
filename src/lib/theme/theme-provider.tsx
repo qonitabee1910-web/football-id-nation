@@ -88,7 +88,7 @@ export interface ThemeProviderProps {
 export function ThemeProvider({
   children,
   defaultTheme,
-}: ThemeProviderProps): JSX.Element {
+}: ThemeProviderProps): ReactNode {
   const [theme, setThemeState] = useState<Theme>(() => defaultTheme ?? getInitialTheme());
 
   const resolvedTheme = useMemo<ResolvedTheme>(() => resolveTheme(theme), [theme]);

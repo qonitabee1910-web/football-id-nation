@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { t } from "@/lib/i18n";
 
-export type UnifiedNotFoundVariant = "404" | "403";
+export type UnifiedNotFoundVariant = "404" | "403" | "error";
 
 export interface UnifiedNotFoundProps {
   variant?: UnifiedNotFoundVariant;
+  title?: string | null;
   onBackHome?: () => void;
   onTryAgain?: () => void;
   className?: string;
@@ -14,13 +15,22 @@ export interface UnifiedNotFoundProps {
 
 export function UnifiedNotFound({
   variant = "404",
+  title = null,
   onBackHome,
   onTryAgain,
   className,
 }: UnifiedNotFoundProps) {
-  const code = variant === "404"
-    ? t("error.notFound.code404", "404")
-    : t("error.notFound.code403", "403");
+  const code =
+    variant === "404"
+      ? t("error.notFound.code404", "404")
+      : variant === "403"
+        ? t("error.notFound.code403", "403")
+        : "ERR";
+  const resolvedTitle =
+    title ??
+    (variant === "error"
+      ? t("error.error.title", "Terjadi kesalahan yang tidak terduga")
+      : t("error.notFound.title", "Halaman tidak dapat diakses"));
 
   const handleBackHome = () => {
     if (onBackHome) {
@@ -69,7 +79,7 @@ export function UnifiedNotFound({
         </span>
 
         <h2 className="mb-2 text-xl font-semibold tracking-tight text-foreground">
-          {t("error.notFound.title", "Halaman tidak dapat diakses")}
+          {resolvedTitle}
         </h2>
 
         <p className="mb-8 text-sm leading-relaxed text-muted-foreground">

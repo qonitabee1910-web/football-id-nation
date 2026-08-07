@@ -4,14 +4,14 @@ interface LogEntry {
   level: "debug" | "info" | "warn" | "error";
   message: string;
   timestamp: number;
-  context?: LogContext;
+  context: LogContext;
 }
 
 const isBrowser = typeof window !== "undefined";
 
 function formatEntry(entry: LogEntry): string {
   const ts = new Date(entry.timestamp).toISOString();
-  const ctx = entry.context ? ` ${JSON.stringify(entry.context)}` : "";
+  const ctx = entry.context && Object.keys(entry.context).length > 0 ? ` ${JSON.stringify(entry.context)}` : "";
   return `[${ts}] [${entry.level.toUpperCase()}] ${entry.message}${ctx}`;
 }
 
@@ -20,7 +20,7 @@ function log(level: LogEntry["level"], message: string, context?: LogContext): v
     level,
     message,
     timestamp: Date.now(),
-    context,
+    context: context ?? {},
   };
 
   const formatted = formatEntry(entry);
@@ -48,14 +48,14 @@ export const logger = {
   info: (message: string, context?: LogContext) => log("info", message, context),
   warn: (message: string, context?: LogContext) => log("warn", message, context),
   error: (message: string, error?: unknown, context?: LogContext) => {
-    const enriched: LogContext = { ...context };
+    const enriched: LogContext = { ...(context ?? {}) };
     if (error instanceof Error) {
-      enriched.errorName = error.name;
-      enriched.errorMessage = error.message;
-      enriched.errorStack = error.stack;
+      enriched["errorName"] = error.name;
+      enriched["errorMessage"] = error.message;
+      enriched["errorStack"] = error.stack;
     } else if (error !== undefined) {
-      enriched.error = error;
+      enriched["error"] = error;
     }
-    log("error", message, Object.keys(enriched).length > 0 ? enriched : undefined);
+    log("error", message, Object.keys(enriched).length > 0 ? enriched : {});
   },
 };

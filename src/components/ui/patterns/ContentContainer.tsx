@@ -7,6 +7,7 @@ export interface ContentContainerProps extends HTMLAttributes<HTMLDivElement> {
   padding?: "sm" | "md" | "lg" | "none";
   withShadow?: boolean;
   withBorder?: boolean;
+  variant?: "default" | "outlined" | "elevated";
 }
 
 const paddingClasses: Record<NonNullable<ContentContainerProps["padding"]>, string> = {
@@ -16,22 +17,32 @@ const paddingClasses: Record<NonNullable<ContentContainerProps["padding"]>, stri
   none: "",
 };
 
+const variantClasses: Record<NonNullable<ContentContainerProps["variant"]>, string> = {
+  default: "shadow-sm border border-border",
+  outlined: "border border-border",
+  elevated: "shadow-md border border-border",
+};
+
 export const ContentContainer = forwardRef<HTMLDivElement, ContentContainerProps>(
   ({
     className,
     padding = "md",
-    withShadow = true,
-    withBorder = true,
+    withShadow,
+    withBorder,
+    variant = "default",
     ...props
   }, ref) => {
+    const useShadow = withShadow ?? variant === "default" || variant === "elevated";
+    const useBorder = withBorder ?? variant === "outlined" || variant === "elevated" || variant === "default";
     return (
       <div
         ref={ref}
         className={cn(
           CONTENT_RADIUS,
           "bg-card text-card-foreground",
-          withShadow && "shadow-sm",
-          withBorder && "border border-border",
+          useShadow && "shadow-sm",
+          variant === "elevated" && "shadow-md",
+          useBorder && "border border-border",
           paddingClasses[padding],
           className,
         )}
