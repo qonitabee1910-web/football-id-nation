@@ -29,7 +29,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | IDN-DMN-001 | Identity Domain Model v1.0 (7 aggregates, 25 VOs, 33 events, 38 invariants) | 2 | IN_REVIEW | G3 |
 | IDN-DOM-001 | superseded by IDN-DMN-001 | 2 | SUPERSEDED | G3 |
 | IDN-CDM-001 | Canonical Data Model v1.0 (13 canonical business objects, 19 parts) | 2 | IN_REVIEW | G4 |
-| IDN-EVT-001 | Domain Events | 2 | NOT_STARTED | G2 |
+| IDN-EVT-001 | Domain Event Catalogue v1.0 (49 events, 9 families, 20 parts) | 2 | IN_REVIEW — 1 structural decision (EDEC-01) | G4 |
 | IDN-ERD-001 | ERD subset + RLS design | 3 | NOT_STARTED | G3 |
 | IDN-API-001 | OpenAPI contract | 4 | NOT_STARTED | G4 |
 | IDN-UIC-001 | UI Contract + Dashboard Shell IA | 5 | NOT_STARTED | G5 |
