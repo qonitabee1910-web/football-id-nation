@@ -45,8 +45,20 @@ Produced so far:
   mapping, business-rule and event-publication mapping, audit mapping,
   versioning, security/privacy, and traceability. No code, SQL, ORM, or UI.
 
-Next artefact after approval: `IDN-UIC-001` (UI Contract + Dashboard Shell IA,
-Stage 5, G5). Implementation (Stage 6) remains blocked.
+- [`08-screen-catalogue.md` (IDN-SCR-001 v1.0)](./08-screen-catalogue.md) —
+  IN_REVIEW at G7. Stage 5 UX Architecture: 50 screens across PUBLIC, PLAYER,
+  GUARDIAN, ORGANIZATION, ASSOCIATION, FEDERATION and SYSTEM areas, navigation
+  architecture, per-screen definition, layout structure, component composition,
+  interaction, data dependency, authorization matrix, privacy and child
+  protection, WCAG 2.2 AA requirements, responsive behaviour, navigation flow,
+  screen states, error and recovery, analytics mapping, and full traceability.
+  Coverage verified: 21/21 journeys, 22/22 commands, 12/12 queries. Prohibited
+  capabilities have no screen at all (STK-INV-004). No React, CSS, HTML,
+  wireframe, mockup, database, or new API.
+
+Next artefact after approval: `IDN-UIC-001` (UI Component Catalogue), then
+`IDN-DS-001` (Enterprise Design System). Implementation (Stage 6) remains
+blocked.
 
 
 
