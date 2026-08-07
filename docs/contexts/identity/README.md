@@ -25,9 +25,14 @@ Produced so far:
   analytics projection mapping, privacy and information governance. One
   structural decision open: EDEC-01 (`JourneyUpdated` excluded — Journey is a
   derived read model and never a producer).
+- [`02-journeys.md` (IDN-JRN-001 v1.0)](./02-journeys.md) — IN_REVIEW at G5.
+  21 business journeys, 11 actors, 12 business decisions, 9 exceptions, policy
+  application matrix over all 10 policies, domain event mapping, projection,
+  privacy/child-protection, audit, analytics, and traceability. Carries OQ-02 and
+  OQ-05 forward as policy values only.
 
-Next artefacts after approval: `02-journeys.md` (IDN-JRN-001) and `IDN-ERD-001`
-(ERD subset + RLS design).
+Next artefact after approval: `IDN-ERD-001` (ERD subset + RLS design).
+
 
 
 Governing decisions:
