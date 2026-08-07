@@ -31,7 +31,7 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | IDN-CDM-001 | Canonical Data Model v1.0 (13 canonical business objects, 19 parts) | 2 | IN_REVIEW | G4 |
 | IDN-EVT-001 | Domain Event Catalogue v1.0 (49 events, 9 families, 20 parts) | 2 | IN_REVIEW — 1 structural decision (EDEC-01) | G4 |
 | IDN-ERD-001 | Enterprise Logical Data Model v1.0 (15 entities, 9 reference domains, logical RLS, 21 parts) | 3 | IN_REVIEW | G3 |
-| IDN-API-001 | OpenAPI contract | 4 | NOT_STARTED | G4 |
+| IDN-API-001 | Contract-First Application API Spec v1.0 (15 resources, 22 commands, 12 queries, 19 parts) | 4 | IN_REVIEW | G4 |
 | IDN-UIC-001 | UI Contract + Dashboard Shell IA | 5 | NOT_STARTED | G5 |
 | IDN-IMP-001 | Implementation | 6 | BLOCKED | G6 |
 
