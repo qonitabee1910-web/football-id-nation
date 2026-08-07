@@ -32,7 +32,9 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | IDN-EVT-001 | Domain Event Catalogue v1.0 (49 events, 9 families, 20 parts) | 2 | IN_REVIEW — 1 structural decision (EDEC-01) | G4 |
 | IDN-ERD-001 | Enterprise Logical Data Model v1.0 (15 entities, 9 reference domains, logical RLS, 21 parts) | 3 | IN_REVIEW | G3 |
 | IDN-API-001 | Contract-First Application API Spec v1.0 (15 resources, 22 commands, 12 queries, 19 parts) | 4 | IN_REVIEW | G4 |
-| IDN-UIC-001 | UI Contract + Dashboard Shell IA | 5 | NOT_STARTED | G5 |
+| IDN-SCR-001 | Enterprise Screen Catalogue v1.0 (50 screens, 7 areas, 18 parts, full journey/command/query coverage) | 5 | IN_REVIEW | G7 |
+| IDN-UIC-001 | UI Component Catalogue + Dashboard Shell IA | 5 | NOT_STARTED | G5 |
+| IDN-DS-001 | Enterprise Design System | 5 | NOT_STARTED | G5 |
 | IDN-IMP-001 | Implementation | 6 | BLOCKED | G6 |
 
 ## Other contexts
