@@ -19,9 +19,15 @@ Produced so far:
   — IN_REVIEW at G4. 13 canonical business objects, canonical vocabulary,
   semantic relationships, attribute semantics, reference data, ownership,
   privacy classification, cross-context information contracts, governance.
+- [`05-domain-event-catalogue.md` (IDN-EVT-001 v1.0)](./05-domain-event-catalogue.md)
+  — IN_REVIEW at G4. 49 business events across 9 families, event principles and
+  invariants, aggregate and cross-context matrices, policy triggers, journey and
+  analytics projection mapping, privacy and information governance. One
+  structural decision open: EDEC-01 (`JourneyUpdated` excluded — Journey is a
+  derived read model and never a producer).
 
-Next artefacts after approval: `02-journeys.md` (IDN-JRN-001) and `IDN-EVT-001`
-(Domain Event Catalogue).
+Next artefacts after approval: `02-journeys.md` (IDN-JRN-001) and `IDN-ERD-001`
+(ERD subset + RLS design).
 
 
 Governing decisions:
