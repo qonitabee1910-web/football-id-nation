@@ -31,7 +31,14 @@ Produced so far:
   privacy/child-protection, audit, analytics, and traceability. Carries OQ-02 and
   OQ-05 forward as policy values only.
 
-Next artefact after approval: `IDN-ERD-001` (ERD subset + RLS design).
+- [`06-logical-data-model.md` (IDN-ERD-001 v1.0)](./06-logical-data-model.md) —
+  IN_REVIEW at G3. Stage 3 Logical Data Design: 15 logical entities, 6 supporting
+  structures, 9 reference domains, relationship model, invariant and policy
+  mapping, event persistence, journey projection, audit model, security
+  classification, logical RLS boundaries, index/partition/retention/quality
+  strategy, and full traceability. No SQL, DDL, migration, ORM, API, or code.
+
+Next artefact after approval: `IDN-API-001` (OpenAPI contract, Stage 4, G4).
 
 
 
