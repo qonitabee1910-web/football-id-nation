@@ -38,7 +38,15 @@ Produced so far:
   classification, logical RLS boundaries, index/partition/retention/quality
   strategy, and full traceability. No SQL, DDL, migration, ORM, API, or code.
 
-Next artefact after approval: `IDN-API-001` (OpenAPI contract, Stage 4, G4).
+- [`07-api-contract.md` (IDN-API-001 v1.0)](./07-api-contract.md) — IN_REVIEW at
+  G4. Stage 4 Application Contract: 13 API principles, 15 resources, 22 commands,
+  12 queries, conceptual endpoint catalogue, request/response contracts, uniform
+  error catalogue, idempotency strategy, authentication and authorization
+  mapping, business-rule and event-publication mapping, audit mapping,
+  versioning, security/privacy, and traceability. No code, SQL, ORM, or UI.
+
+Next artefact after approval: `IDN-UIC-001` (UI Contract + Dashboard Shell IA,
+Stage 5, G5). Implementation (Stage 6) remains blocked.
 
 
 
