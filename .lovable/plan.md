@@ -1,77 +1,55 @@
-# IDN-SCR-001 Screen Catalogue + Stage 5 UX Prototype
+# IDN-SCR-001 — Enterprise Screen Catalogue (Identity)
 
-Stage 5 (UX Architecture) · Bounded Context: Identity · Gate G5/G7
+Stage 5 · Bounded Context: Identity · Gate G7 · Document-only artefact
 
-Two things are requested at once: the governed screen contract, and a visible UI.
-The lifecycle allows both only in this order — contract first, then a
-presentation-only prototype bound to it. No database, no API, no server function,
-no business rule is created. Mock fixtures only.
+Deliverable: one new file, `docs/contexts/identity/08-screen-catalogue.md`,
+plus status updates in the registry and the context README. No React, TanStack,
+CSS, HTML, wireframe, mockup, database, API, or business rule is produced.
 
-## Part A — IDN-SCR-001 Enterprise Screen Catalogue
+## Structure — 18 parts exactly as specified
 
-New artefact `docs/contexts/identity/08-screen-catalogue.md`, 18 parts exactly as
-specified: executive summary, navigation architecture, screen catalogue grouped by
-area, per-screen definition, layout structure, component composition, interaction
-summary, data dependency, authorization matrix, privacy & child protection,
-accessibility, responsive behaviour, navigation flow, screen states, error &
-recovery, analytics mapping, acceptance criteria, traceability matrix.
+1. Executive Summary — purpose, scope, bounded context, position in the artefact chain
+2. Navigation Architecture — public, authenticated, role-based, dashboard, context navigation, deep-link rules, breadcrumb strategy
+3. Screen Catalogue — grouped by area (PUBLIC, PLAYER, GUARDIAN, ORGANIZATION, ASSOCIATION, FEDERATION, SYSTEM)
+4. Screen Definition — per screen: ID, name, business goal, primary/supporting actors, entry/exit conditions, primary journey, related commands, related queries, produced events, related policies, related ADR, traceability
+5. Screen Layout Structure — header, navigation, sidebar, toolbar, main content, detail panel, action panel, footer (structural only, no visual design)
+6. Component Composition — referenced component names per screen
+7. Interaction Summary — primary/secondary actions, confirmation, cancellation, recovery, read-only areas
+8. Data Dependency — required queries, commands, projections, reference data
+9. Authorization Matrix — Actor → visible screens → allowed actions (no RBAC implementation)
+10. Privacy & Child Protection — personal/child data exposure, consent requirement, masking, visibility
+11. Accessibility Requirements — keyboard, screen reader, focus order, contrast, responsive
+12. Responsive Behaviour — mobile, tablet, desktop, large display
+13. Navigation Flow — Screen → Journey → Destination, narrative form
+14. Screen State Catalogue — initial, loading, empty, success, error, offline, forbidden, archived
+15. Error & Recovery — validation, authorization, network failure, retry, recovery flow
+16. Analytics Mapping — screen contribution to VAP, NDI, JCS, CTI
+17. Acceptance Criteria — coverage checks
+18. Traceability Matrix — Vision → … → API Contract → Screen → future component → future page
 
-Coverage rules enforced against the locked artefacts:
+## Screen set (approx. 48 screens, IDs `SCR-<AREA>-nn`)
 
-- Every one of the 21 journeys (JRN-01..21) maps to at least one screen.
-- Every one of the 22 commands (C-01..C-22) is invoked from at least one screen.
-- Every one of the 12 queries (Q-01..Q-12) backs at least one screen.
-- No orphan screen, no screen without a business goal.
-- Under-13 scouting surfaces are structurally absent (STK-INV-004), not disabled.
-- Journey screens are read-only projections (EDEC-01 — Journey never a producer).
+- PUBLIC: Landing, Login, Register, Forgot Password, Football ID Lookup (authenticated-gated entry), Public Legal/Consent Information
+- PLAYER: Dashboard, Profile, Football Identity, Journey Timeline, Membership, Activities, Consent, Verification, Notifications, Settings, Identity Recovery
+- GUARDIAN: Dashboard, Linked Players, Guardian Link Request, Consent Management, Verification, Guardian Annotation, Notifications
+- ORGANIZATION: Dashboard, Player Directory, Membership, Membership Request/Transfer Initiation, Activity Management, Verification Queue
+- ASSOCIATION: Dashboard, Football ID Administration, Verification Adjudication, Membership Transfer Review, Duplicate/Merge Resolution, Policy Monitoring
+- FEDERATION: Dashboard, National Directory, Policy Administration, Analytics, Audit, Search, Event Ledger, High-Risk Revocation Review (Child Protection Officer)
+- SYSTEM: Error, Access Denied, Maintenance, Session Expired, Offline, Archived Record
 
-Screen areas: PUBLIC, PLAYER, GUARDIAN, ORGANIZATION, ASSOCIATION, FEDERATION,
-SYSTEM — approximately 45 screens, each with `SCR-<AREA>-nn` IDs.
+## Coverage rules enforced while writing
 
-## Part B — IDN-UIC-001 UI Component Catalogue (condensed)
+- Every journey JRN-01..JRN-21 maps to at least one screen; coverage table included.
+- Every command C-01..C-22 is invoked from at least one screen; coverage table included.
+- Every query Q-01..Q-12 backs at least one screen; coverage table included.
+- Journey screens are read-only projections — no screen produces `JourneyUpdated` (EDEC-01).
+- Under-13 scouting has no screen at all (STK-INV-004, structural absence, not a disabled control).
+- Guardian annotation screens attach, never mutate (STK-INV-003).
+- Screens surface only what the capability requires (STK-INV-001) and separate consent authority from evidence authority (STK-INV-002).
+- Every conflict-bearing screen states the Rule 0 resolution (The Child's Interest Prevails).
+- Open policy values OQ-02 and OQ-05 are carried as policy references, never restated as screen rules.
 
-`docs/contexts/identity/09-ui-component-catalogue.md`: the component vocabulary
-referenced by the catalogue (Table, Timeline, QR Card, Wizard, Status Banner,
-Consent Toggle, Masked Field, Empty State, …), each with purpose, states,
-accessibility contract, and the screens that use it. No code in this document.
+## Registry updates
 
-## Part C — Stage 5 UX Prototype (visible UI)
-
-A navigable, non-functional prototype that renders the catalogue. Explicitly
-labelled as a UX prototype, and it does not create backend capability.
-
-- Design system tokens in `src/styles.css` — Indonesian football identity
-  direction (deep pitch green + gold accent, no default purple/Inter look),
-  light + dark, WCAG 2.2 AA contrast.
-- App shell in `src/routes/__root.tsx`: role-switchable sidebar navigation
-  (Player / Guardian / Organization / Association / Federation), header, single
-  `<main>` landmark, Bahasa Indonesia primary.
-- Routes mirroring the catalogue's navigation architecture:
-  - `/` landing (replaces the placeholder index), `/masuk`, `/daftar`, `/lupa-sandi`
-  - `/pemain/*` — dashboard, profil, football identity, journey timeline,
-    membership, aktivitas, consent, verifikasi, notifikasi, pengaturan
-  - `/wali/*` — dashboard, anak terhubung, consent, verifikasi
-  - `/klub/*` — dashboard, direktori pemain, membership, aktivitas, antrean verifikasi
-  - `/asosiasi/*` — dashboard, football ID, verifikasi, transfer, monitoring kebijakan
-  - `/federasi/*` — dashboard, direktori nasional, kebijakan, analitik, audit, pencarian
-  - system screens: akses ditolak, sesi berakhir, pemeliharaan, error
-- All data comes from typed fixtures in `src/lib/fixtures/` shaped exactly like the
-  Q-01..Q-12 query contracts, so a later Stage 6 swaps fixtures for real reads
-  without changing screens.
-- Every screen renders its documented states (loading / empty / error variants
-  shown where meaningful) and masks child-sensitive fields per CONSENT-001.
-- Each route gets its own `head()` metadata.
-
-## Technical notes
-
-- TanStack Start file routing, shadcn/ui, Tailwind v4 tokens (ADR-0001).
-- Read-only prototype: no Lovable Cloud enablement, no tables, no server
-  functions, no auth. Login screens are visual only.
-- Registry and context README updated: IDN-SCR-001 and IDN-UIC-001 IN_REVIEW,
-  IDN-IMP-001 remains BLOCKED until G5 is recorded PASSED.
-
-## Open point for the Council
-
-Part C is presentation-only and therefore does not breach the "no production
-code" rule, but it does precede a recorded G5 PASS. It is delivered as a
-reviewable prototype, not as Stage 6 implementation.
+- `docs/artefact-registry.md`: add IDN-SCR-001 — Stage 5 — IN_REVIEW — G7.
+- `docs/contexts/identity/README.md`: list the artefact and name IDN-UIC-001 as the next artefact; IDN-IMP-001 stays BLOCKED.
