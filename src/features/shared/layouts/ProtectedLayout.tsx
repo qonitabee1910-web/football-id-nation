@@ -62,7 +62,7 @@ export function ProtectedLayout({
     return (
       <Navigate
         to={loginRoute}
-        search={(prev) => ({ ...prev, return: returnTo })}
+        search={(prev: Record<string, unknown>) => ({ ...prev, return: returnTo })}
         replace
       />
     );
