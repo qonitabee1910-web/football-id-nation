@@ -26,7 +26,7 @@ function resolvePath(obj: unknown, path: string): string | undefined {
   return typeof current === "string" ? current : undefined;
 }
 
-export function t(key: I18nKey, fallback?: string): string {
+export function t(key: I18nKey | (string & {}), fallback?: string): string {
   const resolved = resolvePath(STRINGS, key);
   if (resolved !== undefined) return resolved;
   if (fallback !== undefined) return fallback;

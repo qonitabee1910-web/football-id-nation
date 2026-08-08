@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, Home, Users, Activity, Bell, FileText } from "lucide-react";
+import { CircleDot } from "lucide-react";
 import { type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -95,7 +96,7 @@ export function BottomNav({
           </li>
 
           {visibleItems.map((item) => {
-            const Icon = item.icon;
+            const Icon = item.icon ?? CircleDot;
             const isActive =
               location.pathname === item.to ||
               (item.to.length > 1 && location.pathname.startsWith(item.to));
@@ -168,7 +169,7 @@ export function BottomNav({
           <div className="px-2 py-3">
             <ul className="space-y-1">
               {menuItems.map((item) => {
-                const Icon = item.icon;
+                const Icon = item.icon ?? CircleDot;
                 const isActive =
                   location.pathname === item.to ||
                   (item.to.length > 1 && location.pathname.startsWith(item.to));

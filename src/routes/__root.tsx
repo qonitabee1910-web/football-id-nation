@@ -13,7 +13,6 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ThemeProvider } from "../lib/theme/theme-provider";
 import { getThemeInlineScript } from "../lib/theme/theme-script";
 import { Toaster } from "../components/ui/sonner";
-import { LoadingBoundary } from "../components/domain/loading/LoadingBoundary";
 import { NotFoundLayout } from "../features/shared/layouts/NotFoundLayout";
 import { EmptyLayout } from "../features/shared/layouts/EmptyLayout";
 import { UnifiedNotFound } from "../components/domain/error/UnifiedNotFound";
@@ -153,7 +152,7 @@ function RootComponent() {
   return (
     <ThemeProvider defaultTheme="system">
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div className="min-h-screen"><LoadingBoundary /></div>}>
+        <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </Suspense>
