@@ -14,11 +14,15 @@ import type {
 export const AUTH_BACKEND_PENDING_MESSAGE =
   "Layanan identitas belum aktif pada rilis ini. Fungsi ini akan tersedia setelah Sprint 3 (Identity Backend) disetujui Council.";
 
-class AuthBackendPendingError extends Error {
+export class AuthBackendPendingError extends Error {
   public constructor(public readonly command: string) {
     super(AUTH_BACKEND_PENDING_MESSAGE);
     this.name = "AuthBackendPendingError";
   }
+}
+
+export function isAuthBackendUnavailable(error: unknown): boolean {
+  return error instanceof AuthBackendPendingError;
 }
 
 function pending(command: string): Promise<never> {

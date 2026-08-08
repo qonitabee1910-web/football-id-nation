@@ -29,42 +29,67 @@ import {
 } from "@/features/public/components/PublicPrimitives";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia" },
-      {
-        name: "description",
-        content:
-          "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
-      },
-      {
-        property: "og:title",
-        content: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
-      },
-      {
-        property: "og:description",
-        content:
-          "Satu orang, satu akun, banyak peran. Infrastruktur data sepak bola nasional yang terverifikasi dan melindungi anak.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://football-id-nation.lovable.app/" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://football-id-nation.lovable.app/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "Football ID Nation",
-          url: "https://football-id-nation.lovable.app/",
-          description:
-            "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
-        }),
-      },
-    ],
+  loader: () => ({
+    meta: {
+      title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
+      description:
+        "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
+      canonical: "https://football-id-nation.lovable.app/",
+      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+      ogImageWidth: 1200,
+      ogImageHeight: 630,
+      robots: "index, follow",
+    },
+    trace: { screen: "SCR-PUB-01", journey: ["JRN-01", "JRN-17"] },
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Football ID Nation",
+      url: "https://football-id-nation.lovable.app/",
+      description:
+        "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
+    },
   }),
+  head: () => {
+    const data = Route.options.loader?.() ?? {
+      meta: {
+        title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
+        description:
+          "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
+        canonical: "https://football-id-nation.lovable.app/",
+        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+        ogImageWidth: 1200,
+        ogImageHeight: 630,
+        robots: "index, follow",
+      },
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: "Football ID Nation",
+        url: "https://football-id-nation.lovable.app/",
+        description:
+          "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
+      },
+    };
+    return {
+      meta: [
+        { title: data.meta.title },
+        { name: "description", content: data.meta.description },
+        { property: "og:title", content: data.meta.title },
+        { property: "og:description", content: data.meta.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: data.meta.canonical },
+        { property: "og:image", content: data.meta.ogImage },
+        { property: "og:image:width", content: String(data.meta.ogImageWidth) },
+        { property: "og:image:height", content: String(data.meta.ogImageHeight) },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: data.meta.ogImage },
+        { name: "robots", content: data.meta.robots },
+      ],
+      links: [{ rel: "canonical", href: data.meta.canonical }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(data.jsonLd) }],
+    };
+  },
   component: LandingPage,
 });
 

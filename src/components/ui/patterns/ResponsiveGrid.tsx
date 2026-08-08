@@ -9,6 +9,7 @@ export interface ResponsiveGridProps extends HTMLAttributes<HTMLDivElement> {
     md?: ResponsiveGridColumns;
     lg?: ResponsiveGridColumns;
     xl?: ResponsiveGridColumns;
+    xxl?: ResponsiveGridColumns;
   };
   gap?: "sm" | "md" | "lg" | "xl";
 }
@@ -45,6 +46,14 @@ const xlColMap: Record<ResponsiveGridColumns, string> = {
   6: "xl:grid-cols-6",
 };
 
+const xxlColMap: Record<ResponsiveGridColumns, string> = {
+  1: "2xl:grid-cols-1",
+  2: "2xl:grid-cols-2",
+  3: "2xl:grid-cols-3",
+  4: "2xl:grid-cols-4",
+  6: "2xl:grid-cols-6",
+};
+
 const gapMap: Record<NonNullable<ResponsiveGridProps["gap"]>, string> = {
   sm: "gap-3 md:gap-4",
   md: "gap-4 md:gap-6",
@@ -53,8 +62,11 @@ const gapMap: Record<NonNullable<ResponsiveGridProps["gap"]>, string> = {
 };
 
 export const ResponsiveGrid = forwardRef<HTMLDivElement, ResponsiveGridProps>(
-  ({ className, cols = { base: 1, md: 2, lg: 3, xl: 4 }, gap = "md", ...props }, ref) => {
-    const { base = 1, md = 2, lg = 3, xl = 4 } = cols;
+  (
+    { className, cols = { base: 1, md: 2, lg: 3, xl: 4, xxl: 4 }, gap = "md", ...props },
+    ref,
+  ) => {
+    const { base = 1, md = 2, lg = 3, xl = 4, xxl = 4 } = cols;
 
     return (
       <div
@@ -65,6 +77,7 @@ export const ResponsiveGrid = forwardRef<HTMLDivElement, ResponsiveGridProps>(
           mdColMap[md],
           lgColMap[lg],
           xlColMap[xl],
+          xxlColMap[xxl],
           gapMap[gap],
           className,
         )}

@@ -31,29 +31,56 @@ import {
   type RegisterInput,
   type RegistrationRole,
 } from "@/features/public/schemas/auth.schemas";
-import { useRegisterMutation } from "@/features/public/hooks/usePublicAuth";
+import {
+  isAuthBackendUnavailable,
+  useRegisterMutation,
+} from "@/features/public/hooks/usePublicAuth";
 
 export const Route = createFileRoute("/register")({
-  head: () => ({
-    meta: [
-      { title: "Daftar Football ID — Football ID Nation" },
-      {
-        name: "description",
-        content:
-          "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
-      },
-      { property: "og:title", content: "Daftar Football ID — Football ID Nation" },
-      {
-        property: "og:description",
-        content:
-          "Satu orang, satu akun, banyak peran. Mulai perjalanan sepak bola terverifikasi Anda.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://football-id-nation.lovable.app/register" },
-      { name: "twitter:card", content: "summary" },
-    ],
-    links: [{ rel: "canonical", href: "https://football-id-nation.lovable.app/register" }],
+  loader: () => ({
+    meta: {
+      title: "Daftar Football ID — Football ID Nation",
+      description:
+        "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
+      canonical: "https://football-id-nation.lovable.app/register",
+      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+      ogImageWidth: 1200,
+      ogImageHeight: 630,
+      robots: "index, follow",
+    },
+    trace: { screen: "SCR-PUB-03", journey: ["JRN-01", "JRN-02"] },
   }),
+  head: () => {
+    const data = Route.options.loader?.() ?? {
+      meta: {
+        title: "Daftar Football ID — Football ID Nation",
+        description:
+          "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
+        canonical: "https://football-id-nation.lovable.app/register",
+        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+        ogImageWidth: 1200,
+        ogImageHeight: 630,
+        robots: "index, follow",
+      },
+    };
+    return {
+      meta: [
+        { title: data.meta.title },
+        { name: "description", content: data.meta.description },
+        { property: "og:title", content: data.meta.title },
+        { property: "og:description", content: data.meta.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: data.meta.canonical },
+        { property: "og:image", content: data.meta.ogImage },
+        { property: "og:image:width", content: String(data.meta.ogImageWidth) },
+        { property: "og:image:height", content: String(data.meta.ogImageHeight) },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: data.meta.ogImage },
+        { name: "robots", content: data.meta.robots },
+      ],
+      links: [{ rel: "canonical", href: data.meta.canonical }],
+    };
+  },
   component: RegisterPage,
 });
 
@@ -159,9 +186,16 @@ function RegisterPage() {
         </div>
 
         {mutation.isError ? (
-          <Alert variant="destructive" role="alert">
+          <Alert
+            variant={isAuthBackendUnavailable(mutation.error) ? "unavailable" : "destructive"}
+            role="alert"
+          >
             <AlertCircle className="h-4 w-4" aria-hidden="true" />
-            <AlertTitle>Pendaftaran gagal</AlertTitle>
+            <AlertTitle>
+              {isAuthBackendUnavailable(mutation.error)
+                ? "Layanan belum tersedia"
+                : "Pendaftaran gagal"}
+            </AlertTitle>
             <AlertDescription>{mutation.error.message}</AlertDescription>
           </Alert>
         ) : null}

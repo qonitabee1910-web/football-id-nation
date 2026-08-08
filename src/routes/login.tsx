@@ -11,29 +11,56 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginInput } from "@/features/public/schemas/auth.schemas";
-import { useLoginMutation } from "@/features/public/hooks/usePublicAuth";
+import {
+  isAuthBackendUnavailable,
+  useLoginMutation,
+} from "@/features/public/hooks/usePublicAuth";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({
-    meta: [
-      { title: "Masuk — Football ID Nation" },
-      {
-        name: "description",
-        content:
-          "Masuk ke akun Football ID Nation untuk mengakses identitas sepak bola nasional Anda secara aman.",
-      },
-      { property: "og:title", content: "Masuk — Football ID Nation" },
-      {
-        property: "og:description",
-        content: "Akses identitas sepak bola nasional Anda dengan aman.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://football-id-nation.lovable.app/login" },
-      { name: "twitter:card", content: "summary" },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [{ rel: "canonical", href: "https://football-id-nation.lovable.app/login" }],
+  loader: () => ({
+    meta: {
+      title: "Masuk — Football ID Nation",
+      description:
+        "Masuk ke akun Football ID Nation untuk mengakses identitas sepak bola nasional Anda secara aman.",
+      canonical: "https://football-id-nation.lovable.app/login",
+      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+      ogImageWidth: 1200,
+      ogImageHeight: 630,
+      robots: "noindex, follow",
+    },
+    trace: { screen: "SCR-PUB-02", journey: ["JRN-17"] },
   }),
+  head: () => {
+    const data = Route.options.loader?.() ?? {
+      meta: {
+        title: "Masuk — Football ID Nation",
+        description:
+          "Masuk ke akun Football ID Nation untuk mengakses identitas sepak bola nasional Anda secara aman.",
+        canonical: "https://football-id-nation.lovable.app/login",
+        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+        ogImageWidth: 1200,
+        ogImageHeight: 630,
+        robots: "noindex, follow",
+      },
+    };
+    return {
+      meta: [
+        { title: data.meta.title },
+        { name: "description", content: data.meta.description },
+        { property: "og:title", content: data.meta.title },
+        { property: "og:description", content: data.meta.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: data.meta.canonical },
+        { property: "og:image", content: data.meta.ogImage },
+        { property: "og:image:width", content: String(data.meta.ogImageWidth) },
+        { property: "og:image:height", content: String(data.meta.ogImageHeight) },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: data.meta.ogImage },
+        { name: "robots", content: data.meta.robots },
+      ],
+      links: [{ rel: "canonical", href: data.meta.canonical }],
+    };
+  },
   component: LoginPage,
 });
 
@@ -67,9 +94,14 @@ function LoginPage() {
         }
       >
         {mutation.isError ? (
-          <Alert variant="destructive" role="alert">
+          <Alert
+            variant={isAuthBackendUnavailable(mutation.error) ? "unavailable" : "destructive"}
+            role="alert"
+          >
             <AlertCircle className="h-4 w-4" aria-hidden="true" />
-            <AlertTitle>Gagal masuk</AlertTitle>
+            <AlertTitle>
+              {isAuthBackendUnavailable(mutation.error) ? "Layanan belum tersedia" : "Gagal masuk"}
+            </AlertTitle>
             <AlertDescription>{mutation.error.message}</AlertDescription>
           </Alert>
         ) : null}

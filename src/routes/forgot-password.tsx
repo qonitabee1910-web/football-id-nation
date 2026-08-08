@@ -13,34 +13,56 @@ import {
   forgotPasswordSchema,
   type ForgotPasswordInput,
 } from "@/features/public/schemas/auth.schemas";
-import { useForgotPasswordMutation } from "@/features/public/hooks/usePublicAuth";
+import {
+  isAuthBackendUnavailable,
+  useForgotPasswordMutation,
+} from "@/features/public/hooks/usePublicAuth";
 
 export const Route = createFileRoute("/forgot-password")({
-  head: () => ({
-    meta: [
-      { title: "Lupa Kata Sandi — Football ID Nation" },
-      {
-        name: "description",
-        content:
-          "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
-      },
-      { property: "og:title", content: "Lupa Kata Sandi — Football ID Nation" },
-      {
-        property: "og:description",
-        content: "Pemulihan akses akun Football ID Nation melalui email terdaftar.",
-      },
-      { property: "og:type", content: "website" },
-      {
-        property: "og:url",
-        content: "https://football-id-nation.lovable.app/forgot-password",
-      },
-      { name: "twitter:card", content: "summary" },
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: [
-      { rel: "canonical", href: "https://football-id-nation.lovable.app/forgot-password" },
-    ],
+  loader: () => ({
+    meta: {
+      title: "Lupa Kata Sandi — Football ID Nation",
+      description:
+        "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
+      canonical: "https://football-id-nation.lovable.app/forgot-password",
+      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+      ogImageWidth: 1200,
+      ogImageHeight: 630,
+      robots: "noindex, follow",
+    },
+    trace: { screen: "SCR-PUB-04", journey: ["JRN-17"] },
   }),
+  head: () => {
+    const data = Route.options.loader?.() ?? {
+      meta: {
+        title: "Lupa Kata Sandi — Football ID Nation",
+        description:
+          "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
+        canonical: "https://football-id-nation.lovable.app/forgot-password",
+        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+        ogImageWidth: 1200,
+        ogImageHeight: 630,
+        robots: "noindex, follow",
+      },
+    };
+    return {
+      meta: [
+        { title: data.meta.title },
+        { name: "description", content: data.meta.description },
+        { property: "og:title", content: data.meta.title },
+        { property: "og:description", content: data.meta.description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: data.meta.canonical },
+        { property: "og:image", content: data.meta.ogImage },
+        { property: "og:image:width", content: String(data.meta.ogImageWidth) },
+        { property: "og:image:height", content: String(data.meta.ogImageHeight) },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: data.meta.ogImage },
+        { name: "robots", content: data.meta.robots },
+      ],
+      links: [{ rel: "canonical", href: data.meta.canonical }],
+    };
+  },
   component: ForgotPasswordPage,
 });
 
@@ -74,9 +96,16 @@ function ForgotPasswordPage() {
         }
       >
         {mutation.isError ? (
-          <Alert variant="destructive" role="alert">
+          <Alert
+            variant={isAuthBackendUnavailable(mutation.error) ? "unavailable" : "destructive"}
+            role="alert"
+          >
             <AlertCircle className="h-4 w-4" aria-hidden="true" />
-            <AlertTitle>Permintaan gagal</AlertTitle>
+            <AlertTitle>
+              {isAuthBackendUnavailable(mutation.error)
+                ? "Layanan belum tersedia"
+                : "Permintaan gagal"}
+            </AlertTitle>
             <AlertDescription>{mutation.error.message}</AlertDescription>
           </Alert>
         ) : null}
@@ -86,8 +115,9 @@ function ForgotPasswordPage() {
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
             <AlertTitle>Permintaan terkirim</AlertTitle>
             <AlertDescription>
-              Jika {submittedEmail} terdaftar, tautan verifikasi pemulihan telah dikirim.
-              Periksa kotak masuk dan folder spam Anda.
+              Jika email tersebut terdaftar di sistem, Anda akan menerima tautan
+              verifikasi pemulihan dalam beberapa menit. Periksa kotak masuk dan
+              folder spam Anda.
             </AlertDescription>
           </Alert>
         ) : null}
