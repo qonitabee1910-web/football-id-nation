@@ -12,7 +12,7 @@ import {
   Trophy,
   UserRound,
   Users,
-  Whistle,
+  ClipboardCheck,
 } from "lucide-react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
 import { PageContainer } from "@/components/ui/patterns/PageContainer";
@@ -138,7 +138,7 @@ const PHASE_ZERO_TARGETS = [
 const ECOSYSTEM_ACTORS = [
   { name: "Sekolah Sepak Bola", role: "Keanggotaan & pembinaan", icon: Building2 },
   { name: "Asosiasi & Federasi", role: "Verifikasi & kompetisi", icon: Landmark },
-  { name: "Pelatih Bersertifikat", role: "Pencatatan aktivitas", icon: Whistle },
+  { name: "Pelatih Bersertifikat", role: "Pencatatan aktivitas", icon: ClipboardCheck },
   { name: "Wali & Orang Tua", role: "Otoritas persetujuan", icon: Users },
 ] as const;
 
@@ -262,7 +262,7 @@ function LandingPage() {
             eyebrow="Kapabilitas inti"
             title="Apa yang Football ID berikan pada ekosistem"
           />
-          <ResponsiveGrid cols={{ base: 1, sm: 2, lg: 3 }} gap="md">
+          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 3 }} gap="md">
             {CAPABILITIES.map((capability) => (
               <FeatureCard key={capability.title} {...capability} />
             ))}
@@ -296,7 +296,7 @@ function LandingPage() {
             title="Peran yang bekerja di atas satu identitas"
             description="Setiap peran memperoleh kapabilitas seminimal yang dibutuhkan untuk tugasnya."
           />
-          <ResponsiveGrid cols={{ base: 1, sm: 2, lg: 4 }} gap="md">
+          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 4 }} gap="md">
             {ECOSYSTEM_ACTORS.map((actor) => (
               <PartnerLogo key={actor.name} {...actor} />
             ))}
