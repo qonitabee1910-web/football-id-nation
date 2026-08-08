@@ -1,3 +1,4 @@
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useState, type ReactNode, useCallback } from "react";
 import { Outlet } from "@tanstack/react-router";
 import { GlobalErrorBoundary } from "@/components/domain/error/GlobalErrorBoundary";
@@ -78,7 +79,7 @@ export function AppShell({
   const shouldShowBottomNav =
     showBottomNav ?? (area !== "public" && area !== "system" && authenticated);
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: ReactKeyboardEvent<HTMLDivElement>) => {
     if (e.defaultPrevented) return;
     const mod = e.metaKey || e.ctrlKey;
     if (mod && e.key.toLowerCase() === "k") {

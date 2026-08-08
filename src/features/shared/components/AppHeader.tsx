@@ -196,16 +196,16 @@ export function AppHeader({
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem asChild role="menuitem">
-                    <Link to="/player/profile" className="gap-2">
+                    <a href="/player/profile" className="gap-2">
                       <UserCircle className="h-4 w-4" aria-hidden="true" />
                       Profil
-                    </Link>
+                    </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild role="menuitem">
-                    <Link to="/player/settings" className="gap-2">
+                    <a href="/player/settings" className="gap-2">
                       <Shield className="h-4 w-4" aria-hidden="true" />
                       Pengaturan
-                    </Link>
+                    </a>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -223,10 +223,10 @@ export function AppHeader({
         ) : (
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-              <Link to="/login">Masuk</Link>
+              <a href="/login">Masuk</a>
             </Button>
             <Button asChild size="sm">
-              <Link to="/register">Daftar</Link>
+              <a href="/register">Daftar</a>
             </Button>
           </div>
         )}

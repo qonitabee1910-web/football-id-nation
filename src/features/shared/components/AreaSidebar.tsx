@@ -16,6 +16,7 @@ import {
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { Shield, HelpCircle, FileText } from "lucide-react";
+import { CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 import type { AreaNavConfig, RoleKey } from "../types";
@@ -89,7 +90,7 @@ function NavItem({
   readonly currentPath: string;
 }) {
   const { state } = useSidebar();
-  const Icon = item.icon;
+  const Icon = item.icon ?? CircleDot;
   const exactMatch = currentPath === item.to;
   const prefixMatch = !exactMatch && item.to.length > 1 && currentPath.startsWith(item.to);
   const isActive = exactMatch || prefixMatch;
