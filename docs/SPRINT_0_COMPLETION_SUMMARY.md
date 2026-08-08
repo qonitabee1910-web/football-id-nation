@@ -1,3 +1,17 @@
+[//]: # (TRACEABILITY CORRECTION NOTICE — Governance Audit 2026-08-08)
+[//]: # (DOCUMENT DRIFT DETECTED: This is a historical Sprint 0 completion document.)
+[//]: # (File-path references in the body below NO LONGER match the current repository tree.)
+[//]: # (Current canonical locations for referenced artefacts — DO NOT silently rewrite history:)
+[//]: # (  OLD: src/components/providers/ThemeProvider.tsx     → NEW: src/lib/theme/theme-provider.tsx + theme-script.ts)
+[//]: # (  OLD: src/components/boundaries/ErrorBoundary.tsx    → NEW: src/components/domain/error/GlobalErrorBoundary.tsx + UnifiedNotFound.tsx)
+[//]: # (  OLD: src/components/navigation/Navigation.tsx       → NEW: src/features/shared/components/{AppHeader,AreaSidebar,AreaBreadcrumb,BottomNav}.tsx)
+[//]: # (  OLD: src/components/layouts/Layouts.tsx             → NEW: src/features/shared/layouts/{Public,Auth,Protected,Dashboard,Empty,NotFound,Forbidden,Maintenance,Unauthorized}Layout.tsx [9 variants])
+[//]: # (  OLD: src/components/notifications/NotificationCenter.tsx → NEW: src/features/shared/components/NotificationCenter.tsx + sonner Toaster in __root.tsx)
+[//]: # (  OLD: src/hooks/useCustom.ts                         → NEW: src/features/{public,shared}/hooks/* [split by bounded context])
+[//]: # (  OLD: src/App.tsx                                    → NEW: src/routes/__root.tsx [TanStack file-based routing])
+[//]: # (  OLD: src/types/index.ts                             → NEW: src/features/shared/types/index.ts)
+[//]: # (STATUS OF THIS DOCUMENT: Historical record retained for audit trail. Body below is UNMODIFIED original Sprint 0 record.)
+
 /**
  * SPRINT 0 COMPLETION SUMMARY
  * 
@@ -5,7 +19,7 @@
  * 
  * PROJECT: IDN (Football ID Nation) - SaaS Platform for Indonesian Youth Football
  * DELIVERABLE: Sprint 0 - Application Shell & Core Infrastructure
- * STATUS: ✅ COMPLETE - 15 Files, 2000+ Lines, Production-Ready Code
+ * STATUS: ✅ COMPLETE (historical) — Paths corrected via NOTICE above per Governance Audit 2026-08-08
  * COMPLIANCE: WCAG 2.1 AA, CONSENT-001, STK-INV-004, IDN-DS-001
  */
 

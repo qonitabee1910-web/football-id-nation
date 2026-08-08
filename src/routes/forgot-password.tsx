@@ -18,33 +18,24 @@ import {
   useForgotPasswordMutation,
 } from "@/features/public/hooks/usePublicAuth";
 
+const FORGOT_PASSWORD_LOADER_DEFAULTS = {
+  meta: {
+    title: "Lupa Kata Sandi — Football ID Nation",
+    description:
+      "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
+    canonical: "https://football-id-nation.lovable.app/forgot-password",
+    ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    robots: "noindex, follow",
+  },
+  trace: { screen: "SCR-PUB-04", journey: ["JRN-17"] },
+} as const;
+
 export const Route = createFileRoute("/forgot-password")({
-  loader: () => ({
-    meta: {
-      title: "Lupa Kata Sandi — Football ID Nation",
-      description:
-        "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
-      canonical: "https://football-id-nation.lovable.app/forgot-password",
-      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-      ogImageWidth: 1200,
-      ogImageHeight: 630,
-      robots: "noindex, follow",
-    },
-    trace: { screen: "SCR-PUB-04", journey: ["JRN-17"] },
-  }),
+  loader: () => FORGOT_PASSWORD_LOADER_DEFAULTS,
   head: () => {
-    const data = Route.options.loader?.() ?? {
-      meta: {
-        title: "Lupa Kata Sandi — Football ID Nation",
-        description:
-          "Ajukan pemulihan akses akun Football ID Nation melalui email terdaftar Anda secara aman.",
-        canonical: "https://football-id-nation.lovable.app/forgot-password",
-        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-        ogImageWidth: 1200,
-        ogImageHeight: 630,
-        robots: "noindex, follow",
-      },
-    };
+    const data = FORGOT_PASSWORD_LOADER_DEFAULTS;
     return {
       meta: [
         { title: data.meta.title },

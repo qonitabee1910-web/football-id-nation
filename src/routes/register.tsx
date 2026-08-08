@@ -36,33 +36,24 @@ import {
   useRegisterMutation,
 } from "@/features/public/hooks/usePublicAuth";
 
+const REGISTER_LOADER_DEFAULTS = {
+  meta: {
+    title: "Daftar Football ID — Football ID Nation",
+    description:
+      "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
+    canonical: "https://football-id-nation.lovable.app/register",
+    ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    robots: "index, follow",
+  },
+  trace: { screen: "SCR-PUB-03", journey: ["JRN-01", "JRN-02"] },
+} as const;
+
 export const Route = createFileRoute("/register")({
-  loader: () => ({
-    meta: {
-      title: "Daftar Football ID — Football ID Nation",
-      description:
-        "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
-      canonical: "https://football-id-nation.lovable.app/register",
-      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-      ogImageWidth: 1200,
-      ogImageHeight: 630,
-      robots: "index, follow",
-    },
-    trace: { screen: "SCR-PUB-03", journey: ["JRN-01", "JRN-02"] },
-  }),
+  loader: () => REGISTER_LOADER_DEFAULTS,
   head: () => {
-    const data = Route.options.loader?.() ?? {
-      meta: {
-        title: "Daftar Football ID — Football ID Nation",
-        description:
-          "Buat Football ID: satu identitas digital sepak bola untuk pemain, wali, SSB, dan asosiasi di Indonesia.",
-        canonical: "https://football-id-nation.lovable.app/register",
-        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-        ogImageWidth: 1200,
-        ogImageHeight: 630,
-        robots: "index, follow",
-      },
-    };
+    const data = REGISTER_LOADER_DEFAULTS;
     return {
       meta: [
         { title: data.meta.title },

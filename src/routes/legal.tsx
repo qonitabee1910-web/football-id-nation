@@ -16,33 +16,24 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+const LEGAL_LOADER_DEFAULTS = {
+  meta: {
+    title: "Ketentuan & Kebijakan — Football ID Nation",
+    description:
+      "Pusat informasi ketentuan layanan, kebijakan privasi, dan kerangka hukum Football ID Nation. Konten final dalam persiapan Council.",
+    canonical: "https://football-id-nation.lovable.app/legal",
+    ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    robots: "index, follow",
+  },
+  trace: { screen: "SCR-PUB-06", journey: [], placeholder: true },
+} as const;
+
 export const Route = createFileRoute("/legal")({
-  loader: () => ({
-    meta: {
-      title: "Ketentuan & Kebijakan — Football ID Nation",
-      description:
-        "Pusat informasi ketentuan layanan, kebijakan privasi, dan kerangka hukum Football ID Nation. Konten final dalam persiapan Council.",
-      canonical: "https://football-id-nation.lovable.app/legal",
-      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-      ogImageWidth: 1200,
-      ogImageHeight: 630,
-      robots: "index, follow",
-    },
-    trace: { screen: "SCR-PUB-06", journey: [], placeholder: true },
-  }),
+  loader: () => LEGAL_LOADER_DEFAULTS,
   head: () => {
-    const data = Route.options.loader?.() ?? {
-      meta: {
-        title: "Ketentuan & Kebijakan — Football ID Nation",
-        description:
-          "Pusat informasi ketentuan layanan, kebijakan privasi, dan kerangka hukum Football ID Nation. Konten final dalam persiapan Council.",
-        canonical: "https://football-id-nation.lovable.app/legal",
-        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-        ogImageWidth: 1200,
-        ogImageHeight: 630,
-        robots: "index, follow",
-      },
-    };
+    const data = LEGAL_LOADER_DEFAULTS;
     return {
       meta: [
         { title: data.meta.title },

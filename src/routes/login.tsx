@@ -16,33 +16,24 @@ import {
   useLoginMutation,
 } from "@/features/public/hooks/usePublicAuth";
 
+const LOGIN_LOADER_DEFAULTS = {
+  meta: {
+    title: "Masuk — Football ID Nation",
+    description:
+      "Masuk ke akun Football ID Nation Anda untuk mengakses identitas digital sepak bola yang terverifikasi.",
+    canonical: "https://football-id-nation.lovable.app/login",
+    ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    robots: "noindex, follow",
+  },
+  trace: { screen: "SCR-PUB-02", journey: ["JRN-17"] },
+} as const;
+
 export const Route = createFileRoute("/login")({
-  loader: () => ({
-    meta: {
-      title: "Masuk — Football ID Nation",
-      description:
-        "Masuk ke akun Football ID Nation untuk mengakses identitas sepak bola nasional Anda secara aman.",
-      canonical: "https://football-id-nation.lovable.app/login",
-      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-      ogImageWidth: 1200,
-      ogImageHeight: 630,
-      robots: "noindex, follow",
-    },
-    trace: { screen: "SCR-PUB-02", journey: ["JRN-17"] },
-  }),
+  loader: () => LOGIN_LOADER_DEFAULTS,
   head: () => {
-    const data = Route.options.loader?.() ?? {
-      meta: {
-        title: "Masuk — Football ID Nation",
-        description:
-          "Masuk ke akun Football ID Nation untuk mengakses identitas sepak bola nasional Anda secara aman.",
-        canonical: "https://football-id-nation.lovable.app/login",
-        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-        ogImageWidth: 1200,
-        ogImageHeight: 630,
-        robots: "noindex, follow",
-      },
-    };
+    const data = LOGIN_LOADER_DEFAULTS;
     return {
       meta: [
         { title: data.meta.title },

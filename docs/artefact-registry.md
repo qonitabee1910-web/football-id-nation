@@ -33,8 +33,8 @@ Status values: `NOT_STARTED` · `DRAFT` · `IN_REVIEW` · `APPROVED` · `SUPERSE
 | IDN-ERD-001 | Enterprise Logical Data Model v1.0 (15 entities, 9 reference domains, logical RLS, 21 parts) | 3 | IN_REVIEW | G3 |
 | IDN-API-001 | Contract-First Application API Spec v1.0 (15 resources, 22 commands, 12 queries, 19 parts) | 4 | IN_REVIEW | G4 |
 | IDN-SCR-001 | Enterprise Screen Catalogue v1.0 (50 screens, 7 areas, 18 parts, full journey/command/query coverage) | 5 | IN_REVIEW | G7 |
-| IDN-UIC-001 | UI Component Catalogue + Dashboard Shell IA | 5 | NOT_STARTED | G5 |
-| IDN-DS-001 | Enterprise Design System | 5 | NOT_STARTED | G5 |
+| IDN-UIC-001 | UI Component Catalogue + Dashboard Shell IA | 5 | IN_REVIEW — structural shell + 47 shadcn/ui primitives + 9 layouts implemented; component-to-screen mapping (IDN-SCR-001 → UIC-001) pending G5 audit | G5 |
+| IDN-DS-001 | Enterprise Design System | 5 | IN_REVIEW — theme provider, tokens, 4 semantic color groups (Navy/Football-Green/Red-Accent/Neutral), typography scale, 44px touch baseline implemented; final sign-off of token values vs spec pending G5 | G5 |
 | IDN-IMP-001 | Implementation | 6 | BLOCKED | G6 |
 
 ## Other contexts

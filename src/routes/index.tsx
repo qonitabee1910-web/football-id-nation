@@ -28,49 +28,32 @@ import {
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
 
+const INDEX_LOADER_DEFAULTS = {
+  meta: {
+    title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
+    description:
+      "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
+    canonical: "https://football-id-nation.lovable.app/",
+    ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
+    ogImageWidth: 1200,
+    ogImageHeight: 630,
+    robots: "index, follow",
+  },
+  trace: { screen: "SCR-PUB-01", journey: ["JRN-01", "JRN-17"] },
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Football ID Nation",
+    url: "https://football-id-nation.lovable.app/",
+    description:
+      "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
+  },
+} as const;
+
 export const Route = createFileRoute("/")({
-  loader: () => ({
-    meta: {
-      title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
-      description:
-        "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
-      canonical: "https://football-id-nation.lovable.app/",
-      ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-      ogImageWidth: 1200,
-      ogImageHeight: 630,
-      robots: "index, follow",
-    },
-    trace: { screen: "SCR-PUB-01", journey: ["JRN-01", "JRN-17"] },
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: "Football ID Nation",
-      url: "https://football-id-nation.lovable.app/",
-      description:
-        "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
-    },
-  }),
+  loader: () => INDEX_LOADER_DEFAULTS,
   head: () => {
-    const data = Route.options.loader?.() ?? {
-      meta: {
-        title: "Football ID Nation — Identitas Digital Sepak Bola Indonesia",
-        description:
-          "Football ID: satu identitas digital terverifikasi untuk pemain, wali, SSB, asosiasi, dan federasi. Perjalanan pemain yang portabel, dengan perlindungan anak sebagai prinsip utama.",
-        canonical: "https://football-id-nation.lovable.app/",
-        ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
-        ogImageWidth: 1200,
-        ogImageHeight: 630,
-        robots: "index, follow",
-      },
-      jsonLd: {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        name: "Football ID Nation",
-        url: "https://football-id-nation.lovable.app/",
-        description:
-          "Infrastruktur identitas digital sepak bola Indonesia berbasis Football ID.",
-      },
-    };
+    const data = INDEX_LOADER_DEFAULTS;
     return {
       meta: [
         { title: data.meta.title },
