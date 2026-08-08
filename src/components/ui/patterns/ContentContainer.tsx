@@ -32,8 +32,8 @@ export const ContentContainer = forwardRef<HTMLDivElement, ContentContainerProps
     variant = "default",
     ...props
   }, ref) => {
-    const useShadow = withShadow ?? variant === "default" || variant === "elevated";
-    const useBorder = withBorder ?? variant === "outlined" || variant === "elevated" || variant === "default";
+    const useShadow = withShadow ?? (variant === "default" || variant === "elevated");
+    const useBorder = withBorder ?? (variant === "outlined" || variant === "elevated" || variant === "default");
     return (
       <div
         ref={ref}
