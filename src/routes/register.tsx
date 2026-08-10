@@ -250,8 +250,7 @@ function RegisterPage() {
                 ) : null}
               </div>
 
-               </div>
-              ) : null}
+
 
               <div className="flex flex-col gap-2">
                 <Label htmlFor="register-email">Email</Label>
