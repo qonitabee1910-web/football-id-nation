@@ -6,9 +6,7 @@ import {
   AlertCircle,
   ArrowLeft,
   ArrowRight,
-  Building2,
   CheckCircle2,
-  Landmark,
   Loader2,
   ShieldCheck,
   UserRound,
@@ -93,18 +91,6 @@ const ROLE_OPTIONS: ReadonlyArray<{
     description: "Memberikan persetujuan dan mendampingi pemain di bawah umur.",
     icon: Users,
   },
-  {
-    value: "ORGANIZATION",
-    label: "SSB / Klub",
-    description: "Mengelola keanggotaan, bukan pemilik identitas pemain.",
-    icon: Building2,
-  },
-  {
-    value: "ASSOCIATION",
-    label: "Asosiasi / Federasi",
-    description: "Menyelenggarakan kompetisi dan verifikasi kelayakan.",
-    icon: Landmark,
-  },
 ];
 
 const STEP_LABELS = ["Pilih peran", "Data akun", "Persetujuan"] as const;
@@ -119,7 +105,6 @@ function RegisterPage() {
     defaultValues: {
       role: "PLAYER",
       fullName: "",
-      organizationName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -130,16 +115,13 @@ function RegisterPage() {
   });
 
   const role = form.watch("role");
-  const needsOrganization = role === "ORGANIZATION" || role === "ASSOCIATION";
   const errors = form.formState.errors;
 
   const goNext = async () => {
     const fields: Array<keyof RegisterInput> =
       step === 0
         ? ["role"]
-        : needsOrganization
-          ? ["fullName", "organizationName", "email", "password", "confirmPassword"]
-          : ["fullName", "email", "password", "confirmPassword"];
+        : ["fullName", "email", "password", "confirmPassword"];
     const valid = await form.trigger(fields);
     if (valid) setStep((current) => Math.min(current + 1, 2));
   };
@@ -268,23 +250,7 @@ function RegisterPage() {
                 ) : null}
               </div>
 
-              {needsOrganization ? (
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="register-org">Nama organisasi</Label>
-                  <Input
-                    id="register-org"
-                    autoComplete="organization"
-                    className="min-h-11"
-                    aria-invalid={errors.organizationName ? true : undefined}
-                    aria-describedby={errors.organizationName ? "register-org-error" : undefined}
-                    {...form.register("organizationName")}
-                  />
-                  {errors.organizationName ? (
-                    <p id="register-org-error" role="alert" className="text-xs text-destructive">
-                      {errors.organizationName.message}
-                    </p>
-                  ) : null}
-                </div>
+               </div>
               ) : null}
 
               <div className="flex flex-col gap-2">

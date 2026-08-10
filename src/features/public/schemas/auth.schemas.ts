@@ -34,12 +34,13 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export const forgotPasswordSchema = z.object({ email });
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 
-export const REGISTRATION_ROLES = [
-  "PLAYER",
-  "GUARDIAN",
-  "ORGANIZATION",
-  "ASSOCIATION",
-] as const;
+/**
+ * Scope note: IDN-API-001 C-01 RegisterPerson brings a *Person* into the
+ * ecosystem. Organization / Association onboarding has no approved command in
+ * C-01..C-22, so those roles are structurally absent from public self-service
+ * registration until a contract amendment is approved by Council.
+ */
+export const REGISTRATION_ROLES = ["PLAYER", "GUARDIAN"] as const;
 export type RegistrationRole = (typeof REGISTRATION_ROLES)[number];
 
 export const roleStepSchema = z.object({
@@ -52,7 +53,6 @@ export const registerSchema = z
   .object({
     role: z.enum(REGISTRATION_ROLES),
     fullName: personName,
-    organizationName: z.string().trim().max(160).optional(),
     email,
     password,
     confirmPassword: z.string(),
@@ -63,16 +63,6 @@ export const registerSchema = z
     message: "Konfirmasi kata sandi tidak cocok",
     path: ["confirmPassword"],
   })
-  .refine(
-    (data) =>
-      data.role === "PLAYER" ||
-      data.role === "GUARDIAN" ||
-      (data.organizationName !== undefined && data.organizationName.length >= 2),
-    {
-      message: "Nama organisasi wajib diisi",
-      path: ["organizationName"],
-    },
-  )
   .refine((data) => data.consentTerms, {
     message: "Persetujuan ketentuan layanan wajib diberikan",
     path: ["consentTerms"],
