@@ -47,7 +47,7 @@ export function AuthLayout({
     <GlobalErrorBoundary isStructural>
       <div
         className={cn(
-          "relative flex min-h-screen flex-col bg-background text-foreground",
+          "relative flex min-h-dvh flex-col bg-background text-foreground",
           "bg-[radial-gradient(circle_at_top,_var(--color-surface-2),transparent_60%)]",
           className,
         )}
@@ -123,12 +123,12 @@ export function AuthLayout({
                   {footerSlot ?? (
                     <p>
                       Dengan melanjutkan, Anda menyetujui{" "}
-                      <a
-                        href="/legal"
+                      <Link
+                        to="/legal"
                         className="text-primary underline-offset-4 hover:underline"
                       >
                         Ketentuan Hukum
-                      </a>{" "}
+                      </Link>{" "}
                       dan Kebijakan Privasi.
                     </p>
                   )}

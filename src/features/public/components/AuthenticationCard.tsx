@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export interface AuthenticationCardProps {
@@ -22,9 +22,12 @@ export function AuthenticationCard({
   return (
     <Card className={cn("w-full", className)}>
       <CardHeader>
-        <CardTitle id={titleId} className="text-xl tracking-tight">
+        <h2
+          id={titleId}
+          className="text-xl font-semibold leading-none tracking-tight"
+        >
           {title}
-        </CardTitle>
+        </h2>
         <CardDescription className="leading-relaxed">{description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">

@@ -25,7 +25,7 @@ const LEGAL_LOADER_DEFAULTS = {
     ogImage: "https://football-id-nation.lovable.app/og-image-default.png",
     ogImageWidth: 1200,
     ogImageHeight: 630,
-    robots: "index, follow",
+    robots: "noindex, follow",
   },
   trace: { screen: "SCR-PUB-06", journey: [], placeholder: true },
 } as const;
