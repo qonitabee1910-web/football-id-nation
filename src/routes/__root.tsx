@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "viewport",
         content:
-          "width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no",
+          "width=device-width, initial-scale=1, viewport-fit=cover",
       },
       { title: "Football ID Nation — Identitas Sepak Bola Nasional" },
       {
@@ -138,7 +138,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
         <ThemeScript />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-dvh bg-background text-foreground antialiased">
         {children}
         <Scripts />
       </body>
@@ -152,7 +152,7 @@ function RootComponent() {
   return (
     <ThemeProvider defaultTheme="system">
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
+        <Suspense fallback={<div className="min-h-dvh" aria-busy="true" />}>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </Suspense>
