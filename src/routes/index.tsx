@@ -15,7 +15,6 @@ import {
   ClipboardCheck,
 } from "lucide-react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
-import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
 import {
   CTAButton,
@@ -23,10 +22,12 @@ import {
   FeatureCard,
   HeroBanner,
   PartnerLogo,
+  PublicSection,
   SectionTitle,
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
 
 const INDEX_LOADER_DEFAULTS = {
   meta: {
@@ -185,7 +186,7 @@ const FAQ_ENTRIES: readonly FAQEntry[] = [
 
 function LandingPage() {
   return (
-    <PublicLayout showHeader showFooter>
+    <PublicLayout showHeader showFooter contained={false}>
       <HeroBanner
         titleId="hero-title"
         badge="Identitas sepak bola nasional — aman, resmi, terlacak"
@@ -210,141 +211,131 @@ function LandingPage() {
       />
 
       {/* Trust pillars */}
-      <section aria-labelledby="trust-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="trust-title"
-            eyebrow="Fondasi kepercayaan"
-            title="Dibangun agar layak dipercaya, bukan sekadar terlihat modern"
-            description="Tiga pilar yang menjadi dasar setiap keputusan arsitektur platform."
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 3 }} gap="md">
-            {TRUST_PILLARS.map((pillar) => (
-              <FeatureCard key={pillar.title} {...pillar} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="trust-title">
+        <SectionTitle
+          id="trust-title"
+          eyebrow="Fondasi kepercayaan"
+          title="Dibangun agar layak dipercaya, bukan sekadar terlihat modern"
+          description="Tiga pilar yang menjadi dasar setiap keputusan arsitektur platform."
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 3 }} gap="md">
+          {TRUST_PILLARS.map((pillar) => (
+            <FeatureCard key={pillar.title} {...pillar} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* About */}
-      <section aria-labelledby="about-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="grid gap-8 md:grid-cols-2 md:items-start">
-          <SectionTitle
-            id="about-title"
-            eyebrow="Tentang platform"
-            title="Infrastruktur data, bukan sekadar aplikasi klub"
-            description="Football ID Nation adalah lapisan identitas bersama bagi seluruh ekosistem sepak bola usia muda Indonesia. Alih-alih setiap SSB menyimpan datanya sendiri secara terpisah, platform ini menjadikan identitas dan perjalanan pemain sebagai sumber kebenaran tunggal yang portabel."
-          />
-          <div className="flex flex-col gap-4 rounded-lg border bg-card p-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Setiap kapabilitas diturunkan dari artefak tata kelola yang disetujui:
-              visi, peta pemangku kepentingan, model domain, kontrak API, hingga
-              katalog layar. Tidak ada fitur yang dibangun tanpa kontrak yang lebih
-              dahulu disepakati.
-            </p>
-            <ul className="flex flex-col gap-2 text-sm">
-              {[
-                "Identity Bounded Context sebagai fondasi Sprint 1",
-                "Consent sebagai warga kelas satu, bukan tambahan",
-                "Ledger append-only sebagai otoritas riwayat",
-                "Kepentingan anak mengalahkan seluruh kepentingan lain",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <ShieldCheck
-                    className="mt-0.5 h-4 w-4 shrink-0 text-primary"
-                    aria-hidden="true"
-                  />
-                  <span className="text-muted-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </PageContainer>
-      </section>
+      <PublicSection
+        labelledBy="about-title"
+        innerClassName="grid gap-8 md:grid-cols-2 md:items-start"
+      >
+        <SectionTitle
+          id="about-title"
+          eyebrow="Tentang platform"
+          title="Infrastruktur data, bukan sekadar aplikasi klub"
+          description="Football ID Nation adalah lapisan identitas bersama bagi seluruh ekosistem sepak bola usia muda Indonesia. Alih-alih setiap SSB menyimpan datanya sendiri secara terpisah, platform ini menjadikan identitas dan perjalanan pemain sebagai sumber kebenaran tunggal yang portabel."
+        />
+        <div className="flex flex-col gap-4 rounded-lg border bg-card p-6">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Setiap kapabilitas diturunkan dari artefak tata kelola yang disetujui:
+            visi, peta pemangku kepentingan, model domain, kontrak API, hingga
+            katalog layar. Tidak ada fitur yang dibangun tanpa kontrak yang lebih
+            dahulu disepakati.
+          </p>
+          <ul className="flex flex-col gap-2 text-sm">
+            {[
+              "Identity Bounded Context sebagai fondasi Sprint 1",
+              "Consent sebagai warga kelas satu, bukan tambahan",
+              "Ledger append-only sebagai otoritas riwayat",
+              "Kepentingan anak mengalahkan seluruh kepentingan lain",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ShieldCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="text-muted-foreground">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </PublicSection>
 
       {/* Capabilities */}
-      <section aria-labelledby="capabilities-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="capabilities-title"
-            eyebrow="Kapabilitas inti"
-            title="Apa yang Football ID berikan pada ekosistem"
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 3 }} gap="md">
-            {CAPABILITIES.map((capability) => (
-              <FeatureCard key={capability.title} {...capability} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="capabilities-title">
+        <SectionTitle
+          id="capabilities-title"
+          eyebrow="Kapabilitas inti"
+          title="Apa yang Football ID berikan pada ekosistem"
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 2, lg: 3 }} gap="md">
+          {CAPABILITIES.map((capability) => (
+            <FeatureCard key={capability.title} {...capability} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* Phase 0 targets */}
-      <section aria-labelledby="targets-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="targets-title"
-            eyebrow="Fase 0 — Founding"
-            title="Target rancangan fase pendiri"
-            description="Angka berikut adalah target volume desain untuk Fase 0 yang telah disetujui Council, bukan jumlah pengguna saat ini."
-          />
-          <ResponsiveGrid cols={{ base: 2, lg: 4 }} gap="md">
-            {PHASE_ZERO_TARGETS.map((stat) => (
-              <StatisticCard key={stat.label} {...stat} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="targets-title">
+        <SectionTitle
+          id="targets-title"
+          eyebrow="Fase 0 — Founding"
+          title="Target rancangan fase pendiri"
+          description="Angka berikut adalah target volume desain Fase 0 yang telah disetujui Council, bukan jumlah pengguna saat ini. Statistik ekosistem aktual belum tersedia dan akan tampil setelah layanan identitas beroperasi."
+        />
+        <ResponsiveGrid cols={{ base: 2, lg: 4 }} gap="md">
+          {PHASE_ZERO_TARGETS.map((stat) => (
+            <StatisticCard key={stat.label} {...stat} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* Ecosystem actors */}
-      <section aria-labelledby="actors-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="actors-title"
-            eyebrow="Ekosistem"
-            title="Peran yang bekerja di atas satu identitas"
-            description="Setiap peran memperoleh kapabilitas seminimal yang dibutuhkan untuk tugasnya."
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 4 }} gap="md">
-            {ECOSYSTEM_ACTORS.map((actor) => (
-              <PartnerLogo key={actor.name} {...actor} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="actors-title">
+        <SectionTitle
+          id="actors-title"
+          eyebrow="Ekosistem"
+          title="Peran yang bekerja di atas satu identitas"
+          description="Setiap peran memperoleh kapabilitas seminimal yang dibutuhkan untuk tugasnya."
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 2, lg: 4 }} gap="md">
+          {ECOSYSTEM_ACTORS.map((actor) => (
+            <PartnerLogo key={actor.name} {...actor} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* FAQ */}
-      <section aria-labelledby="faq-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="lg" className="flex flex-col gap-8">
-          <SectionTitle
-            id="faq-title"
-            eyebrow="Pertanyaan umum"
-            title="Hal yang paling sering ditanyakan"
-          />
-          <FAQAccordion entries={FAQ_ENTRIES} />
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="faq-title" maxWidth="lg">
+        <SectionTitle
+          id="faq-title"
+          eyebrow="Pertanyaan umum"
+          title="Hal yang paling sering ditanyakan"
+        />
+        <FAQAccordion entries={FAQ_ENTRIES} />
+      </PublicSection>
 
       {/* Final CTA */}
-      <section aria-labelledby="cta-title" className="py-12 md:py-16">
-        <PageContainer as="div" maxWidth="lg">
-          <div className="flex flex-col items-start gap-6 rounded-xl border bg-card p-8 md:items-center md:text-center">
-            <SectionTitle
-              id="cta-title"
-              title="Mulai perjalanan sepak bola yang terverifikasi"
-              description="Buat Football ID Anda hari ini, atau masuk untuk melanjutkan perjalanan yang sudah berjalan."
-              align="center"
-            />
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <CTAButton to="/register" withArrow>
-                Daftar sekarang
-              </CTAButton>
-              <CTAButton to="/login" variant="outline" icon={LogIn}>
-                Masuk
-              </CTAButton>
-            </div>
+      <PublicSection labelledBy="cta-title" maxWidth="lg" bordered={false}>
+        <div className="flex flex-col items-start gap-6 rounded-xl border bg-card p-6 md:items-center md:p-10 md:text-center">
+          <SectionTitle
+            id="cta-title"
+            title="Mulai perjalanan sepak bola yang terverifikasi"
+            description="Buat Football ID Anda hari ini, atau masuk untuk melanjutkan perjalanan yang sudah berjalan."
+            align="center"
+          />
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <CTAButton to="/register" withArrow>
+              Daftar sekarang
+            </CTAButton>
+            <CTAButton to="/login" variant="outline" icon={LogIn}>
+              Masuk
+            </CTAButton>
           </div>
-        </PageContainer>
-      </section>
+        </div>
+      </PublicSection>
     </PublicLayout>
   );
 }
+

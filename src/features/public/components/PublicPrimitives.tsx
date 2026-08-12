@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, type LucideIcon } from "lucide-react";
+import { AlertCircle, ArrowRight, type LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +12,72 @@ import {
 } from "@/components/ui/accordion";
 import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { cn } from "@/lib/utils";
+
+/* -------------------------------------------------------------- PublicSection */
+
+export interface PublicSectionProps {
+  /** id of the heading this section is labelled by */
+  readonly labelledBy: string;
+  readonly children: ReactNode;
+  readonly maxWidth?: "sm" | "md" | "lg" | "xl" | "full";
+  readonly bordered?: boolean;
+  readonly className?: string;
+  readonly innerClassName?: string;
+}
+
+/**
+ * Single source of vertical rhythm for the public surface.
+ * Every landing section uses this so spacing and container width stay
+ * identical across breakpoints (375 / 768 / 1024 / 1440 / 1920).
+ */
+export function PublicSection({
+  labelledBy,
+  children,
+  maxWidth = "xl",
+  bordered = true,
+  className,
+  innerClassName,
+}: PublicSectionProps) {
+  return (
+    <section
+      aria-labelledby={labelledBy}
+      className={cn("py-12 md:py-16 lg:py-20", bordered && "border-b", className)}
+    >
+      <PageContainer
+        as="div"
+        maxWidth={maxWidth}
+        className={cn("flex flex-col gap-8 py-0 md:gap-10", innerClassName)}
+      >
+        {children}
+      </PageContainer>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ FieldError */
+
+export interface FieldErrorProps {
+  readonly id?: string;
+  readonly children: ReactNode;
+  readonly className?: string;
+}
+
+/**
+ * Form error message: icon + text, never colour alone (WCAG 1.4.1).
+ */
+export function FieldError({ id, children, className }: FieldErrorProps) {
+  return (
+    <p
+      id={id}
+      role="alert"
+      className={cn("flex items-start gap-1.5 text-xs text-destructive", className)}
+    >
+      <AlertCircle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      <span>{children}</span>
+    </p>
+  );
+}
+
 
 /* ---------------------------------------------------------------- SectionTitle */
 
@@ -115,14 +181,14 @@ export function HeroBanner({
   return (
     <section
       aria-labelledby={titleId}
-      className={cn("relative overflow-hidden border-b py-12 md:py-20", className)}
+      className={cn("relative overflow-hidden border-b py-14 md:py-24 lg:py-28", className)}
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--color-primary)_0%,_transparent_55%)] opacity-10 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-700"
       />
       <PageContainer as="div" maxWidth="xl" className="relative">
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex max-w-4xl flex-col items-start gap-5 md:gap-6">
           {badge ? (
             <Badge variant="outline" className="gap-1.5 border-primary/30">
               {BadgeIcon ? (
@@ -133,7 +199,7 @@ export function HeroBanner({
           ) : null}
           <h1
             id={titleId}
-            className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
+            className="text-balance text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
           >
             {title}
           </h1>
@@ -175,7 +241,7 @@ export function FeatureCard({
   return (
     <Card
       className={cn(
-        "h-full transition-colors motion-safe:transition-shadow hover:border-primary/40",
+        "h-full transition-colors motion-safe:transition-shadow hover:border-primary/40 hover:shadow-md",
         className,
       )}
     >

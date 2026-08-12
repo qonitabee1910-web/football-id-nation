@@ -149,7 +149,7 @@ export function AreaSidebar({
   return (
     <TooltipProvider delayDuration={0}>
       <SidebarProvider defaultOpen={!isPublic && !isSystem}>
-        <div className={cn("flex min-h-screen w-full bg-background", className)}>
+        <div className={cn("flex min-h-dvh w-full bg-background", className)}>
           {!isPublic && !isSystem ? (
             <Sidebar
               collapsible="icon"

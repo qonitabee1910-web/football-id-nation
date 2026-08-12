@@ -14,7 +14,7 @@ import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const LEGAL_LOADER_DEFAULTS = {
   meta: {
@@ -128,10 +128,10 @@ function LegalPlaceholderPage() {
               <Card key={doc.id} className="flex flex-col">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="flex items-center gap-2 text-lg">
+                    <h2 className="flex items-center gap-2 text-lg font-semibold leading-none tracking-tight">
                       <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
                       <span>{doc.title}</span>
-                    </CardTitle>
+                    </h2>
                     <Badge variant="outline" className="font-mono text-[10px]">
                       DRAFT · ID:{doc.id}
                     </Badge>

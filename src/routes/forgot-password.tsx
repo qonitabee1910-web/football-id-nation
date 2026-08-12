@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FieldError } from "@/features/public/components/PublicPrimitives";
 import {
   forgotPasswordSchema,
   type ForgotPasswordInput,
@@ -74,6 +75,7 @@ function ForgotPasswordPage() {
   return (
     <AuthLayout variant="recovery">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="recovery-title"
         title="Lupa kata sandi"
         description="Masukkan email terdaftar. Instruksi verifikasi pemulihan dikirim jika email tersebut terdaftar — sistem tidak mengungkap keberadaan akun."
@@ -129,9 +131,9 @@ function ForgotPasswordPage() {
               {...form.register("email")}
             />
             {form.formState.errors.email ? (
-              <p id="recovery-email-error" role="alert" className="text-xs text-destructive">
+              <FieldError id="recovery-email-error">
                 {form.formState.errors.email.message}
-              </p>
+              </FieldError>
             ) : null}
           </div>
 
