@@ -75,6 +75,7 @@ function ForgotPasswordPage() {
   return (
     <AuthLayout variant="recovery">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="recovery-title"
         title="Lupa kata sandi"
         description="Masukkan email terdaftar. Instruksi verifikasi pemulihan dikirim jika email tersebut terdaftar — sistem tidak mengungkap keberadaan akun."

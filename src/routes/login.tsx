@@ -73,6 +73,7 @@ function LoginPage() {
   return (
     <AuthLayout variant="login">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="login-title"
         title="Masuk"
         description="Gunakan email terdaftar Anda. Otorisasi diverifikasi di sisi server sesuai Konstitusi Pasal 8."

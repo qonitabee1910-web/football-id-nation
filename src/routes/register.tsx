@@ -134,6 +134,7 @@ function RegisterPage() {
   return (
     <AuthLayout variant="register">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="register-title"
         title="Daftar Football ID"
         description="Satu orang, satu akun, banyak peran. Football ID bersifat permanen dan sepenuhnya opaque — tidak memuat tahun, wilayah, atau fakta bisnis apa pun."
