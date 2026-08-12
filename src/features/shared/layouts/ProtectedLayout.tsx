@@ -71,7 +71,7 @@ export function ProtectedLayout({
   if (authenticated === true && !hasRequiredRole) {
     return (
       <GlobalErrorBoundary isStructural>
-        <div className="min-h-screen w-full bg-background">
+        <div className="min-h-dvh w-full bg-background">
           <UnifiedNotFound variant="403" />
         </div>
       </GlobalErrorBoundary>

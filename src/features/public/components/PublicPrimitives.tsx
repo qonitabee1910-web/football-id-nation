@@ -181,14 +181,14 @@ export function HeroBanner({
   return (
     <section
       aria-labelledby={titleId}
-      className={cn("relative overflow-hidden border-b py-12 md:py-20", className)}
+      className={cn("relative overflow-hidden border-b py-14 md:py-24 lg:py-28", className)}
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--color-primary)_0%,_transparent_55%)] opacity-10 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-700"
       />
       <PageContainer as="div" maxWidth="xl" className="relative">
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex max-w-4xl flex-col items-start gap-5 md:gap-6">
           {badge ? (
             <Badge variant="outline" className="gap-1.5 border-primary/30">
               {BadgeIcon ? (
@@ -199,7 +199,7 @@ export function HeroBanner({
           ) : null}
           <h1
             id={titleId}
-            className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
+            className="text-balance text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
           >
             {title}
           </h1>
@@ -241,7 +241,7 @@ export function FeatureCard({
   return (
     <Card
       className={cn(
-        "h-full transition-colors motion-safe:transition-shadow hover:border-primary/40",
+        "h-full transition-colors motion-safe:transition-shadow hover:border-primary/40 hover:shadow-md",
         className,
       )}
     >

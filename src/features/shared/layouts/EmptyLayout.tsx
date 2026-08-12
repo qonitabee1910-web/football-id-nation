@@ -29,7 +29,7 @@ export function EmptyLayout({
     <GlobalErrorBoundary isStructural>
       <div
         className={cn(
-          "flex min-h-screen w-full flex-col bg-background text-foreground antialiased",
+          "flex min-h-dvh w-full flex-col bg-background text-foreground antialiased",
           className,
         )}
       >
