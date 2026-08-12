@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, type LucideIcon } from "lucide-react";
+import { AlertCircle, ArrowRight, type LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +12,72 @@ import {
 } from "@/components/ui/accordion";
 import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { cn } from "@/lib/utils";
+
+/* -------------------------------------------------------------- PublicSection */
+
+export interface PublicSectionProps {
+  /** id of the heading this section is labelled by */
+  readonly labelledBy: string;
+  readonly children: ReactNode;
+  readonly maxWidth?: "sm" | "md" | "lg" | "xl" | "full";
+  readonly bordered?: boolean;
+  readonly className?: string;
+  readonly innerClassName?: string;
+}
+
+/**
+ * Single source of vertical rhythm for the public surface.
+ * Every landing section uses this so spacing and container width stay
+ * identical across breakpoints (375 / 768 / 1024 / 1440 / 1920).
+ */
+export function PublicSection({
+  labelledBy,
+  children,
+  maxWidth = "xl",
+  bordered = true,
+  className,
+  innerClassName,
+}: PublicSectionProps) {
+  return (
+    <section
+      aria-labelledby={labelledBy}
+      className={cn("py-12 md:py-16 lg:py-20", bordered && "border-b", className)}
+    >
+      <PageContainer
+        as="div"
+        maxWidth={maxWidth}
+        className={cn("flex flex-col gap-8 py-0 md:gap-10", innerClassName)}
+      >
+        {children}
+      </PageContainer>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ FieldError */
+
+export interface FieldErrorProps {
+  readonly id?: string;
+  readonly children: ReactNode;
+  readonly className?: string;
+}
+
+/**
+ * Form error message: icon + text, never colour alone (WCAG 1.4.1).
+ */
+export function FieldError({ id, children, className }: FieldErrorProps) {
+  return (
+    <p
+      id={id}
+      role="alert"
+      className={cn("flex items-start gap-1.5 text-xs text-destructive", className)}
+    >
+      <AlertCircle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      <span>{children}</span>
+    </p>
+  );
+}
+
 
 /* ---------------------------------------------------------------- SectionTitle */
 
