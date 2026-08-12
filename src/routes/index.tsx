@@ -15,7 +15,6 @@ import {
   ClipboardCheck,
 } from "lucide-react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
-import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
 import {
   CTAButton,
@@ -23,10 +22,12 @@ import {
   FeatureCard,
   HeroBanner,
   PartnerLogo,
+  PublicSection,
   SectionTitle,
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
 
 const INDEX_LOADER_DEFAULTS = {
   meta: {
