@@ -185,7 +185,7 @@ function RegisterPage() {
           </Alert>
         ) : null}
 
-        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+        <form onSubmit={onSubmit} noValidate className="flex w-full min-w-0 flex-col gap-6">
           {step === 0 ? (
             <FormSection
               legend="Peran utama Anda"

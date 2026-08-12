@@ -55,7 +55,7 @@ export interface FormSectionProps {
 
 export function FormSection({ legend, hint, children, className }: FormSectionProps) {
   return (
-    <fieldset className={cn("border-0 p-0", className)}>
+    <fieldset className={cn("w-full min-w-0 border-0 p-0", className)}>
       <legend className="sr-only">{legend}</legend>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
