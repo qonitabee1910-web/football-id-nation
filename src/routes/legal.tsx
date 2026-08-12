@@ -128,9 +128,11 @@ function LegalPlaceholderPage() {
               <Card key={doc.id} className="flex flex-col">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="flex items-center gap-2 text-lg">
+                    <CardTitle asChild>
+                      <h2 className="flex items-center gap-2 text-lg font-semibold leading-none tracking-tight">
                       <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                      <span>{doc.title}</span>
+                        <span>{doc.title}</span>
+                      </h2>
                     </CardTitle>
                     <Badge variant="outline" className="font-mono text-[10px]">
                       DRAFT · ID:{doc.id}

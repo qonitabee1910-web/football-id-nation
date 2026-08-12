@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
+import { FieldError } from "@/features/public/components/PublicPrimitives";
 import {
   registerSchema,
   type RegisterInput,
@@ -147,7 +148,7 @@ function RegisterPage() {
       >
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>
+            <span aria-live="polite">
               Langkah {step + 1} dari {STEP_LABELS.length} · {STEP_LABELS[step]}
             </span>
             <span>{Math.round(((step + 1) / STEP_LABELS.length) * 100)}%</span>
@@ -221,9 +222,7 @@ function RegisterPage() {
                 })}
               </RadioGroup>
               {errors.role ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.role.message}
-                </p>
+                <FieldError>{errors.role.message}</FieldError>
               ) : null}
             </FormSection>
           ) : null}
@@ -244,9 +243,9 @@ function RegisterPage() {
                   {...form.register("fullName")}
                 />
                 {errors.fullName ? (
-                  <p id="register-name-error" role="alert" className="text-xs text-destructive">
+                  <FieldError id="register-name-error">
                     {errors.fullName.message}
-                  </p>
+                  </FieldError>
                 ) : null}
               </div>
 
@@ -265,9 +264,9 @@ function RegisterPage() {
                   {...form.register("email")}
                 />
                 {errors.email ? (
-                  <p id="register-email-error" role="alert" className="text-xs text-destructive">
+                  <FieldError id="register-email-error">
                     {errors.email.message}
-                  </p>
+                  </FieldError>
                 ) : null}
               </div>
 
@@ -280,16 +279,20 @@ function RegisterPage() {
                     autoComplete="new-password"
                     className="min-h-11"
                     aria-invalid={errors.password ? true : undefined}
-                    aria-describedby="register-password-hint"
+                    aria-describedby={
+                      errors.password
+                        ? "register-password-hint register-password-error"
+                        : "register-password-hint"
+                    }
                     {...form.register("password")}
                   />
                   <p id="register-password-hint" className="text-xs text-muted-foreground">
                     Minimal 12 karakter.
                   </p>
                   {errors.password ? (
-                    <p role="alert" className="text-xs text-destructive">
+                    <FieldError id="register-password-error">
                       {errors.password.message}
-                    </p>
+                    </FieldError>
                   ) : null}
                 </div>
                 <div className="flex flex-col gap-2">
@@ -306,13 +309,9 @@ function RegisterPage() {
                     {...form.register("confirmPassword")}
                   />
                   {errors.confirmPassword ? (
-                    <p
-                      id="register-confirm-error"
-                      role="alert"
-                      className="text-xs text-destructive"
-                    >
+                    <FieldError id="register-confirm-error">
                       {errors.confirmPassword.message}
-                    </p>
+                    </FieldError>
                   ) : null}
                 </div>
               </div>
@@ -342,9 +341,7 @@ function RegisterPage() {
                 </Label>
               </div>
               {errors.consentTerms ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.consentTerms.message}
-                </p>
+                <FieldError>{errors.consentTerms.message}</FieldError>
               ) : null}
 
               <div className="flex items-start gap-3 rounded-lg border p-4">
@@ -366,9 +363,7 @@ function RegisterPage() {
                 </Label>
               </div>
               {errors.consentPrivacy ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.consentPrivacy.message}
-                </p>
+                <FieldError>{errors.consentPrivacy.message}</FieldError>
               ) : null}
 
               <p className="flex items-start gap-2 rounded-lg bg-muted p-4 text-xs leading-relaxed text-muted-foreground">
