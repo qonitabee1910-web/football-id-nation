@@ -18,6 +18,9 @@ export interface PublicLayoutProps {
   readonly showFooter?: boolean;
   readonly className?: string;
   readonly mainClassName?: string;
+  /** Wrap children in the shared PageContainer. Sections that own their
+   *  container (landing page) pass false to avoid double padding. */
+  readonly contained?: boolean;
 }
 
 export function PublicLayout({
@@ -27,6 +30,7 @@ export function PublicLayout({
   showFooter = true,
   className,
   mainClassName,
+  contained = true,
 }: PublicLayoutProps) {
   const [searchOpen] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -58,9 +62,13 @@ export function PublicLayout({
           className={cn("flex min-h-0 flex-1 flex-col", mainClassName)}
         >
           <LoadingBoundary>
-            <PageContainer as="div" maxWidth={maxWidth} className="flex-1">
-              {children ?? <Outlet />}
-            </PageContainer>
+            {contained ? (
+              <PageContainer as="div" maxWidth={maxWidth} className="flex-1">
+                {children ?? <Outlet />}
+              </PageContainer>
+            ) : (
+              children ?? <Outlet />
+            )}
           </LoadingBoundary>
         </main>
 
