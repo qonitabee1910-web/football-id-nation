@@ -206,10 +206,10 @@ function RegisterPage() {
                     <Label
                       key={option.value}
                       htmlFor={inputId}
-                      className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border p-4 font-normal transition-colors hover:border-primary/40 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5"
+                      className="flex min-h-11 w-full cursor-pointer items-start gap-3 rounded-lg border p-4 font-normal whitespace-normal transition-colors hover:border-primary/40 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5"
                     >
                       <RadioGroupItem id={inputId} value={option.value} className="mt-1" />
-                      <span className="flex flex-col gap-1">
+                      <span className="flex min-w-0 flex-1 flex-col gap-1">
                         <span className="flex items-center gap-2 text-sm font-medium">
                           <Icon className="h-4 w-4 text-primary" aria-hidden="true" />
                           {option.label}
