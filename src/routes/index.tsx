@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
+import { Button } from "@/components/ui/button";
 import {
   CTAButton,
   FAQAccordion,
@@ -28,6 +29,7 @@ import {
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
 
 
 
