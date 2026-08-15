@@ -52,13 +52,21 @@ function PublicNotFoundPage() {
             404
           </span>
 
-          <SectionTitle
-            id="not-found-title"
-            eyebrow="Kesalahan navigasi"
-            title="Halaman tidak dapat ditemukan"
-            description="URL yang Anda tuju tidak tersedia atau telah dipindahkan. Periksa kembali tautan, atau gunakan navigasi utama untuk melanjutkan."
-            align="center"
-          />
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+              Kesalahan navigasi
+            </span>
+            <h1
+              id="not-found-title"
+              className="text-2xl font-semibold tracking-tight md:text-3xl"
+            >
+              Halaman tidak dapat ditemukan
+            </h1>
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              URL yang Anda tuju tidak tersedia atau telah dipindahkan. Periksa
+              kembali tautan, atau gunakan navigasi utama untuk melanjutkan.
+            </p>
+          </div>
 
           <div
             role="group"
@@ -77,6 +85,7 @@ function PublicNotFoundPage() {
             Jika menurut Anda ini adalah kesalahan, silakan hubungi pengelola platform.
           </p>
         </div>
+
       </PublicSection>
     </PublicLayout>
   );
