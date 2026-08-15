@@ -14,6 +14,7 @@ import {
   Users,
   ClipboardCheck,
 } from "lucide-react";
+import { useState } from "react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
 import {
@@ -27,6 +28,7 @@ import {
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
 
 
 const INDEX_LOADER_DEFAULTS = {
