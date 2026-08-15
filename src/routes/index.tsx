@@ -356,9 +356,11 @@ function LandingPage() {
           id="faq-title"
           eyebrow="Pertanyaan umum"
           title="Hal yang paling sering ditanyakan"
+          description="Pilih kategori untuk menyaring pertanyaan."
         />
-        <FAQAccordion entries={FAQ_ENTRIES} />
+        <FAQFilter entries={FAQ_ENTRIES} />
       </PublicSection>
+
 
       {/* Final CTA */}
       <PublicSection labelledBy="cta-title" maxWidth="lg" bordered={false}>
