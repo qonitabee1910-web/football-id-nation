@@ -14,8 +14,10 @@ import {
   Users,
   ClipboardCheck,
 } from "lucide-react";
+import { useState } from "react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
+import { Button } from "@/components/ui/button";
 import {
   CTAButton,
   FAQAccordion,
@@ -27,6 +29,8 @@ import {
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
+
 
 
 const INDEX_LOADER_DEFAULTS = {
@@ -151,38 +155,80 @@ const ECOSYSTEM_ACTORS = [
   { name: "Wali & Orang Tua", role: "Otoritas persetujuan", icon: Users },
 ] as const;
 
+const FAQ_CATEGORIES = [
+  "Semua",
+  "Umum",
+  "Keanggotaan",
+  "Privasi & Anak",
+  "Teknis",
+] as const;
+
 const FAQ_ENTRIES: readonly FAQEntry[] = [
   {
     id: "faq-what",
+    category: "Umum",
     question: "Apa itu Football ID?",
     answer:
       "Football ID adalah identitas digital permanen bagi setiap orang dalam ekosistem sepak bola Indonesia. Satu orang memiliki satu Football ID seumur hidup, terlepas dari berapa banyak peran atau klub yang ia jalani.",
   },
   {
     id: "faq-ownership",
+    category: "Umum",
     question: "Siapa pemilik data perjalanan pemain?",
     answer:
       "Pemain. SSB hanya memiliki catatan keanggotaan, bukan identitas pemain. Ketika pemain pindah klub, perjalanan dan bukti terverifikasinya tetap utuh dan mengikuti pemain.",
   },
   {
+    id: "faq-primary-secondary",
+    category: "Keanggotaan",
+    question: "Apa bedanya keanggotaan Primary dan Secondary?",
+    answer:
+      "Setiap pemain hanya boleh memiliki tepat satu keanggotaan Primary aktif yang menentukan kelayakan kompetisi dan transfer. Keanggotaan Secondary bersifat opsional dan digunakan untuk kamp, klinik, atau program tambahan tanpa hak kelayakan.",
+  },
+  {
+    id: "faq-transfer",
+    category: "Keanggotaan",
+    question: "Bagaimana proses pemindahan keanggotaan Primary?",
+    answer:
+      "Transfer Primary memerlukan pemutusan keanggotaan aktif di klub asal dan aktivasi keanggotaan baru di klub tujuan. Seluruh riwayat pemain tetap terpelihara karena identitas dan perjalanan milik pemain, bukan klub.",
+  },
+  {
     id: "faq-child",
+    category: "Privasi & Anak",
     question: "Bagaimana perlindungan pemain di bawah umur?",
     answer:
       "Kepentingan anak selalu diutamakan di atas kepentingan pihak lain. Wali memegang otoritas persetujuan, pemanduan bakat tidak tersedia untuk pemain di bawah 13 tahun, dan pelatihan model AI atas data pemain memerlukan persetujuan terpisah yang tidak pernah otomatis.",
   },
   {
     id: "faq-consent",
+    category: "Privasi & Anak",
     question: "Bisakah persetujuan dicabut?",
     answer:
       "Bisa, kapan saja. Persetujuan bersifat granular per tujuan. Pencabutan berisiko tinggi berlaku seketika dengan notifikasi dan pencatatan audit.",
   },
   {
+    id: "faq-ai",
+    category: "Privasi & Anak",
+    question: "Apakah data pemain digunakan untuk melatih AI?",
+    answer:
+      "Tidak secara otomatis. Penggunaan data untuk perbaikan model AI termasuk tujuan persetujuan tersendiri (P8) dan tidak pernah diizinkan untuk pemain di bawah 13 tahun. Pengguna harus memberikan persetujuan eksplisit.",
+  },
+  {
     id: "faq-join",
+    category: "Teknis",
     question: "Siapa yang dapat mendaftar sekarang?",
     answer:
       "Pemain, wali, SSB atau klub, serta asosiasi dan federasi dapat membuat akun. Kapabilitas yang tersedia menyesuaikan peran dan status verifikasi masing-masing.",
   },
+  {
+    id: "faq-verify",
+    category: "Teknis",
+    question: "Bagaimana status verifikasi ditentukan?",
+    answer:
+      "Verifikasi mengikuti siklus hidup identitas: REGISTERED → VERIFIED → ACTIVE. Status ACTIVE memerlukan bukti identitas terverifikasi dan aktivitas yang memenuhi ActivityPolicy yang dapat dikonfigurasi.",
+  },
 ];
+
 
 function LandingPage() {
   return (
@@ -312,9 +358,11 @@ function LandingPage() {
           id="faq-title"
           eyebrow="Pertanyaan umum"
           title="Hal yang paling sering ditanyakan"
+          description="Pilih kategori untuk menyaring pertanyaan."
         />
-        <FAQAccordion entries={FAQ_ENTRIES} />
+        <FAQFilter entries={FAQ_ENTRIES} />
       </PublicSection>
+
 
       {/* Final CTA */}
       <PublicSection labelledBy="cta-title" maxWidth="lg" bordered={false}>
@@ -336,6 +384,47 @@ function LandingPage() {
         </div>
       </PublicSection>
     </PublicLayout>
+  );
+}
+function FAQFilter({ entries }: { readonly entries: readonly FAQEntry[] }) {
+  const [activeCategory, setActiveCategory] =
+    useState<(typeof FAQ_CATEGORIES)[number]>("Semua");
+
+  const filteredEntries =
+    activeCategory === "Semua"
+      ? entries
+      : entries.filter((entry) => entry.category === activeCategory);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div
+        role="group"
+        aria-label="Filter kategori FAQ"
+        className="flex flex-wrap gap-2"
+      >
+        {FAQ_CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            type="button"
+            variant={activeCategory === category ? "default" : "outline"}
+            size="sm"
+            aria-pressed={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+            className="min-h-[44px]"
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
+
+      {filteredEntries.length > 0 ? (
+        <FAQAccordion entries={filteredEntries} />
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          Tidak ada pertanyaan untuk kategori ini.
+        </p>
+      )}
+    </div>
   );
 }
 
