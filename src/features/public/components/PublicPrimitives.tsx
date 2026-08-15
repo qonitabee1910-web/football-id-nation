@@ -316,7 +316,9 @@ export interface FAQEntry {
   readonly id: string;
   readonly question: string;
   readonly answer: string;
+  readonly category?: "Umum" | "Keanggotaan" | "Privasi & Anak" | "Teknis";
 }
+
 
 export function FAQAccordion({
   entries,
