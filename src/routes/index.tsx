@@ -386,4 +386,45 @@ function LandingPage() {
     </PublicLayout>
   );
 }
+function FAQFilter({ entries }: { readonly entries: readonly FAQEntry[] }) {
+  const [activeCategory, setActiveCategory] =
+    useState<(typeof FAQ_CATEGORIES)[number]>("Semua");
+
+  const filteredEntries =
+    activeCategory === "Semua"
+      ? entries
+      : entries.filter((entry) => entry.category === activeCategory);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div
+        role="group"
+        aria-label="Filter kategori FAQ"
+        className="flex flex-wrap gap-2"
+      >
+        {FAQ_CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            type="button"
+            variant={activeCategory === category ? "default" : "outline"}
+            size="sm"
+            aria-pressed={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+            className="min-h-[44px]"
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
+
+      {filteredEntries.length > 0 ? (
+        <FAQAccordion entries={filteredEntries} />
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          Tidak ada pertanyaan untuk kategori ini.
+        </p>
+      )}
+    </div>
+  );
+}
 
