@@ -5,8 +5,8 @@ import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
 import {
   CTAButton,
   PublicSection,
-  SectionTitle,
 } from "@/features/public/components/PublicPrimitives";
+
 
 const NOT_FOUND_META = {
   title: "Halaman tidak ditemukan — Football ID Nation",
