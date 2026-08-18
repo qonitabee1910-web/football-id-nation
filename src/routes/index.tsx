@@ -14,19 +14,24 @@ import {
   Users,
   ClipboardCheck,
 } from "lucide-react";
+import { useState } from "react";
 import { PublicLayout } from "@/features/shared/layouts/PublicLayout";
-import { PageContainer } from "@/components/ui/patterns/PageContainer";
 import { ResponsiveGrid } from "@/components/ui/patterns/ResponsiveGrid";
+import { Button } from "@/components/ui/button";
 import {
   CTAButton,
   FAQAccordion,
   FeatureCard,
   HeroBanner,
   PartnerLogo,
+  PublicSection,
   SectionTitle,
   StatisticCard,
   type FAQEntry,
 } from "@/features/public/components/PublicPrimitives";
+
+
+
 
 const INDEX_LOADER_DEFAULTS = {
   meta: {
@@ -150,42 +155,84 @@ const ECOSYSTEM_ACTORS = [
   { name: "Wali & Orang Tua", role: "Otoritas persetujuan", icon: Users },
 ] as const;
 
+const FAQ_CATEGORIES = [
+  "Semua",
+  "Umum",
+  "Keanggotaan",
+  "Privasi & Anak",
+  "Teknis",
+] as const;
+
 const FAQ_ENTRIES: readonly FAQEntry[] = [
   {
     id: "faq-what",
+    category: "Umum",
     question: "Apa itu Football ID?",
     answer:
       "Football ID adalah identitas digital permanen bagi setiap orang dalam ekosistem sepak bola Indonesia. Satu orang memiliki satu Football ID seumur hidup, terlepas dari berapa banyak peran atau klub yang ia jalani.",
   },
   {
     id: "faq-ownership",
+    category: "Umum",
     question: "Siapa pemilik data perjalanan pemain?",
     answer:
       "Pemain. SSB hanya memiliki catatan keanggotaan, bukan identitas pemain. Ketika pemain pindah klub, perjalanan dan bukti terverifikasinya tetap utuh dan mengikuti pemain.",
   },
   {
+    id: "faq-primary-secondary",
+    category: "Keanggotaan",
+    question: "Apa bedanya keanggotaan Primary dan Secondary?",
+    answer:
+      "Setiap pemain hanya boleh memiliki tepat satu keanggotaan Primary aktif yang menentukan kelayakan kompetisi dan transfer. Keanggotaan Secondary bersifat opsional dan digunakan untuk kamp, klinik, atau program tambahan tanpa hak kelayakan.",
+  },
+  {
+    id: "faq-transfer",
+    category: "Keanggotaan",
+    question: "Bagaimana proses pemindahan keanggotaan Primary?",
+    answer:
+      "Transfer Primary memerlukan pemutusan keanggotaan aktif di klub asal dan aktivasi keanggotaan baru di klub tujuan. Seluruh riwayat pemain tetap terpelihara karena identitas dan perjalanan milik pemain, bukan klub.",
+  },
+  {
     id: "faq-child",
+    category: "Privasi & Anak",
     question: "Bagaimana perlindungan pemain di bawah umur?",
     answer:
       "Kepentingan anak selalu diutamakan di atas kepentingan pihak lain. Wali memegang otoritas persetujuan, pemanduan bakat tidak tersedia untuk pemain di bawah 13 tahun, dan pelatihan model AI atas data pemain memerlukan persetujuan terpisah yang tidak pernah otomatis.",
   },
   {
     id: "faq-consent",
+    category: "Privasi & Anak",
     question: "Bisakah persetujuan dicabut?",
     answer:
       "Bisa, kapan saja. Persetujuan bersifat granular per tujuan. Pencabutan berisiko tinggi berlaku seketika dengan notifikasi dan pencatatan audit.",
   },
   {
+    id: "faq-ai",
+    category: "Privasi & Anak",
+    question: "Apakah data pemain digunakan untuk melatih AI?",
+    answer:
+      "Tidak secara otomatis. Penggunaan data untuk perbaikan model AI termasuk tujuan persetujuan tersendiri (P8) dan tidak pernah diizinkan untuk pemain di bawah 13 tahun. Pengguna harus memberikan persetujuan eksplisit.",
+  },
+  {
     id: "faq-join",
+    category: "Teknis",
     question: "Siapa yang dapat mendaftar sekarang?",
     answer:
       "Pemain, wali, SSB atau klub, serta asosiasi dan federasi dapat membuat akun. Kapabilitas yang tersedia menyesuaikan peran dan status verifikasi masing-masing.",
   },
+  {
+    id: "faq-verify",
+    category: "Teknis",
+    question: "Bagaimana status verifikasi ditentukan?",
+    answer:
+      "Verifikasi mengikuti siklus hidup identitas: REGISTERED → VERIFIED → ACTIVE. Status ACTIVE memerlukan bukti identitas terverifikasi dan aktivitas yang memenuhi ActivityPolicy yang dapat dikonfigurasi.",
+  },
 ];
+
 
 function LandingPage() {
   return (
-    <PublicLayout showHeader showFooter>
+    <PublicLayout showHeader showFooter contained={false}>
       <HeroBanner
         titleId="hero-title"
         badge="Identitas sepak bola nasional — aman, resmi, terlacak"
@@ -210,141 +257,174 @@ function LandingPage() {
       />
 
       {/* Trust pillars */}
-      <section aria-labelledby="trust-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="trust-title"
-            eyebrow="Fondasi kepercayaan"
-            title="Dibangun agar layak dipercaya, bukan sekadar terlihat modern"
-            description="Tiga pilar yang menjadi dasar setiap keputusan arsitektur platform."
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 3 }} gap="md">
-            {TRUST_PILLARS.map((pillar) => (
-              <FeatureCard key={pillar.title} {...pillar} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="trust-title">
+        <SectionTitle
+          id="trust-title"
+          eyebrow="Fondasi kepercayaan"
+          title="Dibangun agar layak dipercaya, bukan sekadar terlihat modern"
+          description="Tiga pilar yang menjadi dasar setiap keputusan arsitektur platform."
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 3 }} gap="md">
+          {TRUST_PILLARS.map((pillar) => (
+            <FeatureCard key={pillar.title} {...pillar} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* About */}
-      <section aria-labelledby="about-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="grid gap-8 md:grid-cols-2 md:items-start">
-          <SectionTitle
-            id="about-title"
-            eyebrow="Tentang platform"
-            title="Infrastruktur data, bukan sekadar aplikasi klub"
-            description="Football ID Nation adalah lapisan identitas bersama bagi seluruh ekosistem sepak bola usia muda Indonesia. Alih-alih setiap SSB menyimpan datanya sendiri secara terpisah, platform ini menjadikan identitas dan perjalanan pemain sebagai sumber kebenaran tunggal yang portabel."
-          />
-          <div className="flex flex-col gap-4 rounded-lg border bg-card p-6">
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Setiap kapabilitas diturunkan dari artefak tata kelola yang disetujui:
-              visi, peta pemangku kepentingan, model domain, kontrak API, hingga
-              katalog layar. Tidak ada fitur yang dibangun tanpa kontrak yang lebih
-              dahulu disepakati.
-            </p>
-            <ul className="flex flex-col gap-2 text-sm">
-              {[
-                "Identity Bounded Context sebagai fondasi Sprint 1",
-                "Consent sebagai warga kelas satu, bukan tambahan",
-                "Ledger append-only sebagai otoritas riwayat",
-                "Kepentingan anak mengalahkan seluruh kepentingan lain",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <ShieldCheck
-                    className="mt-0.5 h-4 w-4 shrink-0 text-primary"
-                    aria-hidden="true"
-                  />
-                  <span className="text-muted-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </PageContainer>
-      </section>
+      <PublicSection
+        labelledBy="about-title"
+        innerClassName="grid gap-8 md:grid-cols-2 md:items-start"
+      >
+        <SectionTitle
+          id="about-title"
+          eyebrow="Tentang platform"
+          title="Infrastruktur data, bukan sekadar aplikasi klub"
+          description="Football ID Nation adalah lapisan identitas bersama bagi seluruh ekosistem sepak bola usia muda Indonesia. Alih-alih setiap SSB menyimpan datanya sendiri secara terpisah, platform ini menjadikan identitas dan perjalanan pemain sebagai sumber kebenaran tunggal yang portabel."
+        />
+        <div className="flex flex-col gap-4 rounded-lg border bg-card p-6">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Setiap kapabilitas diturunkan dari artefak tata kelola yang disetujui:
+            visi, peta pemangku kepentingan, model domain, kontrak API, hingga
+            katalog layar. Tidak ada fitur yang dibangun tanpa kontrak yang lebih
+            dahulu disepakati.
+          </p>
+          <ul className="flex flex-col gap-2 text-sm">
+            {[
+              "Identity Bounded Context sebagai fondasi Sprint 1",
+              "Consent sebagai warga kelas satu, bukan tambahan",
+              "Ledger append-only sebagai otoritas riwayat",
+              "Kepentingan anak mengalahkan seluruh kepentingan lain",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ShieldCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                <span className="text-muted-foreground">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </PublicSection>
 
       {/* Capabilities */}
-      <section aria-labelledby="capabilities-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="capabilities-title"
-            eyebrow="Kapabilitas inti"
-            title="Apa yang Football ID berikan pada ekosistem"
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 3 }} gap="md">
-            {CAPABILITIES.map((capability) => (
-              <FeatureCard key={capability.title} {...capability} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="capabilities-title">
+        <SectionTitle
+          id="capabilities-title"
+          eyebrow="Kapabilitas inti"
+          title="Apa yang Football ID berikan pada ekosistem"
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 2, lg: 3 }} gap="md">
+          {CAPABILITIES.map((capability) => (
+            <FeatureCard key={capability.title} {...capability} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* Phase 0 targets */}
-      <section aria-labelledby="targets-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="targets-title"
-            eyebrow="Fase 0 — Founding"
-            title="Target rancangan fase pendiri"
-            description="Angka berikut adalah target volume desain untuk Fase 0 yang telah disetujui Council, bukan jumlah pengguna saat ini."
-          />
-          <ResponsiveGrid cols={{ base: 2, lg: 4 }} gap="md">
-            {PHASE_ZERO_TARGETS.map((stat) => (
-              <StatisticCard key={stat.label} {...stat} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="targets-title">
+        <SectionTitle
+          id="targets-title"
+          eyebrow="Fase 0 — Founding"
+          title="Target rancangan fase pendiri"
+          description="Angka berikut adalah target volume desain Fase 0 yang telah disetujui Council, bukan jumlah pengguna saat ini. Statistik ekosistem aktual belum tersedia dan akan tampil setelah layanan identitas beroperasi."
+        />
+        <ResponsiveGrid cols={{ base: 2, lg: 4 }} gap="md">
+          {PHASE_ZERO_TARGETS.map((stat) => (
+            <StatisticCard key={stat.label} {...stat} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* Ecosystem actors */}
-      <section aria-labelledby="actors-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="xl" className="flex flex-col gap-8">
-          <SectionTitle
-            id="actors-title"
-            eyebrow="Ekosistem"
-            title="Peran yang bekerja di atas satu identitas"
-            description="Setiap peran memperoleh kapabilitas seminimal yang dibutuhkan untuk tugasnya."
-          />
-          <ResponsiveGrid cols={{ base: 1, md: 2, lg: 4 }} gap="md">
-            {ECOSYSTEM_ACTORS.map((actor) => (
-              <PartnerLogo key={actor.name} {...actor} />
-            ))}
-          </ResponsiveGrid>
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="actors-title">
+        <SectionTitle
+          id="actors-title"
+          eyebrow="Ekosistem"
+          title="Peran yang bekerja di atas satu identitas"
+          description="Setiap peran memperoleh kapabilitas seminimal yang dibutuhkan untuk tugasnya."
+        />
+        <ResponsiveGrid cols={{ base: 1, md: 2, lg: 4 }} gap="md">
+          {ECOSYSTEM_ACTORS.map((actor) => (
+            <PartnerLogo key={actor.name} {...actor} />
+          ))}
+        </ResponsiveGrid>
+      </PublicSection>
 
       {/* FAQ */}
-      <section aria-labelledby="faq-title" className="border-b py-12 md:py-16">
-        <PageContainer as="div" maxWidth="lg" className="flex flex-col gap-8">
-          <SectionTitle
-            id="faq-title"
-            eyebrow="Pertanyaan umum"
-            title="Hal yang paling sering ditanyakan"
-          />
-          <FAQAccordion entries={FAQ_ENTRIES} />
-        </PageContainer>
-      </section>
+      <PublicSection labelledBy="faq-title" maxWidth="lg">
+        <SectionTitle
+          id="faq-title"
+          eyebrow="Pertanyaan umum"
+          title="Hal yang paling sering ditanyakan"
+          description="Pilih kategori untuk menyaring pertanyaan."
+        />
+        <FAQFilter entries={FAQ_ENTRIES} />
+      </PublicSection>
+
 
       {/* Final CTA */}
-      <section aria-labelledby="cta-title" className="py-12 md:py-16">
-        <PageContainer as="div" maxWidth="lg">
-          <div className="flex flex-col items-start gap-6 rounded-xl border bg-card p-8 md:items-center md:text-center">
-            <SectionTitle
-              id="cta-title"
-              title="Mulai perjalanan sepak bola yang terverifikasi"
-              description="Buat Football ID Anda hari ini, atau masuk untuk melanjutkan perjalanan yang sudah berjalan."
-              align="center"
-            />
-            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-              <CTAButton to="/register" withArrow>
-                Daftar sekarang
-              </CTAButton>
-              <CTAButton to="/login" variant="outline" icon={LogIn}>
-                Masuk
-              </CTAButton>
-            </div>
+      <PublicSection labelledBy="cta-title" maxWidth="lg" bordered={false}>
+        <div className="flex flex-col items-start gap-6 rounded-xl border bg-card p-6 md:items-center md:p-10 md:text-center">
+          <SectionTitle
+            id="cta-title"
+            title="Mulai perjalanan sepak bola yang terverifikasi"
+            description="Buat Football ID Anda hari ini, atau masuk untuk melanjutkan perjalanan yang sudah berjalan."
+            align="center"
+          />
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <CTAButton to="/register" withArrow>
+              Daftar sekarang
+            </CTAButton>
+            <CTAButton to="/login" variant="outline" icon={LogIn}>
+              Masuk
+            </CTAButton>
           </div>
-        </PageContainer>
-      </section>
+        </div>
+      </PublicSection>
     </PublicLayout>
   );
 }
+function FAQFilter({ entries }: { readonly entries: readonly FAQEntry[] }) {
+  const [activeCategory, setActiveCategory] =
+    useState<(typeof FAQ_CATEGORIES)[number]>("Semua");
+
+  const filteredEntries =
+    activeCategory === "Semua"
+      ? entries
+      : entries.filter((entry) => entry.category === activeCategory);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div
+        role="group"
+        aria-label="Filter kategori FAQ"
+        className="flex flex-wrap gap-2"
+      >
+        {FAQ_CATEGORIES.map((category) => (
+          <Button
+            key={category}
+            type="button"
+            variant={activeCategory === category ? "default" : "outline"}
+            size="sm"
+            aria-pressed={activeCategory === category}
+            onClick={() => setActiveCategory(category)}
+            className="min-h-[44px]"
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
+
+      {filteredEntries.length > 0 ? (
+        <FAQAccordion entries={filteredEntries} />
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          Tidak ada pertanyaan untuk kategori ini.
+        </p>
+      )}
+    </div>
+  );
+}
+

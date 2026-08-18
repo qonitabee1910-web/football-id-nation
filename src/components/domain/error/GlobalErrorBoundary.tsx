@@ -79,7 +79,7 @@ export class GlobalErrorBoundary extends Component<
     }
 
     return (
-      <div data-trace-id={traceId ?? undefined} className="min-h-screen w-full bg-background">
+      <div data-trace-id={traceId ?? undefined} className="min-h-dvh w-full bg-background">
         <UnifiedNotFound
           variant="404"
           onBackHome={this.handleBackHome}

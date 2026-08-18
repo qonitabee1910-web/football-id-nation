@@ -6,9 +6,7 @@ import {
   AlertCircle,
   ArrowLeft,
   ArrowRight,
-  Building2,
   CheckCircle2,
-  Landmark,
   Loader2,
   ShieldCheck,
   UserRound,
@@ -26,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
+import { FieldError } from "@/features/public/components/PublicPrimitives";
 import {
   registerSchema,
   type RegisterInput,
@@ -93,18 +92,6 @@ const ROLE_OPTIONS: ReadonlyArray<{
     description: "Memberikan persetujuan dan mendampingi pemain di bawah umur.",
     icon: Users,
   },
-  {
-    value: "ORGANIZATION",
-    label: "SSB / Klub",
-    description: "Mengelola keanggotaan, bukan pemilik identitas pemain.",
-    icon: Building2,
-  },
-  {
-    value: "ASSOCIATION",
-    label: "Asosiasi / Federasi",
-    description: "Menyelenggarakan kompetisi dan verifikasi kelayakan.",
-    icon: Landmark,
-  },
 ];
 
 const STEP_LABELS = ["Pilih peran", "Data akun", "Persetujuan"] as const;
@@ -119,7 +106,6 @@ function RegisterPage() {
     defaultValues: {
       role: "PLAYER",
       fullName: "",
-      organizationName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -130,16 +116,13 @@ function RegisterPage() {
   });
 
   const role = form.watch("role");
-  const needsOrganization = role === "ORGANIZATION" || role === "ASSOCIATION";
   const errors = form.formState.errors;
 
   const goNext = async () => {
     const fields: Array<keyof RegisterInput> =
       step === 0
         ? ["role"]
-        : needsOrganization
-          ? ["fullName", "organizationName", "email", "password", "confirmPassword"]
-          : ["fullName", "email", "password", "confirmPassword"];
+        : ["fullName", "email", "password", "confirmPassword"];
     const valid = await form.trigger(fields);
     if (valid) setStep((current) => Math.min(current + 1, 2));
   };
@@ -151,6 +134,7 @@ function RegisterPage() {
   return (
     <AuthLayout variant="register">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="register-title"
         title="Daftar Football ID"
         description="Satu orang, satu akun, banyak peran. Football ID bersifat permanen dan sepenuhnya opaque — tidak memuat tahun, wilayah, atau fakta bisnis apa pun."
@@ -165,7 +149,7 @@ function RegisterPage() {
       >
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>
+            <span aria-live="polite">
               Langkah {step + 1} dari {STEP_LABELS.length} · {STEP_LABELS[step]}
             </span>
             <span>{Math.round(((step + 1) / STEP_LABELS.length) * 100)}%</span>
@@ -201,7 +185,7 @@ function RegisterPage() {
           </Alert>
         ) : null}
 
-        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+        <form onSubmit={onSubmit} noValidate className="flex w-full min-w-0 flex-col gap-6">
           {step === 0 ? (
             <FormSection
               legend="Peran utama Anda"
@@ -222,10 +206,10 @@ function RegisterPage() {
                     <Label
                       key={option.value}
                       htmlFor={inputId}
-                      className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border p-4 font-normal transition-colors hover:border-primary/40 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5"
+                      className="flex min-h-11 w-full cursor-pointer items-start gap-3 rounded-lg border p-4 font-normal whitespace-normal transition-colors hover:border-primary/40 has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5"
                     >
                       <RadioGroupItem id={inputId} value={option.value} className="mt-1" />
-                      <span className="flex flex-col gap-1">
+                      <span className="flex min-w-0 flex-1 flex-col gap-1">
                         <span className="flex items-center gap-2 text-sm font-medium">
                           <Icon className="h-4 w-4 text-primary" aria-hidden="true" />
                           {option.label}
@@ -239,9 +223,7 @@ function RegisterPage() {
                 })}
               </RadioGroup>
               {errors.role ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.role.message}
-                </p>
+                <FieldError>{errors.role.message}</FieldError>
               ) : null}
             </FormSection>
           ) : null}
@@ -262,30 +244,13 @@ function RegisterPage() {
                   {...form.register("fullName")}
                 />
                 {errors.fullName ? (
-                  <p id="register-name-error" role="alert" className="text-xs text-destructive">
+                  <FieldError id="register-name-error">
                     {errors.fullName.message}
-                  </p>
+                  </FieldError>
                 ) : null}
               </div>
 
-              {needsOrganization ? (
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="register-org">Nama organisasi</Label>
-                  <Input
-                    id="register-org"
-                    autoComplete="organization"
-                    className="min-h-11"
-                    aria-invalid={errors.organizationName ? true : undefined}
-                    aria-describedby={errors.organizationName ? "register-org-error" : undefined}
-                    {...form.register("organizationName")}
-                  />
-                  {errors.organizationName ? (
-                    <p id="register-org-error" role="alert" className="text-xs text-destructive">
-                      {errors.organizationName.message}
-                    </p>
-                  ) : null}
-                </div>
-              ) : null}
+
 
               <div className="flex flex-col gap-2">
                 <Label htmlFor="register-email">Email</Label>
@@ -300,9 +265,9 @@ function RegisterPage() {
                   {...form.register("email")}
                 />
                 {errors.email ? (
-                  <p id="register-email-error" role="alert" className="text-xs text-destructive">
+                  <FieldError id="register-email-error">
                     {errors.email.message}
-                  </p>
+                  </FieldError>
                 ) : null}
               </div>
 
@@ -315,16 +280,20 @@ function RegisterPage() {
                     autoComplete="new-password"
                     className="min-h-11"
                     aria-invalid={errors.password ? true : undefined}
-                    aria-describedby="register-password-hint"
+                    aria-describedby={
+                      errors.password
+                        ? "register-password-hint register-password-error"
+                        : "register-password-hint"
+                    }
                     {...form.register("password")}
                   />
                   <p id="register-password-hint" className="text-xs text-muted-foreground">
                     Minimal 12 karakter.
                   </p>
                   {errors.password ? (
-                    <p role="alert" className="text-xs text-destructive">
+                    <FieldError id="register-password-error">
                       {errors.password.message}
-                    </p>
+                    </FieldError>
                   ) : null}
                 </div>
                 <div className="flex flex-col gap-2">
@@ -341,13 +310,9 @@ function RegisterPage() {
                     {...form.register("confirmPassword")}
                   />
                   {errors.confirmPassword ? (
-                    <p
-                      id="register-confirm-error"
-                      role="alert"
-                      className="text-xs text-destructive"
-                    >
+                    <FieldError id="register-confirm-error">
                       {errors.confirmPassword.message}
-                    </p>
+                    </FieldError>
                   ) : null}
                 </div>
               </div>
@@ -377,9 +342,7 @@ function RegisterPage() {
                 </Label>
               </div>
               {errors.consentTerms ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.consentTerms.message}
-                </p>
+                <FieldError>{errors.consentTerms.message}</FieldError>
               ) : null}
 
               <div className="flex items-start gap-3 rounded-lg border p-4">
@@ -401,9 +364,7 @@ function RegisterPage() {
                 </Label>
               </div>
               {errors.consentPrivacy ? (
-                <p role="alert" className="text-xs text-destructive">
-                  {errors.consentPrivacy.message}
-                </p>
+                <FieldError>{errors.consentPrivacy.message}</FieldError>
               ) : null}
 
               <p className="flex items-start gap-2 rounded-lg bg-muted p-4 text-xs leading-relaxed text-muted-foreground">

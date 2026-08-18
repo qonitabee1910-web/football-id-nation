@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FieldError } from "@/features/public/components/PublicPrimitives";
 import { loginSchema, type LoginInput } from "@/features/public/schemas/auth.schemas";
 import {
   isAuthBackendUnavailable,
@@ -72,6 +73,7 @@ function LoginPage() {
   return (
     <AuthLayout variant="login">
       <AuthenticationCard
+      visuallyHiddenTitle
         titleId="login-title"
         title="Masuk"
         description="Gunakan email terdaftar Anda. Otorisasi diverifikasi di sisi server sesuai Konstitusi Pasal 8."
@@ -119,9 +121,9 @@ function LoginPage() {
               {...form.register("email")}
             />
             {form.formState.errors.email ? (
-              <p id="login-email-error" role="alert" className="text-xs text-destructive">
+              <FieldError id="login-email-error">
                 {form.formState.errors.email.message}
-              </p>
+              </FieldError>
             ) : null}
           </div>
 
@@ -139,9 +141,9 @@ function LoginPage() {
               {...form.register("password")}
             />
             {form.formState.errors.password ? (
-              <p id="login-password-error" role="alert" className="text-xs text-destructive">
+              <FieldError id="login-password-error">
                 {form.formState.errors.password.message}
-              </p>
+              </FieldError>
             ) : null}
           </div>
 

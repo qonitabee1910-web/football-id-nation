@@ -29,7 +29,7 @@ export function ThemeToggle({
   const { theme, setTheme, themeOptions, isDark } = useTheme();
   const CurrentIcon = themeMeta[theme].icon;
   const sizeClasses =
-    size === "sm" ? "h-8 w-8" : size === "lg" ? "h-11 w-11" : "h-10 w-10";
+    size === "sm" ? "min-h-11 min-w-11" : size === "lg" ? "h-11 w-11" : "h-10 w-10";
 
   if (variant === "text") {
     return (

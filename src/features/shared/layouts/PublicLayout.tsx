@@ -8,7 +8,7 @@ import { useState } from "react";
 import { CommandPalette } from "../components/CommandPalette";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { cn } from "@/lib/utils";
-import { Shield } from "lucide-react";
+import { Search, Shield } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 export interface PublicLayoutProps {
@@ -18,6 +18,9 @@ export interface PublicLayoutProps {
   readonly showFooter?: boolean;
   readonly className?: string;
   readonly mainClassName?: string;
+  /** Wrap children in the shared PageContainer. Sections that own their
+   *  container (landing page) pass false to avoid double padding. */
+  readonly contained?: boolean;
 }
 
 export function PublicLayout({
@@ -27,6 +30,7 @@ export function PublicLayout({
   showFooter = true,
   className,
   mainClassName,
+  contained = true,
 }: PublicLayoutProps) {
   const [searchOpen] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -36,7 +40,7 @@ export function PublicLayout({
     <GlobalErrorBoundary isStructural>
       <div
         className={cn(
-          "flex min-h-screen w-full flex-col bg-background text-foreground antialiased",
+          "flex min-h-dvh w-full flex-col bg-background text-foreground antialiased",
           className,
         )}
       >
@@ -58,9 +62,13 @@ export function PublicLayout({
           className={cn("flex min-h-0 flex-1 flex-col", mainClassName)}
         >
           <LoadingBoundary>
-            <PageContainer as="div" maxWidth={maxWidth} className="flex-1">
-              {children ?? <Outlet />}
-            </PageContainer>
+            {contained ? (
+              <PageContainer as="div" maxWidth={maxWidth} className="flex-1">
+                {children ?? <Outlet />}
+              </PageContainer>
+            ) : (
+              children ?? <Outlet />
+            )}
           </LoadingBoundary>
         </main>
 
@@ -108,34 +116,34 @@ function PublicSiteHeader({
       </Link>
 
       <nav aria-label="Navigasi publik" className="hidden items-center gap-1 md:flex">
-        <a
-          href="/legal"
+        <Link
+          to="/legal"
           className="inline-flex min-h-[44px] items-center gap-1 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           Ketentuan
-        </a>
-        <a
-          href="/login"
+        </Link>
+        <Link
+          to="/login"
           className="inline-flex min-h-[44px] items-center gap-1 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           Masuk
-        </a>
-        <a
-          href="/register"
+        </Link>
+        <Link
+          to="/register"
           className="inline-flex min-h-[44px] items-center gap-1 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
           Daftar
-        </a>
+        </Link>
       </nav>
 
       <div className="flex items-center gap-1 md:gap-2">
         <button
           type="button"
           onClick={onCommandOpen}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
           aria-label="Buka palet perintah"
         >
-          <Shield className="h-4 w-4" aria-hidden="true" />
+          <Search className="h-4 w-4" aria-hidden="true" />
         </button>
         <ThemeToggle variant="icon" size="sm" />
       </div>
@@ -173,28 +181,28 @@ function PublicSiteFooter() {
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <a
-                href="/legal"
+              <Link
+                to="/legal"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Ketentuan Hukum & Privasi
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/forgot-password"
+              <Link
+                to="/forgot-password"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Lupa Kata Sandi
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Pusat Masuk
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

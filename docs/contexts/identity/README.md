@@ -46,7 +46,7 @@ Produced so far:
   versioning, security/privacy, and traceability. No code, SQL, ORM, or UI.
 
 - [`08-screen-catalogue.md` (IDN-SCR-001 v1.0)](./08-screen-catalogue.md) —
-  IN_REVIEW at G7. Stage 5 UX Architecture: 50 screens across PUBLIC, PLAYER,
+  IN_REVIEW at G5. Stage 5 UX Architecture: 50 screens across PUBLIC, PLAYER,
   GUARDIAN, ORGANIZATION, ASSOCIATION, FEDERATION and SYSTEM areas, navigation
   architecture, per-screen definition, layout structure, component composition,
   interaction, data dependency, authorization matrix, privacy and child
@@ -59,6 +59,19 @@ Produced so far:
 Next artefact after approval: `IDN-UIC-001` (UI Component Catalogue), then
 `IDN-DS-001` (Enterprise Design System). Implementation (Stage 6) remains
 blocked.
+
+## Prototype code status (10 Aug 2026)
+
+Sprint 2 delivered `IDN-UI-GEN-002`, a **presentation-only** Public Experience
+prototype (SCR-PUB-01 Landing, SCR-PUB-02 Login, SCR-PUB-03 Register,
+SCR-PUB-04 Forgot Password, plus a `/legal` placeholder) under an explicit
+Council waiver, ahead of G5 sign-off. It contains no backend, no persistence,
+and no business logic; all submit paths intentionally reject with a
+"Backend Pending" structural error. Public self-service registration is limited
+to `PLAYER` and `GUARDIAN` because IDN-API-001 C-01 defines RegisterPerson for a
+Person only — Organization/Association onboarding has no approved command and is
+therefore structurally absent (STK-INV-004). Stage 6 (`IDN-IMP-001`) stays
+`BLOCKED`.
 
 
 
